@@ -1,0 +1,15 @@
+node_modules/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+*.pkl
+*.mp4
+*.gif
+.remember/
+.claude/
+package.json
+package-lock.json
+create-guide.js
+churn-pptx.js
