@@ -1,0 +1,109 @@
+---
+import { weeks } from '../data/curriculum';
+
+interface Props {
+  title: string;
+  activeWeekId?: number;
+}
+
+const { title, activeWeekId } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ECS Veri Bilimi ve Yapay Zeka Uzmanlığı Programı — 90 Saat, 15 Hafta" />
+  <title>{title} — ECS VB&YZ 90</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3 { font-family: 'Georgia', serif; }
+  </style>
+</head>
+<body class="bg-cream min-h-screen">
+
+  <!-- TOP HEADER -->
+  <header class="bg-dark text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href={base} class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+        <div class="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-white font-bold text-sm">ECS</div>
+        <div>
+          <div class="font-semibold text-sm leading-tight">Veri Bilimi & YZ Uzmanlığı</div>
+          <div class="text-xs text-gray-400">90 Saat · 15 Hafta · Dr. Murat Altun</div>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-4 text-sm">
+        <span class="px-2 py-1 rounded bg-accent/20 text-accent border border-accent/30 text-xs">Hafta 1–4: VB Temelleri</span>
+        <span class="px-2 py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 text-xs">Hafta 5–9: ML Uzmanlığı</span>
+        <span class="px-2 py-1 rounded bg-primary/20 text-orange-300 border border-primary/30 text-xs">Hafta 10–15: YZ Mühendisliği</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex max-w-screen-xl mx-auto">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 shrink-0 hidden lg:block sticky top-[57px] self-start h-[calc(100vh-57px)] overflow-y-auto border-r border-border bg-warmBg">
+      <nav class="py-4">
+        <a href={base} class={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${!activeWeekId ? 'bg-primary text-white' : 'text-mid hover:text-primary hover:bg-border/50'}`}>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Program Özeti
+        </a>
+
+        <!-- Bölüm 1 -->
+        <div class="px-4 pt-4 pb-1">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-accent">Bölüm 1 — VB Temelleri</span>
+        </div>
+        {weeks.filter(w => w.id <= 4).map(w => (
+          <a
+            href={`${base}hafta/${w.slug}`}
+            class={`flex items-center gap-2 px-4 py-2 text-sm transition-colors ${activeWeekId === w.id ? 'bg-accent text-white font-semibold' : 'text-mid hover:text-accent hover:bg-border/50'}`}
+          >
+            <span class={`w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 ${activeWeekId === w.id ? 'bg-white/20' : 'bg-accent/10 text-accent'}`}>{w.id}</span>
+            <span class="truncate leading-snug">{w.title.split('—')[0].trim().split(' ').slice(0,3).join(' ')}</span>
+          </a>
+        ))}
+
+        <!-- Bölüm 2 -->
+        <div class="px-4 pt-4 pb-1">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">Bölüm 2 — ML Uzmanlığı</span>
+        </div>
+        {weeks.filter(w => w.id >= 5 && w.id <= 9).map(w => (
+          <a
+            href={`${base}hafta/${w.slug}`}
+            class={`flex items-center gap-2 px-4 py-2 text-sm transition-colors ${activeWeekId === w.id ? 'bg-secondary text-white font-semibold' : 'text-mid hover:text-secondary hover:bg-border/50'}`}
+          >
+            <span class={`w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 ${activeWeekId === w.id ? 'bg-white/20' : 'bg-secondary/10 text-secondary'}`}>{w.id}</span>
+            <span class="truncate leading-snug">{w.title.split('—')[0].trim().split(' ').slice(0,3).join(' ')}</span>
+          </a>
+        ))}
+
+        <!-- Bölüm 3 -->
+        <div class="px-4 pt-4 pb-1">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Bölüm 3 — YZ Mühendisliği</span>
+        </div>
+        {weeks.filter(w => w.id >= 10).map(w => (
+          <a
+            href={`${base}hafta/${w.slug}`}
+            class={`flex items-center gap-2 px-4 py-2 text-sm transition-colors ${activeWeekId === w.id ? 'bg-primary text-white font-semibold' : 'text-mid hover:text-primary hover:bg-border/50'}`}
+          >
+            <span class={`w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 ${activeWeekId === w.id ? 'bg-white/20' : 'bg-primary/10 text-primary'}`}>{w.id}</span>
+            <span class="truncate leading-snug">{w.title.split('—')[0].trim().split(' ').slice(0,3).join(' ')}</span>
+          </a>
+        ))}
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 min-w-0 p-6">
+      <slot />
+    </main>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { weeks } from '../data/curriculum';
+
+const base = import.meta.env.BASE_URL;
+
+const sections = [
+  { label: 'VERİ BİLİMİ TEMELLERİ',      color: 'accent',    weeks: weeks.filter(w => w.id <= 4),            hours: 24 },
+  { label: 'MAKİNE ÖĞRENMESİ UZMANLIĞI', color: 'secondary', weeks: weeks.filter(w => w.id >= 5 && w.id <= 9), hours: 30 },
+  { label: 'YAPAY ZEKA MÜHENDİSLİĞİ',    color: 'primary',   weeks: weeks.filter(w => w.id >= 10),            hours: 36 },
+];
+
+const colorMap: Record<string, string> = {
+  accent:    'border-accent bg-accent/5 hover:bg-accent/10',
+  secondary: 'border-secondary bg-secondary/5 hover:bg-secondary/10',
+  primary:   'border-primary bg-primary/5 hover:bg-primary/10',
+};
+const badgeMap: Record<string, string> = {
+  accent:    'bg-accent text-white',
+  secondary: 'bg-secondary text-white',
+  primary:   'bg-primary text-white',
+};
+const textMap: Record<string, string> = {
+  accent:    'text-accent',
+  secondary: 'text-secondary',
+  primary:   'text-primary',
+};
+---
+
+<Layout title="Program Özeti">
+  <!-- HERO -->
+  <div class="rounded-2xl bg-dark text-white p-8 mb-8 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background: radial-gradient(circle at 70% 50%, #C97B5A 0%, transparent 60%)"></div>
+    <div class="relative">
+      <div class="flex items-start justify-between flex-wrap gap-4">
+        <div>
+          <p class="text-secondary text-sm font-medium uppercase tracking-widest mb-2">ECS Eğitim Programı</p>
+          <h1 class="text-3xl font-bold mb-2">Veri Bilimi ve Yapay Zeka<br/>Uzmanlığı Programı</h1>
+          <p class="text-gray-400 text-sm">Dr. Murat Altun · Google Colab · GitHub Portföyü</p>
+        </div>
+        <div class="flex gap-4 text-center">
+          <div class="bg-white/10 rounded-xl px-5 py-3">
+            <div class="text-3xl font-bold text-secondary">90</div>
+            <div class="text-xs text-gray-400 mt-1">Toplam Saat</div>
+          </div>
+          <div class="bg-white/10 rounded-xl px-5 py-3">
+            <div class="text-3xl font-bold text-accent">15</div>
+            <div class="text-xs text-gray-400 mt-1">Hafta</div>
+          </div>
+          <div class="bg-white/10 rounded-xl px-5 py-3">
+            <div class="text-3xl font-bold text-orange-300">3</div>
+            <div class="text-xs text-gray-400 mt-1">Bölüm</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Değerlendirme -->
+      <div class="mt-6 flex flex-wrap gap-3">
+        <div class="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 text-sm">
+          <span class="text-secondary">▪</span> GitHub Portföyü %30
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 text-sm">
+          <span class="text-accent">▪</span> Final Sınavı %30
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 text-sm">
+          <span class="text-orange-300">▪</span> Capstone Projesi %40
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BÖLÜMLER -->
+  {sections.map(section => (
+    <div class="mb-10">
+      <div class={`flex items-center gap-3 mb-4`}>
+        <span class={`inline-block w-1 h-6 rounded-full ${badgeMap[section.color]}`}></span>
+        <h2 class={`text-sm font-bold uppercase tracking-widest ${textMap[section.color]}`}>{section.label}</h2>
+        <span class="text-xs text-mid bg-border/60 rounded-full px-2 py-0.5">{section.hours} saat</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        {section.weeks.map(week => (
+          <a
+            href={`${base}hafta/${week.slug}`}
+            class={`group block rounded-xl border-l-4 p-4 transition-all ${colorMap[section.color]} border border-border`}
+          >
+            <div class="flex items-start justify-between gap-2 mb-3">
+              <span class={`text-xs font-bold px-2 py-0.5 rounded-full ${badgeMap[section.color]}`}>HAFTA {week.id}</span>
+              <span class="text-xs text-mid">{week.hours} saat</span>
+            </div>
+            <h3 class="font-semibold text-dark text-sm leading-snug mb-2 group-hover:text-primary transition-colors">{week.title}</h3>
+            <p class="text-xs text-mid mb-3">{week.subtitle}</p>
+            <div class="flex flex-wrap gap-1">
+              {week.libraries.slice(0, 3).map(lib => (
+                <span class="text-[10px] bg-white/70 border border-border rounded px-1.5 py-0.5 text-mid font-mono">{lib}</span>
+              ))}
+              {week.libraries.length > 3 && (
+                <span class="text-[10px] text-mid">+{week.libraries.length - 3}</span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  ))}
+
+  <!-- Teknik Araçlar -->
+  <div class="mt-8 rounded-xl border border-border bg-white p-6">
+    <h2 class="font-bold text-dark mb-4">Kullanılan Teknolojiler</h2>
+    <div class="flex flex-wrap gap-2">
+      {['Python', 'NumPy', 'Pandas', 'Matplotlib', 'Seaborn', 'Scikit-learn', 'XGBoost', 'LightGBM',
+        'TensorFlow', 'Keras', 'OpenCV', 'Transformers', 'Gemini API', 'Streamlit', 'Gradio',
+        'Google Colab', 'GitHub', 'Kaggle', 'Hugging Face'].map(tech => (
+        <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-mid font-medium">{tech}</span>
+      ))}
+    </div>
+  </div>
+</Layout>
