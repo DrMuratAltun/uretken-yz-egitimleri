@@ -24,7 +24,12 @@ const sectionColorClass: Record<string, string> = {
 const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
 ---
 
-<Layout title={`Hafta ${week.id}: ${week.title}`} activeWeekId={week.id}>
+<Layout
+  title={`Hafta ${week.id}: ${week.title}`}
+  description={`${week.section} — ${week.title}. ${week.topics.slice(0,3).join(', ')} ve daha fazlası. Dr. Murat Altun, ECS 90 saatlik program.`}
+  activeWeekId={week.id}
+  canonical={`https://drmurataltun.github.io/VB-YZ-90/hafta/${week.slug}/`}
+>
 
   <!-- BREADCRUMB -->
   <div class="flex items-center gap-2 text-xs text-mid mb-4">
