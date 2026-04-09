@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { weeks, getWeekBySlug, getPptxEmbedUrl } from '../../data/curriculum';
+import { weeks, getWeekBySlug, getPdfFileName } from '../../data/curriculum';
 
 export function getStaticPaths() {
   return weeks.map(w => ({ params: { id: w.slug } }));
@@ -11,7 +11,8 @@ const week = getWeekBySlug(id!);
 if (!week) return Astro.redirect('/');
 
 const base = import.meta.env.BASE_URL;
-const embedUrl = getPptxEmbedUrl(week.pptxFile);
+const pdfFile = getPdfFileName(week.pptxFile);
+const pdfUrl = `${base}sunumlar/${pdfFile}#toolbar=0&navpanes=0`;
 
 const prevWeek = weeks.find(w => w.id === week.id - 1);
 const nextWeek = weeks.find(w => w.id === week.id + 1);
@@ -74,15 +75,14 @@ const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
         <span class="w-3 h-3 rounded-full bg-yellow-500/70"></span>
         <span class="w-3 h-3 rounded-full bg-green-500/70"></span>
       </div>
-      <span class="text-xs text-gray-400 ml-2">📊 {week.pptxFile}</span>
+      <span class="text-xs text-gray-400 ml-2">📊 {pdfFile}</span>
     </div>
     <iframe
-      src={embedUrl}
+      src={pdfUrl}
       width="100%"
-      height="520"
+      height="560"
       frameborder="0"
-      allowfullscreen
-      class="w-full block"
+      class="w-full block bg-white"
       loading="lazy"
       title={`Hafta ${week.id} Sunumu`}
     />
@@ -189,23 +189,24 @@ const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
 
 </Layout>
 
-<script>
-function switchTab(btn: HTMLElement) {
-  const key = btn.dataset.tab;
+<script is:inline>
+function switchTab(btn) {
+  var key = btn.getAttribute('data-tab');
   // Update buttons
-  document.querySelectorAll('.tab-btn').forEach(b => {
+  document.querySelectorAll('.tab-btn').forEach(function(b) {
     b.classList.remove('border-primary', 'text-primary');
     b.classList.add('border-transparent', 'text-mid');
   });
   btn.classList.add('border-primary', 'text-primary');
   btn.classList.remove('border-transparent', 'text-mid');
   // Update panels
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-  document.querySelector(`[data-panel="${key}"]`)?.classList.remove('hidden');
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.add('hidden'); });
+  var panel = document.querySelector('[data-panel="' + key + '"]');
+  if (panel) panel.classList.remove('hidden');
 }
 // Activate first tab on load
-document.addEventListener('DOMContentLoaded', () => {
-  const first = document.querySelector('.tab-btn') as HTMLElement;
+document.addEventListener('DOMContentLoaded', function() {
+  var first = document.querySelector('.tab-btn');
   if (first) switchTab(first);
 });
 </script>

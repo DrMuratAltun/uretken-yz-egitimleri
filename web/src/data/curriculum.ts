@@ -15,11 +15,8 @@ export interface Week {
   pptxFile: string;
 }
 
-const GITHUB_RAW = 'https://raw.githubusercontent.com/DrMuratAltun/VB-YZ-90/main/sunumlar_yeni';
-const OFFICE_VIEWER = 'https://view.officeapps.live.com/op/embed.aspx?src=';
-
-export function getPptxEmbedUrl(filename: string): string {
-  return `${OFFICE_VIEWER}${encodeURIComponent(`${GITHUB_RAW}/${filename}`)}`;
+export function getPdfFileName(pptxFile: string): string {
+  return pptxFile.replace('.pptx', '.pdf');
 }
 
 export const weeks: Week[] = [
