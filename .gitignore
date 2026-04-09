@@ -9,8 +9,10 @@ __pycache__/
 *.gif
 .remember/
 .claude/
-package.json
-package-lock.json
+# Root-level node files (web/ klasörü hariç)
+/package.json
+/package-lock.json
+/node_modules/
 create-guide.js
 churn-pptx.js
 sunumlar_yeni/.~lock*
