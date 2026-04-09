@@ -5,6 +5,7 @@ const siteUrl = 'https://drmurataltun.github.io/VB-YZ-90';
 export async function GET() {
   const pages = [
     { url: `${siteUrl}/`, priority: '1.0', changefreq: 'weekly' },
+    { url: `${siteUrl}/egitmen/`, priority: '0.7', changefreq: 'monthly' },
     ...weeks.map(w => ({
       url: `${siteUrl}/hafta/${w.slug}/`,
       priority: '0.8',
