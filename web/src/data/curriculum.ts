@@ -7,7 +7,7 @@ export interface Week {
   sectionColor: string;
   hours: number;
   topics: string[];
-  notebooks: { name: string; desc: string }[];
+  notebooks: { name: string; desc: string; url?: string }[];
   datasets: string[];
   libraries: string[];
   assignments: string[];
@@ -288,7 +288,7 @@ export const weeks: Week[] = [
     notebooks: [
       { name: 'hafta08_kmeans_segmentasyon.ipynb', desc: 'Müşteri segmentasyonu (RFM + K-Means)' },
       { name: 'hafta08_zaman_serisi_prophet.ipynb', desc: 'Ürün satış tahmini (Prophet)' },
-      { name: 'hafta08_film_oneri_sistemi.ipynb', desc: 'Film öneri sistemi (Collaborative)' },
+      { name: 'hafta08_film_oneri_sistemi.ipynb', desc: 'Film öneri sistemi (Content-Based + Collaborative + Gradio UI)', url: 'https://github.com/DrMuratAltun/VB-YZ-90/blob/main/notebooks/hafta08_film_oneri_sistemi.ipynb' },
     ],
     datasets: ['Mall Customer Segmentation (Kaggle)', 'Adidas US Sales (Kaggle)', 'MovieLens 100K'],
     libraries: ['scikit-learn', 'prophet', 'scikit-surprise'],
