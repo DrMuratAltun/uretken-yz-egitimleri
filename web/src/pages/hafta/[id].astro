@@ -12,7 +12,7 @@ if (!week) return Astro.redirect('/');
 
 const base = import.meta.env.BASE_URL;
 const pdfFile = getPdfFileName(week.pptxFile);
-const pdfUrl = `${base}sunumlar/${pdfFile}#toolbar=0&navpanes=0`;
+const pdfUrl = `${base}sunumlar_yeni/${pdfFile}#toolbar=0&navpanes=0`;
 
 const prevWeek = weeks.find(w => w.id === week.id - 1);
 const nextWeek = weeks.find(w => w.id === week.id + 1);
