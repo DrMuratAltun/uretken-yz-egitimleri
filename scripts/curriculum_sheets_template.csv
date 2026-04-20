@@ -1,0 +1,111 @@
+hafta_id,baslik,konular,odevler,kaynaklar
+1,Veri Bilimi Ekosistemi ve Python Temelleri,"Veri bilimi nedir? Kariyer yolları
+Google Colab arayüz tanıtımı
+Python: Değişkenler, veri tipleri (str, int, float, bool)
+Operatörler (aritmetik, karşılaştırma, mantıksal)
+Listeler, Tuple, Sözlükler, Set
+Döngüler: for, while, range()
+Karar yapıları: if, elif, else
+Fonksiyon tanımlama: def, parametreler, return
+GitHub: hesap açma, repo oluşturma, commit/push",,
+2,NumPy ve Pandas ile Keşifsel Veri Analizi,"NumPy: Array oluşturma, temel işlemler, istatistik fonksiyonları
+Pandas: Series ve DataFrame kavramları
+CSV/Excel okuma: pd.read_csv(), pd.read_excel()
+Veri seçme: .loc[], .iloc[], koşullu filtreleme
+Temel EDA: .info(), .describe(), .shape, .dtypes
+Eksik veri analizi: .isnull(), .fillna(), .dropna()
+Veri manipülasyonu: filtreleme, sıralama, .groupby()
+Yeni sütun oluşturma, apply() ve lambda",,
+3,Veri Görselleştirme ve Hikayeleştirme,"Matplotlib: plot, bar, scatter, hist, pie
+Grafik özelleştirme: başlık, eksen, renk, grid
+plt.subplots() ile çoklu grafik
+Seaborn: countplot, boxplot, heatmap, pairplot
+Korelasyon matrisi ve Heatmap
+Bar Chart Race: bar_chart_race kütüphanesi
+Oto-EDA araçları: Sweetviz, YData-Profiling",,
+4,İstatistiksel Analiz ve A/B Testleri,"Tanımlayıcı istatistik: ortalama, medyan, mod, standart sapma
+Normal dağılım ve normallik testleri (Shapiro-Wilk)
+Korelasyon: Pearson, Spearman
+Hipotez testleri: H0, H1, p-value, alpha=0.05
+T-Test (bağımsız iki grup)
+ANOVA (ikiden fazla grup)
+Chi-Square (Ki-Kare) bağımsızlık testi
+A/B testi metodolojisi",,
+5,Makine Öğrenmesi I — Regresyon,"Makine öğrenmesi: denetimli vs denetimsiz
+Basit ve Çoklu Lineer Regresyon
+Polinom Regresyon
+Train/Test Split: train_test_split()
+Başarı metrikleri: MAE, MSE, RMSE, R²
+Feature Engineering: Label/One-Hot Encoding
+Scikit-learn Pipeline
+Model kaydetme: joblib
+Deployment: Streamlit, Gradio, Hugging Face Spaces",,
+6,Makine Öğrenmesi II — Sınıflandırma ve Kaggle,"Sınıflandırma: Binary ve Multi-class
+Lojistik Regresyon
+K-Nearest Neighbors (KNN)
+Decision Tree (Karar Ağacı)
+Confusion Matrix: TP, TN, FP, FN
+Metrikler: Accuracy, Precision, Recall, F1-Score
+ROC Eğrisi ve AUC
+Cross Validation
+Kaggle: hesap, notebook, submission",,
+7,İleri Makine Öğrenmesi — Ensemble Modeller,"Ensemble Learning: Bagging vs Boosting
+Random Forest
+Gradient Boosting: XGBoost, LightGBM
+Feature Importance
+Hiperparametre Optimizasyonu: GridSearchCV, RandomizedSearchCV
+Overfitting ve Regularization
+Model karşılaştırma ve seçim stratejileri",,
+8,"Kümeleme, Zaman Serileri ve Öneri Sistemleri","K-Means Kümeleme: Elbow Method, Silhouette Score
+Müşteri segmentasyonu (RFM)
+Zaman serileri: trend, mevsimsellik, durağanlık
+Facebook Prophet ile zaman serisi tahmini
+Öneri sistemleri: Content-based vs Collaborative
+Kullanıcı-Ürün matrisi, Cosine Similarity",,
+9,MLOps Temelleri ve Veri Bilimi Capstone,"MLOps: model yaşam döngüsü
+Model Serialization: joblib
+Streamlit ile interaktif dashboard
+Hugging Face Spaces'a model deploy
+Proje yönetimi: README, portfolio
+Capstone proje sunumu ve değerlendirme",,
+10,Derin Öğrenmeye Giriş ve Yapay Sinir Ağları,"Biyolojik nörondan yapay nörona
+ANN mimarisi: Input, Hidden, Output katmanları
+Aktivasyon fonksiyonları: ReLU, Sigmoid, Softmax
+Forward/Backpropagation
+Loss fonksiyonları ve Optimizer'lar (SGD, Adam)
+TensorFlow ve Keras'a giriş
+Sequential model oluşturma
+Overfitting önleme: Dropout, Early Stopping",,
+11,Görüntü İşlemenin Temelleri ve OpenCV,"Dijital görüntü: piksel, kanal (RGB, Grayscale)
+OpenCV: imread, imwrite, imshow
+Renk dönüştürme: BGR→RGB, Grayscale, HSV
+Görüntü boyutlandırma: cv2.resize()
+Filtreler: Blur, Gaussian Blur, Median Blur
+Kenar tespiti: Canny Edge Detection
+Şekil çizme: rectangle, circle, line
+Kontur tespiti",,
+12,Bilgisayarlı Görü ve Transfer Learning,"CNN mimarisi: Conv2D, MaxPool, Flatten, Dense
+Filtre/Kernel: CNN görüntüyü nasıl görür
+Transfer Learning: önceden öğrenilmiş bilgiyi transfer etme
+VGG16, ResNet50, MobileNet
+Fine-tuning vs Feature Extraction
+Data Augmentation: ImageDataGenerator",,
+13,Doğal Dil İşleme (NLP) ve Hugging Face,"NLP: tokenization, stemming, lemmatization, stop words
+Bag of Words (BoW) ve TF-IDF
+Word Embeddings: Word2Vec kavramı
+Hugging Face Transformers: BERT, DistilBERT
+pipeline(): sentiment analysis, NER, summarization, translation
+Türkçe NLP: dbmdz/bert-base-turkish-cased",,
+14,"Generative AI, LLM ve Prompt Mühendisliği","Büyük Dil Modelleri (LLM): GPT, Gemini, Claude
+Transformer mimarisi ve Attention mekanizması
+Prompt Engineering: Zero-shot, Few-shot, Chain-of-Thought
+Google Gemini API kullanımı
+Sistem prompt'u ve persona oluşturma
+Yapısal çıktı (JSON) üretme
+RAG: Retrieval-Augmented Generation giriş",,
+15,"AI Etik, Gelecek ve AI Capstone Projesi","AI etiği: Bias, Fairness, Transparency
+Sorumlu AI geliştirme ilkeleri
+EU AI Act ve regülasyonlar
+AI'ın geleceği: AGI, multimodal, otonom ajanlar
+Yapay zeka kariyer yolları
+Capstone proje sunumları",,

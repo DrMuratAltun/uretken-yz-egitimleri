@@ -477,7 +477,7 @@ def build_footer() -> str:
 <a href="https://yapayzekaokulum.com">Yapay Zeka Okulum</a> ·
 <a href="https://gencyz.com">GençYZ</a> ·
 <a href="https://yz-araclari.com">YZ Araçları</a> ·
-<a href="https://scholargent.com">ScholarAI</a> ·
+<a href="https://akademikyz.com">ScholarAI</a> ·
 <a href="https://drmurataltun.github.io">Kişisel Site</a>
 
 <a href="https://drmurataltun.github.io/VB-YZ-90/">drmurataltun.github.io/VB-YZ-90</a>
