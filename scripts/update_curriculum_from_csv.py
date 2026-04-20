@@ -82,57 +82,105 @@ def parse_csv(csv_path: Path) -> dict[int, dict]:
     return data
 
 
-def update_ts(ts_content: str, data: dict[int, dict]) -> str:
-    """Her haftanın topics/assignments/resources bloklarını değiştir."""
-    result = ts_content
-    changes = 0
+def find_week_blocks(ts_content: str) -> list[tuple[int, int, int]]:
+    """Her haftanın (id, start_pos, end_pos) bilgisini döndürür."""
+    # id: N, satırlarının başlangıç konumlarını bul
+    id_positions = []
+    for m in re.finditer(r"^\s*id:\s*(\d+),\s*$", ts_content, re.MULTILINE):
+        id_positions.append((int(m.group(1)), m.start()))
 
-    for week_id, fields in data.items():
-        # Haftayı bul (id: N, ... bloğu)
-        week_pattern = re.compile(
-            r"(\{\s*id:\s*" + str(week_id) + r",.*?\})(?=,\s*\{|\s*\];)",
-            re.DOTALL,
-        )
-        m = week_pattern.search(result)
-        if not m:
-            print(f"⚠️  Hafta {week_id} bulunamadı, atlanıyor")
-            continue
+    blocks = []
+    for i, (wid, start) in enumerate(id_positions):
+        end = id_positions[i + 1][1] if i + 1 < len(id_positions) else len(ts_content)
+        blocks.append((wid, start, end))
+    return blocks
 
-        block = m.group(1)
-        new_block = block
 
-        # topics
+def update_block(block: str, fields: dict) -> str:
+    """Hafta bloğundaki topics/assignments/resources alanlarını değiştir."""
+    new_block = block
+
+    # topics: satır başında, [ ile başlar, aynı girinti düzeyinde ] ile biter
+    topics_pattern = r"(^(\s*)topics:\s*)\[\s*$.*?^\2\],?\s*$"
+    if re.search(topics_pattern, new_block, re.MULTILINE | re.DOTALL):
         new_topics = format_array(fields["topics"], indent="    ")
         new_block = re.sub(
-            r"topics:\s*\[.*?\](?=,\s*\w+:)",
-            f"topics: {new_topics}",
+            topics_pattern,
+            lambda m: f"{m.group(1)}{new_topics},",
             new_block,
             count=1,
-            flags=re.DOTALL,
+            flags=re.MULTILINE | re.DOTALL,
+        )
+    else:
+        # Tek satır içeren yapı: topics: []
+        new_topics = format_array(fields["topics"], indent="    ")
+        new_block = re.sub(
+            r"^(\s*)topics:\s*\[\s*\],?\s*$",
+            lambda m: f"{m.group(1)}topics: {new_topics},",
+            new_block,
+            count=1,
+            flags=re.MULTILINE,
         )
 
-        # assignments
+    # assignments
+    assignments_pattern = r"(^(\s*)assignments:\s*)\[\s*$.*?^\2\],?\s*$"
+    if re.search(assignments_pattern, new_block, re.MULTILINE | re.DOTALL):
         new_assignments = format_array(fields["assignments"], indent="    ")
         new_block = re.sub(
-            r"assignments:\s*\[.*?\](?=,\s*\w+:)",
-            f"assignments: {new_assignments}",
+            assignments_pattern,
+            lambda m: f"{m.group(1)}{new_assignments},",
             new_block,
             count=1,
-            flags=re.DOTALL,
+            flags=re.MULTILINE | re.DOTALL,
+        )
+    else:
+        new_assignments = format_array(fields["assignments"], indent="    ")
+        new_block = re.sub(
+            r"^(\s*)assignments:\s*\[\s*\],?\s*$",
+            lambda m: f"{m.group(1)}assignments: {new_assignments},",
+            new_block,
+            count=1,
+            flags=re.MULTILINE,
         )
 
-        # resources
+    # resources
+    resources_pattern = r"(^(\s*)resources:\s*)\[\s*$.*?^\2\],?\s*$"
+    if re.search(resources_pattern, new_block, re.MULTILINE | re.DOTALL):
         new_resources = format_resources(fields["resources"], indent="    ")
         new_block = re.sub(
-            r"resources:\s*\[.*?\](?=,\s*\w+:)",
-            f"resources: {new_resources}",
+            resources_pattern,
+            lambda m: f"{m.group(1)}{new_resources},",
             new_block,
             count=1,
-            flags=re.DOTALL,
+            flags=re.MULTILINE | re.DOTALL,
+        )
+    else:
+        new_resources = format_resources(fields["resources"], indent="    ")
+        new_block = re.sub(
+            r"^(\s*)resources:\s*\[\s*\],?\s*$",
+            lambda m: f"{m.group(1)}resources: {new_resources},",
+            new_block,
+            count=1,
+            flags=re.MULTILINE,
         )
 
-        if new_block != block:
-            result = result.replace(block, new_block, 1)
+    return new_block
+
+
+def update_ts(ts_content: str, data: dict[int, dict]) -> str:
+    """Her haftanın topics/assignments/resources bloklarını değiştir."""
+    blocks = find_week_blocks(ts_content)
+    changes = 0
+
+    # Son haftadan başa doğru işleyerek konum değişmesini engelle
+    result = ts_content
+    for wid, start, end in reversed(blocks):
+        if wid not in data:
+            continue
+        old_block = result[start:end]
+        new_block = update_block(old_block, data[wid])
+        if new_block != old_block:
+            result = result[:start] + new_block + result[end:]
             changes += 1
 
     print(f"✅ {changes} hafta güncellendi")
