@@ -7,7 +7,10 @@ Listeler, Tuple, Sözlükler, Set
 Döngüler: for, while, range()
 Karar yapıları: if, elif, else
 Fonksiyon tanımlama: def, parametreler, return
-GitHub: hesap açma, repo oluşturma, commit/push",,
+GitHub: hesap açma, repo oluşturma, commit/push","GitHub hesabı açıp ilk repo oluşturma
+3 farklı fonksiyon yazma (sıcaklık çevirici, alan hesaplama, not ortalaması)
+Notebook'ları GitHub'a yükleme","Python Resmi Tutorial | https://docs.python.org/3/tutorial/
+Google Colab Başlangıç | https://colab.research.google.com/"
 2,NumPy ve Pandas ile Keşifsel Veri Analizi,"NumPy: Array oluşturma, temel işlemler, istatistik fonksiyonları
 Pandas: Series ve DataFrame kavramları
 CSV/Excel okuma: pd.read_csv(), pd.read_excel()
@@ -15,14 +18,18 @@ Veri seçme: .loc[], .iloc[], koşullu filtreleme
 Temel EDA: .info(), .describe(), .shape, .dtypes
 Eksik veri analizi: .isnull(), .fillna(), .dropna()
 Veri manipülasyonu: filtreleme, sıralama, .groupby()
-Yeni sütun oluşturma, apply() ve lambda",,
+Yeni sütun oluşturma, apply() ve lambda","Supermarket veri setini yükleyip 10 farklı EDA sorusu cevaplama
+Titanic verisinde cinsiyet ve sınıfa göre hayatta kalma oranlarını hesaplama","Pandas Dokümantasyon | https://pandas.pydata.org/docs/
+NumPy Dokümantasyon | https://numpy.org/doc/"
 3,Veri Görselleştirme ve Hikayeleştirme,"Matplotlib: plot, bar, scatter, hist, pie
 Grafik özelleştirme: başlık, eksen, renk, grid
 plt.subplots() ile çoklu grafik
 Seaborn: countplot, boxplot, heatmap, pairplot
 Korelasyon matrisi ve Heatmap
 Bar Chart Race: bar_chart_race kütüphanesi
-Oto-EDA araçları: Sweetviz, YData-Profiling",,
+Oto-EDA araçları: Sweetviz, YData-Profiling","Seçilen veri setinde en az 5 farklı grafik türü ile analiz raporu
+Sweetviz ile otomatik EDA raporu üretme","Matplotlib Gallery | https://matplotlib.org/stable/gallery/
+Seaborn Tutorial | https://seaborn.pydata.org/tutorial.html"
 4,İstatistiksel Analiz ve A/B Testleri,"Tanımlayıcı istatistik: ortalama, medyan, mod, standart sapma
 Normal dağılım ve normallik testleri (Shapiro-Wilk)
 Korelasyon: Pearson, Spearman
@@ -30,7 +37,8 @@ Hipotez testleri: H0, H1, p-value, alpha=0.05
 T-Test (bağımsız iki grup)
 ANOVA (ikiden fazla grup)
 Chi-Square (Ki-Kare) bağımsızlık testi
-A/B testi metodolojisi",,
+A/B testi metodolojisi","Kendi A/B test senaryosu tasarlama ve analiz etme
+Titanic verisinde 3 farklı hipotez testi uygulama",SciPy Stats Dokümantasyon | https://docs.scipy.org/doc/scipy/reference/stats.html
 5,Makine Öğrenmesi I — Regresyon,"Makine öğrenmesi: denetimli vs denetimsiz
 Basit ve Çoklu Lineer Regresyon
 Polinom Regresyon
@@ -39,7 +47,10 @@ Başarı metrikleri: MAE, MSE, RMSE, R²
 Feature Engineering: Label/One-Hot Encoding
 Scikit-learn Pipeline
 Model kaydetme: joblib
-Deployment: Streamlit, Gradio, Hugging Face Spaces",,
+Deployment: Streamlit, Gradio, Hugging Face Spaces","Araç fiyat tahmin modelini Gradio ile sarmalayıp Hugging Face'e yükleme
+Link'i GitHub repo README'sine ekleme","Scikit-learn Regression | https://scikit-learn.org/stable/supervised_learning.html
+Gradio Quickstart | https://gradio.app/guides/quickstart
+Hugging Face Spaces | https://huggingface.co/docs/hub/spaces"
 6,Makine Öğrenmesi II — Sınıflandırma ve Kaggle,"Sınıflandırma: Binary ve Multi-class
 Lojistik Regresyon
 K-Nearest Neighbors (KNN)
@@ -48,26 +59,34 @@ Confusion Matrix: TP, TN, FP, FN
 Metrikler: Accuracy, Precision, Recall, F1-Score
 ROC Eğrisi ve AUC
 Cross Validation
-Kaggle: hesap, notebook, submission",,
+Kaggle: hesap, notebook, submission","Kaggle Titanic yarışmasına submission yapma ve Leaderboard skor paylaşma
+Diyabet veri setinde en az 3 algoritma karşılaştırma raporu","Kaggle Titanic | https://www.kaggle.com/c/titanic
+Scikit-learn Classification | https://scikit-learn.org/stable/modules/classes.html"
 7,İleri Makine Öğrenmesi — Ensemble Modeller,"Ensemble Learning: Bagging vs Boosting
 Random Forest
 Gradient Boosting: XGBoost, LightGBM
 Feature Importance
 Hiperparametre Optimizasyonu: GridSearchCV, RandomizedSearchCV
 Overfitting ve Regularization
-Model karşılaştırma ve seçim stratejileri",,
+Model karşılaştırma ve seçim stratejileri","Telco Churn verisinde XGBoost modeli eğitip %85+ accuracy hedefleme
+Hiperparametre optimizasyonu öncesi/sonrası karşılaştırma raporu","XGBoost Docs | https://xgboost.readthedocs.io/
+LightGBM Docs | https://lightgbm.readthedocs.io/"
 8,"Kümeleme, Zaman Serileri ve Öneri Sistemleri","K-Means Kümeleme: Elbow Method, Silhouette Score
 Müşteri segmentasyonu (RFM)
 Zaman serileri: trend, mevsimsellik, durağanlık
 Facebook Prophet ile zaman serisi tahmini
 Öneri sistemleri: Content-based vs Collaborative
-Kullanıcı-Ürün matrisi, Cosine Similarity",,
+Kullanıcı-Ürün matrisi, Cosine Similarity","Mall Customer verisinde 3-5 segment oluşturup isimlendirme
+MovieLens verisinde basit öneri sistemi kurma","Prophet Docs | https://facebook.github.io/prophet/
+Surprise Library | https://surpriselib.com/"
 9,MLOps Temelleri ve Veri Bilimi Capstone,"MLOps: model yaşam döngüsü
 Model Serialization: joblib
 Streamlit ile interaktif dashboard
 Hugging Face Spaces'a model deploy
 Proje yönetimi: README, portfolio
-Capstone proje sunumu ve değerlendirme",,
+Capstone proje sunumu ve değerlendirme","Capstone proje: Airbnb Fiyatlandırma, Trendyol Yorum Analizi veya Spotify Popülerlik
+Uçtan uca proje: veri → model → Streamlit/Gradio → GitHub","Streamlit Docs | https://docs.streamlit.io/
+HF Spaces Overview | https://huggingface.co/docs/hub/spaces-overview"
 10,Derin Öğrenmeye Giriş ve Yapay Sinir Ağları,"Biyolojik nörondan yapay nörona
 ANN mimarisi: Input, Hidden, Output katmanları
 Aktivasyon fonksiyonları: ReLU, Sigmoid, Softmax
@@ -75,7 +94,9 @@ Forward/Backpropagation
 Loss fonksiyonları ve Optimizer'lar (SGD, Adam)
 TensorFlow ve Keras'a giriş
 Sequential model oluşturma
-Overfitting önleme: Dropout, Early Stopping",,
+Overfitting önleme: Dropout, Early Stopping","MNIST modelinin doğruluğunu %98+ yapma denemesi
+QuickDraw'dan 10 kategori ile çizim tanıma modeli eğitme","TensorFlow Tutorials | https://www.tensorflow.org/tutorials
+TF Playground | https://playground.tensorflow.org/"
 11,Görüntü İşlemenin Temelleri ve OpenCV,"Dijital görüntü: piksel, kanal (RGB, Grayscale)
 OpenCV: imread, imwrite, imshow
 Renk dönüştürme: BGR→RGB, Grayscale, HSV
@@ -83,29 +104,38 @@ Görüntü boyutlandırma: cv2.resize()
 Filtreler: Blur, Gaussian Blur, Median Blur
 Kenar tespiti: Canny Edge Detection
 Şekil çizme: rectangle, circle, line
-Kontur tespiti",,
+Kontur tespiti","5 farklı filtre uygulanmış görüntü kolajı oluşturma
+HSV ile belirli renkteki nesneleri tespit etme",OpenCV Python Tutorial | https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html
 12,Bilgisayarlı Görü ve Transfer Learning,"CNN mimarisi: Conv2D, MaxPool, Flatten, Dense
 Filtre/Kernel: CNN görüntüyü nasıl görür
 Transfer Learning: önceden öğrenilmiş bilgiyi transfer etme
 VGG16, ResNet50, MobileNet
 Fine-tuning vs Feature Extraction
-Data Augmentation: ImageDataGenerator",,
+Data Augmentation: ImageDataGenerator","Kendi seçtiği 2 kategorili görüntü verisi ile Transfer Learning modeli
+Accuracy %90+ hedefleme","Keras Applications | https://keras.io/api/applications/
+Transfer Learning Guide | https://www.tensorflow.org/tutorials/images/transfer_learning"
 13,Doğal Dil İşleme (NLP) ve Hugging Face,"NLP: tokenization, stemming, lemmatization, stop words
 Bag of Words (BoW) ve TF-IDF
 Word Embeddings: Word2Vec kavramı
 Hugging Face Transformers: BERT, DistilBERT
 pipeline(): sentiment analysis, NER, summarization, translation
-Türkçe NLP: dbmdz/bert-base-turkish-cased",,
+Türkçe NLP: dbmdz/bert-base-turkish-cased","1000+ tweet üzerinde duygu analizi ve görselleştirme
+SMS spam tespiti modeli ve başarı raporu","Hugging Face Docs | https://huggingface.co/docs/transformers/
+Hugging Face Model Hub | https://huggingface.co/models"
 14,"Generative AI, LLM ve Prompt Mühendisliği","Büyük Dil Modelleri (LLM): GPT, Gemini, Claude
 Transformer mimarisi ve Attention mekanizması
 Prompt Engineering: Zero-shot, Few-shot, Chain-of-Thought
 Google Gemini API kullanımı
 Sistem prompt'u ve persona oluşturma
 Yapısal çıktı (JSON) üretme
-RAG: Retrieval-Augmented Generation giriş",,
+RAG: Retrieval-Augmented Generation giriş","Kendi alanına özel chatbot oluşturma
+10 farklı prompt tekniği deneyip karşılaştırma raporu","Google AI Studio | https://aistudio.google.com/
+Prompt Engineering Guide | https://promptingguide.ai/"
 15,"AI Etik, Gelecek ve AI Capstone Projesi","AI etiği: Bias, Fairness, Transparency
 Sorumlu AI geliştirme ilkeleri
 EU AI Act ve regülasyonlar
 AI'ın geleceği: AGI, multimodal, otonom ajanlar
 Yapay zeka kariyer yolları
-Capstone proje sunumları",,
+Capstone proje sunumları","AI Capstone Projesi (seçenekler: Fitness Asistanı, Film Öneri, Bilgi Botu, Görüntü Sınıflandırıcı)
+Proje: Teknik %40 + Sunum %20 + Yenilikçilik %20 + Deploy %20","EU AI Act | https://artificialintelligenceact.eu/
+Responsible AI — Google | https://ai.google/responsibility/responsible-ai-practices/"
