@@ -58,6 +58,7 @@ export const weeks: Week[] = [
     resources: [
       { label: 'Python Resmi Tutorial', url: 'https://docs.python.org/3/tutorial/' },
       { label: 'Google Colab Başlangıç', url: 'https://colab.research.google.com/' },
+      { label: 'Test Kaynağı2', url: 'https://example.com' },
     ],
     pptxFile: 'hafta01_python_temelleri.pptx',
     pptxDriveId: '1x0vvRHjGMAHhGhJhSMKSIfS61rzMkB8F',
