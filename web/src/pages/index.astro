@@ -10,6 +10,8 @@ const sections = [
   { label: 'YAPAY ZEKA MÜHENDİSLİĞİ',    color: 'primary',   weeks: weeks.filter(w => w.id >= 10),            hours: 36 },
 ];
 
+const FREE_DEMO_WEEKS = [1, 5, 10];
+
 const colorMap: Record<string, string> = {
   accent:    'border-accent bg-accent/5 hover:bg-accent/10',
   secondary: 'border-secondary bg-secondary/5 hover:bg-secondary/10',
@@ -85,7 +87,12 @@ const textMap: Record<string, string> = {
             class={`group block rounded-xl border-l-4 p-4 transition-all ${colorMap[section.color]} border border-border`}
           >
             <div class="flex items-start justify-between gap-2 mb-3">
-              <span class={`text-xs font-bold px-2 py-0.5 rounded-full ${badgeMap[section.color]}`}>HAFTA {week.id}</span>
+              <div class="flex items-center gap-2">
+                <span class={`text-xs font-bold px-2 py-0.5 rounded-full ${badgeMap[section.color]}`}>HAFTA {week.id}</span>
+                {FREE_DEMO_WEEKS.includes(week.id) && (
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-500 text-white flex items-center gap-1">🎁 DEMO</span>
+                )}
+              </div>
               <span class="text-xs text-mid">{week.hours} saat</span>
             </div>
             <h3 class="font-semibold text-dark text-sm leading-snug mb-2 group-hover:text-primary transition-colors">{week.title}</h3>
