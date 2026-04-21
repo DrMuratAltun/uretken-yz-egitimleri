@@ -24,6 +24,18 @@ const sectionColorClass: Record<string, string> = {
   'YAPAY ZEKA MÜHENDİSLİĞİ':     'bg-primary',
 };
 const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
+
+const PREVIEW = 2;
+const REGISTER_URL = 'mailto:emurataltun@gmail.com?subject=ECS%20Veri%20Bilimi%20%26%20YZ%20Kay%C4%B1t%20Talebi';
+
+const topicsPreview = week.topics.slice(0, PREVIEW);
+const topicsLocked  = week.topics.slice(PREVIEW);
+const assignPreview = week.assignments.slice(0, PREVIEW);
+const assignLocked  = week.assignments.slice(PREVIEW);
+const nbPreview     = week.notebooks.slice(0, PREVIEW);
+const nbLocked      = week.notebooks.slice(PREVIEW);
+const resPreview    = week.resources.slice(0, PREVIEW);
+const resLocked     = week.resources.slice(PREVIEW);
 ---
 
 <Layout
@@ -113,13 +125,31 @@ const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
     <!-- Konular -->
     <div data-panel="konular" class="tab-panel">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        {week.topics.map((topic, i) => (
+        {topicsPreview.map((topic, i) => (
           <div class="flex items-start gap-3 bg-white rounded-lg border border-border p-3">
             <span class="shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-xs font-bold flex items-center justify-center">{i + 1}</span>
             <span class="text-sm text-dark leading-snug">{topic}</span>
           </div>
         ))}
+        {topicsLocked.map((topic, i) => (
+          <div class="relative flex items-start gap-3 bg-white rounded-lg border border-border p-3 select-none overflow-hidden">
+            <span class="shrink-0 w-6 h-6 rounded-full bg-mid/10 text-mid text-xs font-bold flex items-center justify-center">{i + PREVIEW + 1}</span>
+            <span class="text-sm text-dark leading-snug blur-sm">{topic}</span>
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-mid text-lg">🔒</span>
+          </div>
+        ))}
       </div>
+      {topicsLocked.length > 0 && (
+        <div class="mt-4 rounded-xl border border-dashed border-secondary/40 bg-secondary/5 p-5 flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <p class="text-sm font-semibold text-dark">🔒 {topicsLocked.length} konu daha kilitli</p>
+            <p class="text-xs text-mid mt-1">Tüm içeriğe erişmek için ECS programına kayıt olun.</p>
+          </div>
+          <a href={REGISTER_URL} class="shrink-0 inline-flex items-center gap-2 bg-secondary text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-secondary/90 transition-colors">
+            Kayıt Ol →
+          </a>
+        </div>
+      )}
       {week.libraries.length > 0 && (
         <div class="mt-4 flex flex-wrap gap-2 items-center">
           <span class="text-xs text-mid font-medium">Kütüphaneler:</span>
@@ -133,19 +163,37 @@ const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
     <!-- Ödevler -->
     <div data-panel="odevler" class="tab-panel hidden">
       <div class="space-y-3">
-        {week.assignments.map((a, i) => (
+        {assignPreview.map((a, i) => (
           <div class="flex items-start gap-3 bg-warmBg rounded-lg border border-border p-4">
             <span class="shrink-0 w-7 h-7 rounded-full bg-secondary text-white text-xs font-bold flex items-center justify-center">{i + 1}</span>
             <p class="text-sm text-dark leading-relaxed">{a}</p>
           </div>
         ))}
+        {assignLocked.map((a, i) => (
+          <div class="relative flex items-start gap-3 bg-warmBg rounded-lg border border-border p-4 select-none overflow-hidden">
+            <span class="shrink-0 w-7 h-7 rounded-full bg-mid/60 text-white text-xs font-bold flex items-center justify-center">{i + PREVIEW + 1}</span>
+            <p class="text-sm text-dark leading-relaxed blur-sm flex-1">{a}</p>
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-mid text-lg">🔒</span>
+          </div>
+        ))}
       </div>
+      {assignLocked.length > 0 && (
+        <div class="mt-4 rounded-xl border border-dashed border-secondary/40 bg-secondary/5 p-5 flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <p class="text-sm font-semibold text-dark">🔒 {assignLocked.length} ödev daha kilitli</p>
+            <p class="text-xs text-mid mt-1">Tüm ödevlere ve çözümlere erişmek için ECS programına kayıt olun.</p>
+          </div>
+          <a href={REGISTER_URL} class="shrink-0 inline-flex items-center gap-2 bg-secondary text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-secondary/90 transition-colors">
+            Kayıt Ol →
+          </a>
+        </div>
+      )}
     </div>
 
     <!-- Notebook'lar -->
     <div data-panel="notebook" class="tab-panel hidden">
       <div class="space-y-3">
-        {week.notebooks.map((nb, i) => (
+        {nbPreview.map((nb, i) => (
           <div class="flex items-start gap-4 bg-dark text-white rounded-xl p-4">
             <span class="shrink-0 w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-green-400 font-mono text-sm font-bold">{i + 1}</span>
             <div class="flex-1">
@@ -166,7 +214,32 @@ const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
             </div>
           </div>
         ))}
+        {nbLocked.map((nb, i) => (
+          <div class="relative flex items-start gap-4 bg-dark text-white rounded-xl p-4 overflow-hidden select-none pointer-events-none">
+            <span class="shrink-0 w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-mid font-mono text-sm font-bold">{i + PREVIEW + 1}</span>
+            <div class="flex-1 blur-sm">
+              <code class="text-green-300 text-sm font-mono block mb-1">{nb.name}</code>
+              <p class="text-gray-400 text-xs mb-2">{nb.desc}</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/10 text-xs text-gray-400">Drive'da Aç</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-yellow-500/20 text-xs text-yellow-400">Colab'da Aç</span>
+              </div>
+            </div>
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-2xl">🔒</span>
+          </div>
+        ))}
       </div>
+      {nbLocked.length > 0 && (
+        <div class="mt-4 rounded-xl border border-dashed border-secondary/40 bg-secondary/5 p-5 flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <p class="text-sm font-semibold text-dark">🔒 {nbLocked.length} notebook daha kilitli</p>
+            <p class="text-xs text-mid mt-1">Tüm Colab notebook'larına erişmek için ECS programına kayıt olun.</p>
+          </div>
+          <a href={REGISTER_URL} class="shrink-0 inline-flex items-center gap-2 bg-secondary text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-secondary/90 transition-colors">
+            Kayıt Ol →
+          </a>
+        </div>
+      )}
       {week.datasets.length > 0 && (
         <div class="mt-4">
           <p class="text-xs font-medium text-mid mb-2">Veri Setleri:</p>
@@ -182,7 +255,7 @@ const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
     <!-- Kaynaklar -->
     <div data-panel="kaynaklar" class="tab-panel hidden">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {week.resources.map(r => (
+        {resPreview.map(r => (
           <a
             href={r.url}
             target="_blank"
@@ -196,7 +269,27 @@ const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
             </div>
           </a>
         ))}
+        {resLocked.map(r => (
+          <div class="relative flex items-center gap-3 bg-white border border-border rounded-xl p-4 overflow-hidden select-none pointer-events-none">
+            <span class="w-8 h-8 rounded-lg bg-mid/10 flex items-center justify-center text-mid text-base">🔒</span>
+            <div class="blur-sm">
+              <p class="text-sm font-medium text-dark">{r.label}</p>
+              <p class="text-[10px] text-mid truncate max-w-[200px]">{r.url}</p>
+            </div>
+          </div>
+        ))}
       </div>
+      {resLocked.length > 0 && (
+        <div class="mt-4 rounded-xl border border-dashed border-secondary/40 bg-secondary/5 p-5 flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <p class="text-sm font-semibold text-dark">🔒 {resLocked.length} kaynak daha kilitli</p>
+            <p class="text-xs text-mid mt-1">Tüm öğrenme kaynaklarına erişmek için ECS programına kayıt olun.</p>
+          </div>
+          <a href={REGISTER_URL} class="shrink-0 inline-flex items-center gap-2 bg-secondary text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-secondary/90 transition-colors">
+            Kayıt Ol →
+          </a>
+        </div>
+      )}
     </div>
   </div>
 
