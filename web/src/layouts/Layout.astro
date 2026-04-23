@@ -12,8 +12,8 @@ const { title, description, activeWeekId, canonical } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const siteUrl = 'https://drmurataltun.github.io/VB-YZ-90';
 
-const metaTitle = `${title} — ECS Veri Bilimi & YZ Uzmanlığı`;
-const metaDesc = description ?? 'Dr. Murat Altun tarafından hazırlanmış 90 saatlik Veri Bilimi ve Yapay Zeka Uzmanlığı Programı. Python, Makine Öğrenmesi, Derin Öğrenme, NLP, Generative AI.';
+const metaTitle = `${title} — Veri Bilimi & YZ Uzmanlığı · Dr. Murat Altun`;
+const metaDesc = description ?? 'Dr. Murat Altun ile 15 haftalık Veri Bilimi ve Yapay Zeka Uzmanlığı Programı. Python, Pandas, Makine Öğrenmesi, NLP, Derin Öğrenme ve MLOps.';
 const canonicalUrl = canonical ?? siteUrl;
 
 const jsonLd = {
@@ -39,12 +39,17 @@ const jsonLd = {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#5B2C1E" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+  <link rel="apple-touch-icon" href={`${base}favicon.svg`} />
 
   <!-- Primary Meta -->
   <title>{metaTitle}</title>
   <meta name="description" content={metaDesc} />
   <meta name="author" content="Dr. Murat Altun" />
-  <meta name="keywords" content="veri bilimi, yapay zeka, makine öğrenmesi, python, derin öğrenme, NLP, ECS, Dr. Murat Altun, online kurs, Türkçe" />
+  <meta name="keywords" content="veri bilimi, yapay zeka, makine öğrenmesi, python, pandas, derin öğrenme, NLP, MLOps, Dr. Murat Altun, online kurs, Türkçe, capstone" />
   <link rel="canonical" href={canonicalUrl} />
 
   <!-- Open Graph -->
@@ -53,12 +58,18 @@ const jsonLd = {
   <meta property="og:title" content={metaTitle} />
   <meta property="og:description" content={metaDesc} />
   <meta property="og:locale" content="tr_TR" />
-  <meta property="og:site_name" content="ECS VB&YZ 90" />
+  <meta property="og:site_name" content="Veri Bilimi & YZ Uzmanlığı" />
+  <meta property="og:image" content={`${siteUrl}/og-image.jpg`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Veri Bilimi & YZ Uzmanlığı — 90 saat, Dr. Murat Altun" />
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={metaTitle} />
   <meta name="twitter:description" content={metaDesc} />
+  <meta name="twitter:image" content={`${siteUrl}/og-image.jpg`} />
+  <meta name="twitter:image:alt" content="VB-YZ-90 — Dr. Murat Altun" />
 
   <!-- Robots -->
   <meta name="robots" content="index, follow" />
