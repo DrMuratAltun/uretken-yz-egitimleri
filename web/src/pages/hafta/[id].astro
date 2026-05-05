@@ -29,20 +29,16 @@ const PREVIEW = 2;
 const WHATSAPP_MESSAGE = 'Dr. Murat ALTUN referans Nisan-2026 kodu ile 90 saatlik canlı Veri Bilimi ve Yapay Zeka Uzmanlığı kursuna kaydolmak istiyorum.';
 const REGISTER_URL = `https://wa.me/905331448906?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
-// Her bölümden tanıtım (demo) olarak tamamı açık haftalar
-// Bölüm A (Veri Bilimi): Hafta 1  |  Bölüm B (ML): Hafta 5  |  Bölüm C (YZ): Hafta 10
-const FREE_DEMO_WEEKS = [1, 5, 10];
-const isDemo = FREE_DEMO_WEEKS.includes(week.id);
-
-// Konular (müfredat) ve Ödevler her zaman tamamen açık — pazarlama için
+// Tüm içerik açık
+const isDemo = true;
 const topicsPreview = week.topics;
 const topicsLocked: string[] = [];
 const assignPreview = week.assignments;
 const assignLocked: string[] = [];
-const nbPreview     = isDemo ? week.notebooks : week.notebooks.slice(0, PREVIEW);
-const nbLocked      = isDemo ? [] : week.notebooks.slice(PREVIEW);
-const resPreview    = isDemo ? week.resources : week.resources.slice(0, PREVIEW);
-const resLocked     = isDemo ? [] : week.resources.slice(PREVIEW);
+const nbPreview     = week.notebooks;
+const nbLocked: typeof week.notebooks = [];
+const resPreview    = week.resources;
+const resLocked: typeof week.resources = [];
 ---
 
 <Layout
@@ -96,11 +92,6 @@ const resLocked     = isDemo ? [] : week.resources.slice(PREVIEW);
         <span class="w-3 h-3 rounded-full bg-green-500/70"></span>
       </div>
       <span class="text-xs text-gray-400 ml-2">📊 {week.pptxFile}</span>
-      {isDemo ? (
-        <span class="ml-auto text-xs text-green-400 font-semibold flex items-center gap-1">🎁 Ücretsiz Demo</span>
-      ) : (
-        <span class="ml-auto text-xs text-yellow-400 font-semibold flex items-center gap-1">🔒 Kilitli Sunum</span>
-      )}
     </div>
     {isDemo ? (
       <iframe
