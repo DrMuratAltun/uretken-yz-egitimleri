@@ -34,10 +34,11 @@ const REGISTER_URL = `https://wa.me/905331448906?text=${encodeURIComponent(WHATS
 const FREE_DEMO_WEEKS = [1, 5, 10];
 const isDemo = FREE_DEMO_WEEKS.includes(week.id);
 
-const topicsPreview = isDemo ? week.topics : week.topics.slice(0, PREVIEW);
-const topicsLocked  = isDemo ? [] : week.topics.slice(PREVIEW);
-const assignPreview = isDemo ? week.assignments : week.assignments.slice(0, PREVIEW);
-const assignLocked  = isDemo ? [] : week.assignments.slice(PREVIEW);
+// Konular (müfredat) ve Ödevler her zaman tamamen açık — pazarlama için
+const topicsPreview = week.topics;
+const topicsLocked: string[] = [];
+const assignPreview = week.assignments;
+const assignLocked: string[] = [];
 const nbPreview     = isDemo ? week.notebooks : week.notebooks.slice(0, PREVIEW);
 const nbLocked      = isDemo ? [] : week.notebooks.slice(PREVIEW);
 const resPreview    = isDemo ? week.resources : week.resources.slice(0, PREVIEW);
