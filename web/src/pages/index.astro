@@ -104,15 +104,120 @@ const textMap: Record<string, string> = {
     </div>
   ))}
 
-  <!-- Teknik Araçlar -->
-  <div class="mt-8 rounded-xl border border-border bg-white p-6">
-    <h2 class="font-bold text-dark mb-4">Kullanılan Teknolojiler</h2>
-    <div class="flex flex-wrap gap-2">
-      {['Python', 'NumPy', 'Pandas', 'Matplotlib', 'Seaborn', 'Scikit-learn', 'XGBoost', 'LightGBM',
-        'TensorFlow', 'Keras', 'OpenCV', 'Transformers', 'Gemini API', 'Streamlit', 'Gradio',
-        'Google Colab', 'GitHub', 'Kaggle', 'Hugging Face'].map(tech => (
-        <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-mid font-medium">{tech}</span>
+  <!-- PLATFORMLAR -->
+  <div class="mt-10 mb-8">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="inline-block w-1 h-6 rounded-full bg-primary"></span>
+      <h2 class="text-sm font-bold uppercase tracking-widest text-primary">Kullanılacak Platformlar</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {[
+        { name: 'Google Colab',  emoji: '🟡', desc: 'Bulutta ücretsiz Python notebook ve GPU erişimi', url: 'https://colab.research.google.com/' },
+        { name: 'GitHub',        emoji: '⚫', desc: 'Kod barındırma, versiyon kontrolü, portföy oluşturma', url: 'https://github.com/' },
+        { name: 'Kaggle',        emoji: '🔵', desc: 'Veri seti, yarışmalar, hazır notebook örnekleri', url: 'https://www.kaggle.com/' },
+        { name: 'Hugging Face',  emoji: '🤗', desc: 'Hazır AI modelleri, Spaces ile model yayınlama', url: 'https://huggingface.co/' },
+        { name: 'Google Drive',  emoji: '📁', desc: 'Veri ve materyal paylaşımı, notebook senkronizasyonu', url: 'https://drive.google.com/' },
+        { name: 'Streamlit / Gradio', emoji: '🚀', desc: 'Birkaç satırla AI uygulaması arayüzü ve deploy', url: 'https://streamlit.io/' },
+      ].map(p => (
+        <a href={p.url} target="_blank" rel="noopener" class="group flex items-start gap-3 bg-white rounded-xl border border-border p-4 hover:border-primary/40 hover:shadow-sm transition-all">
+          <span class="text-2xl shrink-0">{p.emoji}</span>
+          <div>
+            <p class="font-semibold text-dark text-sm group-hover:text-primary transition-colors">{p.name}</p>
+            <p class="text-xs text-mid mt-1 leading-snug">{p.desc}</p>
+          </div>
+        </a>
       ))}
+    </div>
+  </div>
+
+  <!-- ARAÇLAR & KÜTÜPHANELER -->
+  <div class="mb-8 rounded-xl border border-border bg-white p-6">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="inline-block w-1 h-6 rounded-full bg-secondary"></span>
+      <h2 class="text-sm font-bold uppercase tracking-widest text-secondary">Araçlar ve Kütüphaneler</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <p class="text-xs font-semibold text-mid mb-2 uppercase tracking-wider">Programlama</p>
+        <div class="flex flex-wrap gap-1.5">
+          {['Python 3', 'Jupyter Notebook'].map(t => (
+            <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-dark font-medium">{t}</span>
+          ))}
+        </div>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-mid mb-2 uppercase tracking-wider">Veri Bilimi</p>
+        <div class="flex flex-wrap gap-1.5">
+          {['NumPy', 'Pandas', 'Matplotlib', 'Seaborn', 'SciPy'].map(t => (
+            <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-dark font-medium">{t}</span>
+          ))}
+        </div>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-mid mb-2 uppercase tracking-wider">Makine Öğrenmesi</p>
+        <div class="flex flex-wrap gap-1.5">
+          {['Scikit-learn', 'XGBoost', 'LightGBM', 'Prophet'].map(t => (
+            <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-dark font-medium">{t}</span>
+          ))}
+        </div>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-mid mb-2 uppercase tracking-wider">Derin Öğrenme & YZ</p>
+        <div class="flex flex-wrap gap-1.5">
+          {['TensorFlow', 'Keras', 'OpenCV', 'Transformers', 'Gemini API', 'LangChain'].map(t => (
+            <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-dark font-medium">{t}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KATILIM KOŞULLARI -->
+  <div class="mb-8 rounded-2xl bg-warmBg border border-border p-6">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="inline-block w-1 h-6 rounded-full bg-accent"></span>
+      <h2 class="text-sm font-bold uppercase tracking-widest text-accent">Katılım Koşulları</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {[
+        { icon: '💻', title: 'Bilgisayar ve İnternet', desc: 'Windows / Mac / Linux fark etmez. Bulut tabanlı (Colab) çalışılır, donanım gerekmez. İstikrarlı internet bağlantısı yeterlidir.' },
+        { icon: '🐍', title: 'Programlama Ön Şartı Yok', desc: 'Python sıfırdan başlar. Daha önce kod yazmamış olmak sorun değildir. Mantık ve sabır yeter.' },
+        { icon: '🌐', title: 'Temel İngilizce Okuma', desc: 'Dokümantasyon ve hata mesajları İngilizcedir. Çeviri araçlarıyla rahat çalışılabilir.' },
+        { icon: '⏱️', title: 'Haftada 6-8 Saat', desc: 'Canlı ders + ödev + pratik için ayrılması önerilen süre. Düzenli pratik başarının anahtarıdır.' },
+        { icon: '🔐', title: 'Hesaplar (Ücretsiz)', desc: 'Google, GitHub, Kaggle ve Hugging Face hesapları (hepsi ücretsiz). İlk hafta birlikte açılır.' },
+        { icon: '🚀', title: 'Öğrenme Tutkusu', desc: 'Problem çözmeye açık, projelerle öğrenmeyi seven, sorular soran katılımcı profili idealdir.' },
+      ].map(req => (
+        <div class="flex items-start gap-3 bg-white rounded-xl border border-border p-4">
+          <span class="text-2xl shrink-0">{req.icon}</span>
+          <div>
+            <p class="font-semibold text-dark text-sm mb-1">{req.title}</p>
+            <p class="text-xs text-mid leading-relaxed">{req.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- KAYIT CTA -->
+  <div class="mb-10 rounded-2xl bg-dark text-white p-8 text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20" style="background: radial-gradient(circle at 30% 50%, #C97B5A 0%, transparent 60%)"></div>
+    <div class="relative">
+      <p class="text-secondary text-xs font-semibold uppercase tracking-widest mb-2">Kayıt</p>
+      <h2 class="text-2xl font-bold mb-3">90 Saatlik Programa Katılın</h2>
+      <p class="text-gray-300 text-sm max-w-xl mx-auto mb-5">
+        Dr. Murat ALTUN ile canlı, etkileşimli Veri Bilimi ve Yapay Zeka Uzmanlığı eğitimi.
+        Detaylı bilgi ve kayıt için WhatsApp üzerinden iletişime geçin.
+      </p>
+      <a
+        href="https://wa.me/905331448906?text=Dr.%20Murat%20ALTUN%20referans%20Nisan-2026%20kodu%20ile%2090%20saatlik%20canl%C4%B1%20Veri%20Bilimi%20ve%20Yapay%20Zeka%20Uzmanl%C4%B1%C4%9F%C4%B1%20kursuna%20kaydolmak%20istiyorum."
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 bg-[#25D366] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#1ebe57] transition-colors shadow-lg"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp'tan Kayıt Ol
+      </a>
+      <p class="text-gray-400 text-[10px] mt-3">📞 +90 533 144 89 06 · Referans Kodu: <span class="text-secondary font-semibold">Nisan-2026</span></p>
     </div>
   </div>
 </Layout>
