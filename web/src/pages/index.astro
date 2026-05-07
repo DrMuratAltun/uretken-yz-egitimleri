@@ -10,6 +10,17 @@ const sections = [
   { label: 'YAPAY ZEKA MÜHENDİSLİĞİ',    color: 'primary',   weeks: weeks.filter(w => w.id >= 10),            hours: 36 },
 ];
 
+const journeyBadge: Record<string, string> = {
+  accent:    'bg-accent text-white',
+  secondary: 'bg-secondary text-white',
+  primary:   'bg-primary text-white',
+};
+const journeyBorder: Record<string, string> = {
+  accent:    'border-accent/20 hover:border-accent/40',
+  secondary: 'border-secondary/20 hover:border-secondary/40',
+  primary:   'border-primary/20 hover:border-primary/40',
+};
+
 const colorMap: Record<string, string> = {
   accent:    'border-accent bg-accent/5 hover:bg-accent/10',
   secondary: 'border-secondary bg-secondary/5 hover:bg-secondary/10',
@@ -130,45 +141,54 @@ const textMap: Record<string, string> = {
     </div>
   </div>
 
-  <!-- ARAÇLAR & KÜTÜPHANELER -->
-  <div class="mb-8 rounded-xl border border-border bg-white p-6">
-    <div class="flex items-center gap-3 mb-4">
+  <!-- ÖĞRENME YOLCULUĞU: Modüller + Kütüphaneler -->
+  <div class="mb-8 rounded-2xl border border-border bg-white p-6">
+    <div class="flex items-center gap-3 mb-5">
       <span class="inline-block w-1 h-6 rounded-full bg-secondary"></span>
-      <h2 class="text-sm font-bold uppercase tracking-widest text-secondary">Araçlar ve Kütüphaneler</h2>
+      <h2 class="text-sm font-bold uppercase tracking-widest text-secondary">Öğrenme Yolculuğu — Modüller ve Kütüphaneler</h2>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div>
-        <p class="text-xs font-semibold text-mid mb-2 uppercase tracking-wider">Programlama</p>
-        <div class="flex flex-wrap gap-1.5">
-          {['Python 3', 'Jupyter Notebook'].map(t => (
-            <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-dark font-medium">{t}</span>
-          ))}
+    <p class="text-sm text-mid mb-5 leading-relaxed">
+      15 hafta boyunca <span class="font-semibold text-dark">Python temellerinden başlayıp Generative AI'a</span> kadar uzanan bir yolculuk.
+      Her modülde kullanılan kütüphaneler, ilk kullanıldıkları hafta ile birlikte aşağıda:
+    </p>
+
+    <div class="space-y-3">
+      {[
+        { weeks: 'Hafta 1',     module: 'Python Temelleri',                                color: 'accent',    libs: ['Python 3', 'Jupyter / Colab', 'IPython'] },
+        { weeks: 'Hafta 2',     module: 'NumPy ve Pandas — EDA',                          color: 'accent',    libs: ['NumPy', 'Pandas', 'OpenPyXL'] },
+        { weeks: 'Hafta 3',     module: 'Görselleştirme',                                  color: 'accent',    libs: ['Matplotlib', 'Seaborn', 'Plotly', 'bar_chart_race', 'Sweetviz', 'YData-Profiling', 'PyTrends'] },
+        { weeks: 'Hafta 4',     module: 'İstatistik & A/B Testleri',                       color: 'accent',    libs: ['SciPy', 'Statsmodels'] },
+        { weeks: 'Hafta 5-6',   module: 'Klasik Makine Öğrenmesi (Regresyon, Sınıflandırma)', color: 'secondary', libs: ['Scikit-learn', 'Joblib'] },
+        { weeks: 'Hafta 7',     module: 'Ensemble Modeller',                               color: 'secondary', libs: ['XGBoost', 'LightGBM', 'CatBoost'] },
+        { weeks: 'Hafta 8',     module: 'Kümeleme, Zaman Serileri, Öneri',                 color: 'secondary', libs: ['Prophet', 'scikit-surprise'] },
+        { weeks: 'Hafta 9',     module: 'MLOps ve Deploy',                                 color: 'secondary', libs: ['Streamlit', 'Gradio', 'Hugging Face Spaces'] },
+        { weeks: 'Hafta 10',    module: 'Yapay Sinir Ağları (ANN)',                        color: 'primary',   libs: ['TensorFlow', 'Keras'] },
+        { weeks: 'Hafta 11',    module: 'Görüntü İşleme',                                  color: 'primary',   libs: ['OpenCV', 'Pillow', 'scikit-image'] },
+        { weeks: 'Hafta 12',    module: 'CNN & Transfer Learning',                         color: 'primary',   libs: ['TensorFlow', 'Keras Applications', 'Albumentations'] },
+        { weeks: 'Hafta 13',    module: 'NLP & Hugging Face',                              color: 'primary',   libs: ['Transformers', 'NLTK', 'spaCy', 'Datasets'] },
+        { weeks: 'Hafta 14',    module: 'Generative AI & LLM',                             color: 'primary',   libs: ['Google Gemini API', 'LangChain', 'ChromaDB', 'OpenAI SDK'] },
+        { weeks: 'Hafta 15',    module: 'AI Etik & Capstone',                              color: 'primary',   libs: ['Fairness Indicators', 'Projeye özel'] },
+      ].map(row => (
+        <div class={`flex items-start gap-4 rounded-xl border bg-warmBg/40 p-3 transition-colors ${journeyBorder[row.color]}`}>
+          <div class="shrink-0 flex flex-col items-center min-w-[70px]">
+            <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${journeyBadge[row.color]}`}>{row.weeks}</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="font-semibold text-dark text-sm mb-1.5">{row.module}</p>
+            <div class="flex flex-wrap gap-1">
+              {row.libs.map(lib => (
+                <code class="text-[11px] bg-dark text-green-300 rounded px-2 py-0.5 font-mono">{lib}</code>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-      <div>
-        <p class="text-xs font-semibold text-mid mb-2 uppercase tracking-wider">Veri Bilimi</p>
-        <div class="flex flex-wrap gap-1.5">
-          {['NumPy', 'Pandas', 'Matplotlib', 'Seaborn', 'SciPy'].map(t => (
-            <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-dark font-medium">{t}</span>
-          ))}
-        </div>
-      </div>
-      <div>
-        <p class="text-xs font-semibold text-mid mb-2 uppercase tracking-wider">Makine Öğrenmesi</p>
-        <div class="flex flex-wrap gap-1.5">
-          {['Scikit-learn', 'XGBoost', 'LightGBM', 'Prophet'].map(t => (
-            <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-dark font-medium">{t}</span>
-          ))}
-        </div>
-      </div>
-      <div>
-        <p class="text-xs font-semibold text-mid mb-2 uppercase tracking-wider">Derin Öğrenme & YZ</p>
-        <div class="flex flex-wrap gap-1.5">
-          {['TensorFlow', 'Keras', 'OpenCV', 'Transformers', 'Gemini API', 'LangChain'].map(t => (
-            <span class="text-xs bg-warmBg border border-border rounded-full px-3 py-1 text-dark font-medium">{t}</span>
-          ))}
-        </div>
-      </div>
+      ))}
+    </div>
+
+    <div class="mt-5 pt-5 border-t border-border flex flex-wrap gap-3 text-xs text-mid">
+      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-accent inline-block"></span> Veri Bilimi Temelleri (24 saat)</span>
+      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> Makine Öğrenmesi Uzmanlığı (30 saat)</span>
+      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Yapay Zeka Mühendisliği (36 saat)</span>
     </div>
   </div>
 
