@@ -17,3 +17,7 @@ create-guide.js
 churn-pptx.js
 sunumlar_yeni/.~lock*
 egitim-kitabi/
+
+# docs/ — 1.4 GB referans materyal (MEB rehberi, NotebookLM PDF, ses/video örnekleri,
+# Nano Banana, Konya stratejisi vb). Drive üzerinden paylaşılır, repo'ya commit edilmez.
+docs/

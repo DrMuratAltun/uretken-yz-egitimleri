@@ -5,9 +5,9 @@ import { weeks } from '../data/curriculum';
 const base = import.meta.env.BASE_URL;
 
 const sections = [
-  { label: 'VERİ BİLİMİ TEMELLERİ',      color: 'accent',    weeks: weeks.filter(w => w.id <= 4),            hours: 24 },
-  { label: 'MAKİNE ÖĞRENMESİ UZMANLIĞI', color: 'secondary', weeks: weeks.filter(w => w.id >= 5 && w.id <= 9), hours: 30 },
-  { label: 'YAPAY ZEKA MÜHENDİSLİĞİ',    color: 'primary',   weeks: weeks.filter(w => w.id >= 10),            hours: 36 },
+  { label: 'TEMELLER VE ASİSTANLAR',     color: 'accent',    weeks: weeks.filter(w => w.id <= 4),              hours: 24, tagline: 'Promptu öğren, asistanları karşılaştır, NotebookLM ile bilgi tabanını kur.' },
+  { label: 'İÇERİK ÜRETİM ATÖLYELERİ',   color: 'secondary', weeks: weeks.filter(w => w.id >= 5 && w.id <= 9), hours: 30, tagline: 'Görsel, ses, video, doküman ve otomasyon — üretkenliği eline al.' },
+  { label: 'MESLEĞE ÖZEL · LOKAL · API', color: 'primary',   weeks: weeks.filter(w => w.id >= 10),             hours: 30, tagline: 'Önce mesleğine bağla, sonra YZ\'yi indir, en sonda kendi ürününü yayınla.' },
 ];
 
 const journeyBadge: Record<string, string> = {
@@ -36,26 +36,33 @@ const textMap: Record<string, string> = {
   secondary: 'text-secondary',
   primary:   'text-primary',
 };
+
+// Renk haritalama: weeks dizinindeki sectionColor değerine göre Yolculuk satırlarındaki rozet rengi
+const colorOfWeek = (w: { sectionColor: string }): 'accent' | 'secondary' | 'primary' => {
+  if (w.sectionColor.includes('accent')) return 'accent';
+  if (w.sectionColor.includes('secondary')) return 'secondary';
+  return 'primary';
+};
 ---
 
-<Layout title="Program Özeti">
+<Layout title="Atölye Özeti">
   <!-- HERO -->
   <div class="rounded-2xl bg-dark text-white p-8 mb-8 relative overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background: radial-gradient(circle at 70% 50%, #C97B5A 0%, transparent 60%)"></div>
     <div class="relative">
       <div class="flex items-start justify-between flex-wrap gap-4">
         <div>
-          <p class="text-secondary text-sm font-medium uppercase tracking-widest mb-2">ECS Eğitim Programı</p>
-          <h1 class="text-3xl font-bold mb-2">Veri Bilimi ve Yapay Zeka<br/>Uzmanlığı Programı</h1>
-          <p class="text-gray-400 text-sm">Dr. Murat Altun · Google Colab · GitHub Portföyü</p>
+          <p class="text-secondary text-sm font-medium uppercase tracking-widest mb-2">Üretken YZ Atölyesi</p>
+          <h1 class="text-3xl font-bold mb-2">Üretken YZ Atölyesi<br/>Prompttan Ürüne</h1>
+          <p class="text-gray-400 text-sm">Dr. Murat Altun · Araç Hakimiyeti · Lokal LLM · API ile Capstone</p>
         </div>
         <div class="flex gap-4 text-center">
           <div class="bg-white/10 rounded-xl px-5 py-3">
-            <div class="text-3xl font-bold text-secondary">90</div>
+            <div class="text-3xl font-bold text-secondary">84</div>
             <div class="text-xs text-gray-400 mt-1">Toplam Saat</div>
           </div>
           <div class="bg-white/10 rounded-xl px-5 py-3">
-            <div class="text-3xl font-bold text-accent">15</div>
+            <div class="text-3xl font-bold text-accent">14</div>
             <div class="text-xs text-gray-400 mt-1">Hafta</div>
           </div>
           <div class="bg-white/10 rounded-xl px-5 py-3">
@@ -68,10 +75,10 @@ const textMap: Record<string, string> = {
       <!-- Değerlendirme -->
       <div class="mt-6 flex flex-wrap gap-3">
         <div class="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 text-sm">
-          <span class="text-secondary">▪</span> GitHub Portföyü %30
+          <span class="text-secondary">▪</span> Haftalık Atölye Çıktıları %30
         </div>
         <div class="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 text-sm">
-          <span class="text-accent">▪</span> Final Sınavı %30
+          <span class="text-accent">▪</span> Mesleğe Özel Mini Proje %30
         </div>
         <div class="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 text-sm">
           <span class="text-orange-300">▪</span> Capstone Projesi %40
@@ -83,11 +90,12 @@ const textMap: Record<string, string> = {
   <!-- BÖLÜMLER -->
   {sections.map(section => (
     <div class="mb-10">
-      <div class={`flex items-center gap-3 mb-4`}>
+      <div class={`flex items-center gap-3 mb-2`}>
         <span class={`inline-block w-1 h-6 rounded-full ${badgeMap[section.color]}`}></span>
         <h2 class={`text-sm font-bold uppercase tracking-widest ${textMap[section.color]}`}>{section.label}</h2>
         <span class="text-xs text-mid bg-border/60 rounded-full px-2 py-0.5">{section.hours} saat</span>
       </div>
+      <p class="text-xs text-mid mb-4 ml-4">{section.tagline}</p>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
         {section.weeks.map(week => (
@@ -115,21 +123,26 @@ const textMap: Record<string, string> = {
     </div>
   ))}
 
-  <!-- PLATFORMLAR -->
+  <!-- PLATFORMLAR & ARAÇ EKOSİSTEMİ -->
   <div class="mt-10 mb-8">
     <div class="flex items-center gap-3 mb-4">
       <span class="inline-block w-1 h-6 rounded-full bg-primary"></span>
-      <h2 class="text-sm font-bold uppercase tracking-widest text-primary">Platformlar ve Programlar</h2>
+      <h2 class="text-sm font-bold uppercase tracking-widest text-primary">Atölyede Kullanılacak Platformlar</h2>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {[
-        { name: 'Google Colab',  emoji: '🟡', desc: 'Bulutta ücretsiz Python notebook ve GPU erişimi', url: 'https://colab.research.google.com/' },
-        { name: 'VS Code',       emoji: '🟦', desc: 'Yerel geliştirme için IDE (PyCharm, Spyder veya tercih ettiğiniz başka bir IDLE de olabilir)', url: 'https://code.visualstudio.com/' },
-        { name: 'GitHub',        emoji: '⚫', desc: 'Kod barındırma, versiyon kontrolü, portföy oluşturma', url: 'https://github.com/' },
-        { name: 'Kaggle',        emoji: '🔵', desc: 'Veri seti, yarışmalar, hazır notebook örnekleri', url: 'https://www.kaggle.com/' },
-        { name: 'Hugging Face',  emoji: '🤗', desc: 'Hazır AI modelleri, Spaces ile model yayınlama', url: 'https://huggingface.co/' },
-        { name: 'Google Drive',  emoji: '📁', desc: 'Veri ve materyal paylaşımı, notebook senkronizasyonu', url: 'https://drive.google.com/' },
-        { name: 'Streamlit / Gradio', emoji: '🚀', desc: 'Birkaç satırla AI uygulaması arayüzü ve deploy', url: 'https://streamlit.io/' },
+        { name: 'ChatGPT · Gemini · Claude', emoji: '💬', desc: 'Sohbet asistanları — Custom GPT, Gem, Project ile kendi asistanını yarat', url: 'https://gemini.google.com/' },
+        { name: 'NotebookLM',         emoji: '📚', desc: 'Kaynaklarla konuş, Audio Overview ile Türkçe podcast üret', url: 'https://notebooklm.google.com/' },
+        { name: 'Google AI Studio',   emoji: '🟢', desc: 'Gemini 2.5 Flash / Imagen / Veo — ücretsiz katman, prompt playground', url: 'https://aistudio.google.com/' },
+        { name: 'Hugging Face',       emoji: '🤗', desc: 'Açık kaynak modeller, Spaces ile sıfır maliyet deploy', url: 'https://huggingface.co/' },
+        { name: 'ElevenLabs',         emoji: '🔊', desc: 'TTS, ses klonlama, Türkçe Multilingual v2', url: 'https://elevenlabs.io/' },
+        { name: 'Midjourney · Ideogram · Flux · Nano Banana', emoji: '🎨', desc: 'Görsel üretim — diffusion modelleri ekosistemi', url: 'https://www.midjourney.com/' },
+        { name: 'Sora · Veo · Runway · HeyGen', emoji: '🎬', desc: 'Video ve avatar üretimi — text-to-video, Türkçe avatar', url: 'https://aistudio.google.com/' },
+        { name: 'Ollama · LM Studio · Open WebUI', emoji: '🖥️', desc: 'Lokal LLM kurulumu — kendi bilgisayarında çalışan YZ', url: 'https://ollama.com/' },
+        { name: 'AnythingLLM · Cherry Studio', emoji: '🗂️', desc: 'Lokal RAG — kendi PDF/dokümanlarınla offline konuş', url: 'https://useanything.com/' },
+        { name: 'Zapier · Make · n8n', emoji: '⚙️', desc: 'No-code otomasyon — sıkıcı işi YZ\'ye yaptır', url: 'https://zapier.com/' },
+        { name: 'Streamlit · Gradio · Vercel v0', emoji: '🚀', desc: 'Capstone deploy — kendi asistanını yayınla', url: 'https://streamlit.io/' },
+        { name: 'GitHub · Notion · Drive', emoji: '📁', desc: 'Portföy, prompt kütüphanesi, atölye çıktıları', url: 'https://github.com/' },
       ].map(p => (
         <a href={p.url} target="_blank" rel="noopener" class="group flex items-start gap-3 bg-white rounded-xl border border-border p-4 hover:border-primary/40 hover:shadow-sm transition-all">
           <span class="text-2xl shrink-0">{p.emoji}</span>
@@ -142,54 +155,46 @@ const textMap: Record<string, string> = {
     </div>
   </div>
 
-  <!-- ÖĞRENME YOLCULUĞU: Modüller + Kütüphaneler -->
+  <!-- ÖĞRENME YOLCULUĞU: Modüller + Araç Setleri (DİNAMİK — weeks.map) -->
   <div class="mb-8 rounded-2xl border border-border bg-white p-6">
     <div class="flex items-center gap-3 mb-5">
       <span class="inline-block w-1 h-6 rounded-full bg-secondary"></span>
-      <h2 class="text-sm font-bold uppercase tracking-widest text-secondary">Öğrenme Yolculuğu — Modüller ve Kütüphaneler</h2>
+      <h2 class="text-sm font-bold uppercase tracking-widest text-secondary">Öğrenme Yolculuğu — 14 Hafta · Modüller ve Araç Setleri</h2>
     </div>
     <p class="text-sm text-mid mb-5 leading-relaxed">
-      15 hafta boyunca <span class="font-semibold text-dark">Python temellerinden başlayıp Generative AI'a</span> kadar uzanan bir yolculuk.
-      Her modülde kullanılan kütüphaneler, ilk kullanıldıkları hafta ile birlikte aşağıda:
+      14 hafta boyunca <span class="font-semibold text-dark">prompt mühendisliğinden başlayıp lokal LLM ve API ile kendi ürününe</span> uzanan bir yolculuk.
+      Her modülde kullanacağın ana araç seti, hafta numarası ile birlikte aşağıda:
     </p>
 
     <div class="space-y-3">
-      {[
-        { weeks: 'Hafta 1',     module: 'Python Temelleri',                                color: 'accent',    libs: ['Python 3', 'Jupyter / Colab', 'IPython'] },
-        { weeks: 'Hafta 2',     module: 'NumPy ve Pandas — EDA',                          color: 'accent',    libs: ['NumPy', 'Pandas', 'OpenPyXL'] },
-        { weeks: 'Hafta 3',     module: 'Görselleştirme',                                  color: 'accent',    libs: ['Matplotlib', 'Seaborn', 'Plotly', 'bar_chart_race', 'Sweetviz', 'YData-Profiling', 'PyTrends'] },
-        { weeks: 'Hafta 4',     module: 'İstatistik & A/B Testleri',                       color: 'accent',    libs: ['SciPy', 'Statsmodels'] },
-        { weeks: 'Hafta 5-6',   module: 'Klasik Makine Öğrenmesi (Regresyon, Sınıflandırma)', color: 'secondary', libs: ['Scikit-learn', 'Joblib'] },
-        { weeks: 'Hafta 7',     module: 'Ensemble Modeller',                               color: 'secondary', libs: ['XGBoost', 'LightGBM', 'CatBoost'] },
-        { weeks: 'Hafta 8',     module: 'Kümeleme, Zaman Serileri, Öneri',                 color: 'secondary', libs: ['Prophet', 'scikit-surprise'] },
-        { weeks: 'Hafta 9',     module: 'MLOps ve Deploy',                                 color: 'secondary', libs: ['Streamlit', 'Gradio', 'Hugging Face Spaces'] },
-        { weeks: 'Hafta 10',    module: 'Yapay Sinir Ağları (ANN)',                        color: 'primary',   libs: ['TensorFlow', 'Keras'] },
-        { weeks: 'Hafta 11',    module: 'Görüntü İşleme',                                  color: 'primary',   libs: ['OpenCV', 'Pillow', 'scikit-image'] },
-        { weeks: 'Hafta 12',    module: 'CNN & Transfer Learning',                         color: 'primary',   libs: ['TensorFlow', 'Keras Applications', 'Albumentations'] },
-        { weeks: 'Hafta 13',    module: 'NLP & Hugging Face',                              color: 'primary',   libs: ['Transformers', 'NLTK', 'spaCy', 'Datasets'] },
-        { weeks: 'Hafta 14',    module: 'Generative AI & LLM',                             color: 'primary',   libs: ['Google Gemini API', 'LangChain', 'ChromaDB', 'OpenAI SDK'] },
-        { weeks: 'Hafta 15',    module: 'AI Etik & Capstone',                              color: 'primary',   libs: ['Fairness Indicators', 'Projeye özel'] },
-      ].map(row => (
-        <div class={`flex items-start gap-4 rounded-xl border bg-warmBg/40 p-3 transition-colors ${journeyBorder[row.color]}`}>
-          <div class="shrink-0 flex flex-col items-center min-w-[70px]">
-            <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${journeyBadge[row.color]}`}>{row.weeks}</span>
-          </div>
-          <div class="flex-1 min-w-0">
-            <p class="font-semibold text-dark text-sm mb-1.5">{row.module}</p>
-            <div class="flex flex-wrap gap-1">
-              {row.libs.map(lib => (
-                <code class="text-[11px] bg-dark text-green-300 rounded px-2 py-0.5 font-mono">{lib}</code>
-              ))}
+      {weeks.map(week => {
+        const c = colorOfWeek(week);
+        return (
+          <a
+            href={`${base}hafta/${week.slug}`}
+            class={`flex items-start gap-4 rounded-xl border bg-warmBg/40 p-3 transition-colors ${journeyBorder[c]}`}
+          >
+            <div class="shrink-0 flex flex-col items-center min-w-[70px]">
+              <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${journeyBadge[c]}`}>HAFTA {week.id}</span>
+              <span class="text-[10px] text-mid mt-1">{week.hours} saat</span>
             </div>
-          </div>
-        </div>
-      ))}
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-dark text-sm mb-1.5">{week.title}</p>
+              <div class="flex flex-wrap gap-1">
+                {week.libraries.map(lib => (
+                  <code class="text-[11px] bg-dark text-green-300 rounded px-2 py-0.5 font-mono">{lib}</code>
+                ))}
+              </div>
+            </div>
+          </a>
+        );
+      })}
     </div>
 
     <div class="mt-5 pt-5 border-t border-border flex flex-wrap gap-3 text-xs text-mid">
-      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-accent inline-block"></span> Veri Bilimi Temelleri (24 saat)</span>
-      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> Makine Öğrenmesi Uzmanlığı (30 saat)</span>
-      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Yapay Zeka Mühendisliği (36 saat)</span>
+      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-accent inline-block"></span> Temeller ve Asistanlar (24 saat)</span>
+      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> İçerik Üretim Atölyeleri (30 saat)</span>
+      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Mesleğe Özel · Lokal · API (30 saat)</span>
     </div>
   </div>
 
@@ -201,12 +206,12 @@ const textMap: Record<string, string> = {
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       {[
-        { icon: '💻', title: 'Bilgisayar ve İnternet', desc: 'Windows / Mac / Linux fark etmez. Bulut tabanlı (Colab) çalışılır, donanım gerekmez. İstikrarlı internet bağlantısı yeterlidir.' },
-        { icon: '🐍', title: 'Programlama Ön Şartı Yok', desc: 'Python sıfırdan başlar. Daha önce kod yazmamış olmak sorun değildir. Mantık ve sabır yeter.' },
-        { icon: '🌐', title: 'Temel İngilizce Okuma', desc: 'Dokümantasyon ve hata mesajları İngilizcedir. Çeviri araçlarıyla rahat çalışılabilir.' },
-        { icon: '⏱️', title: 'Haftada 6-8 Saat', desc: 'Canlı ders + ödev + pratik için ayrılması önerilen süre. Düzenli pratik başarının anahtarıdır.' },
-        { icon: '🔐', title: 'Hesaplar (Ücretsiz)', desc: 'Google, GitHub, Kaggle ve Hugging Face hesapları (hepsi ücretsiz). İlk hafta birlikte açılır.' },
-        { icon: '🚀', title: 'Öğrenme Tutkusu', desc: 'Problem çözmeye açık, projelerle öğrenmeyi seven, sorular soran katılımcı profili idealdir.' },
+        { icon: '💻', title: 'Bilgisayar ve İnternet', desc: 'Windows / Mac / Linux fark etmez. Hafta 12-13\'te lokal LLM için 8 GB+ RAM önerilir; ChatGPT/Gemini gibi bulut araçları için her donanım yeterli.' },
+        { icon: '🚫', title: 'Programlama Bilmek Şart Değil', desc: 'Bu bir araç kullanım atölyesi. Python öğretmiyoruz; Hafta 14\'te kopyala-yapıştır şablonlarla küçük API çağrıları var, o kadar.' },
+        { icon: '🌐', title: 'Temel İngilizce Okuma', desc: 'Araçların büyük kısmı İngilizce. Çeviri araçlarıyla rahat çalışılabilir; her hafta Türkçe rehber verilir.' },
+        { icon: '⏱️', title: 'Haftada 6-8 Saat', desc: 'Canlı atölye + kendi pratiğin + ödevler için. Her hafta bir somut çıktı (görsel/ses/video/sunum) üretirsin.' },
+        { icon: '🔐', title: 'Hesaplar (Çoğu Ücretsiz)', desc: 'Google, GitHub, Hugging Face, NotebookLM, ElevenLabs (free tier), AI Studio. İlk hafta birlikte açılır. Premium opsiyonel.' },
+        { icon: '🚀', title: 'Üretmek İsteyen', desc: 'Eğitimci, akademisyen, tasarımcı, yönetici, girişimci — herkese uygun. Mesleğe özel parkur Hafta 10-11\'de.' },
       ].map(req => (
         <div class="flex items-start gap-3 bg-white rounded-xl border border-border p-4">
           <span class="text-2xl shrink-0">{req.icon}</span>
@@ -224,13 +229,13 @@ const textMap: Record<string, string> = {
     <div class="absolute inset-0 opacity-20" style="background: radial-gradient(circle at 30% 50%, #C97B5A 0%, transparent 60%)"></div>
     <div class="relative">
       <p class="text-secondary text-xs font-semibold uppercase tracking-widest mb-2">Kayıt</p>
-      <h2 class="text-2xl font-bold mb-3">90 Saatlik Programa Katılın</h2>
+      <h2 class="text-2xl font-bold mb-3">84 Saatlik Atölyeye Katılın</h2>
       <p class="text-gray-300 text-sm max-w-xl mx-auto mb-5">
-        Dr. Murat ALTUN ile canlı, etkileşimli Veri Bilimi ve Yapay Zeka Uzmanlığı eğitimi.
+        Dr. Murat ALTUN ile canlı, etkileşimli Üretken YZ Atölyesi — prompt mühendisliğinden lokal LLM ve API'ye, kendi ürününü yayınlayana kadar.
         Detaylı bilgi ve kayıt için WhatsApp üzerinden iletişime geçin.
       </p>
       <a
-        href="https://wa.me/905392578206?text=Dr.%20Murat%20ALTUN%20referans%20Nisan-2026%20kodu%20ile%2090%20saatlik%20canl%C4%B1%20Veri%20Bilimi%20ve%20Yapay%20Zeka%20Uzmanl%C4%B1%C4%9F%C4%B1%20kursuna%20kaydolmak%20istiyorum."
+        href="https://wa.me/905392578206?text=Dr.%20Murat%20ALTUN%20referans%20Mayıs-2026%20kodu%20ile%20Üretken%20YZ%20Atölyesi%20%28Prompttan%20Ürüne%29%20kursuna%20kaydolmak%20istiyorum."
         target="_blank"
         rel="noopener"
         class="inline-flex items-center gap-2 bg-[#25D366] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#1ebe57] transition-colors shadow-lg"
@@ -238,7 +243,7 @@ const textMap: Record<string, string> = {
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         WhatsApp'tan Kayıt Ol
       </a>
-      <p class="text-gray-400 text-[10px] mt-3">📞 +90 539 257 82 06 · Referans Kodu: <span class="text-secondary font-semibold">Nisan-2026</span></p>
+      <p class="text-gray-400 text-[10px] mt-3">📞 +90 539 257 82 06 · Referans Kodu: <span class="text-secondary font-semibold">Mayıs-2026</span></p>
     </div>
   </div>
 </Layout>

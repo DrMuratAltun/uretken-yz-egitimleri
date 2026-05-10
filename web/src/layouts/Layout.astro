@@ -10,27 +10,52 @@ interface Props {
 
 const { title, description, activeWeekId, canonical } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const siteUrl = 'https://drmurataltun.github.io/VB-YZ-90';
+const siteUrl = 'https://drmurataltun.github.io/uretken-yz-egitimleri';
 
-const metaTitle = `${title} — Veri Bilimi & YZ Uzmanlığı · Dr. Murat Altun`;
-const metaDesc = description ?? 'Dr. Murat Altun ile 15 haftalık Veri Bilimi ve Yapay Zeka Uzmanlığı Programı. Python, Pandas, Makine Öğrenmesi, NLP, Derin Öğrenme ve MLOps.';
+const metaTitle = `${title} — Üretken YZ Atölyesi · Prompttan Ürüne · Dr. Murat Altun`;
+const metaDesc = description ?? 'Dr. Murat Altun ile 14 haftalık Üretken YZ Atölyesi. Prompt mühendisliği, ChatGPT/Gemini/Claude, NotebookLM, görsel/ses/video üretimi, lokal LLM (Ollama, AnythingLLM) ve API ile capstone — programlama bilmek gerekmez.';
 const canonicalUrl = canonical ?? siteUrl;
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Course',
-  name: 'Veri Bilimi ve Yapay Zeka Uzmanlığı Programı',
+  name: 'Üretken YZ Atölyesi · Prompttan Ürüne',
   description: metaDesc,
   provider: {
     '@type': 'Person',
     name: 'Dr. Murat Altun',
-    url: 'https://github.com/DrMuratAltun',
+    url: 'https://drmurataltun.github.io',
+    sameAs: [
+      'https://github.com/DrMuratAltun',
+      'https://yapayzekaokulum.com',
+      'https://gencyz.com',
+      'https://yz-araclari.com',
+    ],
   },
-  educationalLevel: 'Intermediate',
+  educationalLevel: 'Beginner to Intermediate',
   inLanguage: 'tr',
-  numberOfCredits: 90,
+  numberOfCredits: 84,
+  timeRequired: 'PT84H',
   courseMode: 'online',
   url: siteUrl,
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: 'online',
+    courseWorkload: 'PT84H',
+    inLanguage: 'tr',
+  },
+  teaches: [
+    'Prompt Mühendisliği',
+    'ChatGPT, Gemini, Claude kullanımı',
+    'NotebookLM ile bilgi yönetimi',
+    'Görsel üretimi (DALL-E, Midjourney, Imagen, Flux, Nano Banana)',
+    'Ses ve TTS (ElevenLabs, Whisper, Suno)',
+    'Video ve avatar (Sora, Veo, Runway, HeyGen)',
+    'Otomasyon (Zapier, Make, n8n)',
+    'Lokal LLM (Ollama, LM Studio, Open WebUI)',
+    'Lokal RAG (AnythingLLM, Cherry Studio)',
+    'API ile Üretken YZ ve deploy (Hugging Face Spaces, Vercel v0)',
+  ],
 };
 ---
 
@@ -49,7 +74,7 @@ const jsonLd = {
   <title>{metaTitle}</title>
   <meta name="description" content={metaDesc} />
   <meta name="author" content="Dr. Murat Altun" />
-  <meta name="keywords" content="veri bilimi, yapay zeka, makine öğrenmesi, python, pandas, derin öğrenme, NLP, MLOps, Dr. Murat Altun, online kurs, Türkçe, capstone" />
+  <meta name="keywords" content="üretken yapay zeka, generative ai, prompt mühendisliği, ChatGPT, Gemini, Claude, NotebookLM, ElevenLabs, Midjourney, Sora, Veo, Ollama, AnythingLLM, lokal LLM, RAG, Türkçe AI eğitimi, MEB yapay zeka, atölye, Dr. Murat Altun" />
   <link rel="canonical" href={canonicalUrl} />
 
   <!-- Open Graph -->
@@ -58,18 +83,18 @@ const jsonLd = {
   <meta property="og:title" content={metaTitle} />
   <meta property="og:description" content={metaDesc} />
   <meta property="og:locale" content="tr_TR" />
-  <meta property="og:site_name" content="Veri Bilimi & YZ Uzmanlığı" />
+  <meta property="og:site_name" content="Üretken YZ Atölyesi" />
   <meta property="og:image" content={`${siteUrl}/og-image.jpg`} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Veri Bilimi & YZ Uzmanlığı — 90 saat, Dr. Murat Altun" />
+  <meta property="og:image:alt" content="Üretken YZ Atölyesi · Prompttan Ürüne · 14 Hafta · 84 Saat · Dr. Murat Altun" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={metaTitle} />
   <meta name="twitter:description" content={metaDesc} />
   <meta name="twitter:image" content={`${siteUrl}/og-image.jpg`} />
-  <meta name="twitter:image:alt" content="VB-YZ-90 — Dr. Murat Altun" />
+  <meta name="twitter:image:alt" content="Üretken YZ Atölyesi — Dr. Murat Altun" />
 
   <!-- Robots -->
   <meta name="robots" content="index, follow" />
@@ -93,16 +118,16 @@ const jsonLd = {
   <header class="bg-dark text-white shadow-lg sticky top-0 z-50">
     <div class="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href={base} class="flex items-center gap-3 hover:opacity-90 transition-opacity">
-        <div class="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-white font-bold text-sm">ECS</div>
+        <div class="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-white font-bold text-sm">⚒️</div>
         <div>
-          <div class="font-semibold text-sm leading-tight">Veri Bilimi & YZ Uzmanlığı</div>
-          <div class="text-xs text-gray-400">90 Saat · 15 Hafta · Dr. Murat Altun</div>
+          <div class="font-semibold text-sm leading-tight">Üretken YZ Atölyesi · Prompttan Ürüne</div>
+          <div class="text-xs text-gray-400">84 Saat · 14 Hafta · Dr. Murat Altun</div>
         </div>
       </a>
       <div class="hidden md:flex items-center gap-4 text-sm">
-        <span class="px-2 py-1 rounded bg-accent/20 text-accent border border-accent/30 text-xs">Hafta 1–4: VB Temelleri</span>
-        <span class="px-2 py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 text-xs">Hafta 5–9: ML Uzmanlığı</span>
-        <span class="px-2 py-1 rounded bg-primary/20 text-orange-300 border border-primary/30 text-xs">Hafta 10–15: YZ Mühendisliği</span>
+        <span class="px-2 py-1 rounded bg-accent/20 text-accent border border-accent/30 text-xs">Hafta 1–4: Temeller</span>
+        <span class="px-2 py-1 rounded bg-secondary/20 text-secondary border border-secondary/30 text-xs">Hafta 5–9: İçerik Atölyeleri</span>
+        <span class="px-2 py-1 rounded bg-primary/20 text-orange-300 border border-primary/30 text-xs">Hafta 10–14: Mesleğe Özel · Lokal · API</span>
         <a href={`${base}egitmen`} class="px-2 py-1 rounded bg-white/10 text-gray-300 border border-white/20 text-xs hover:text-white hover:border-white/40 transition-colors">👨‍🏫 Eğitmen</a>
       </div>
     </div>
@@ -115,7 +140,7 @@ const jsonLd = {
       <nav class="py-4" aria-label="Hafta navigasyonu">
         <a href={base} class={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${!activeWeekId ? 'bg-primary text-white' : 'text-mid hover:text-primary hover:bg-border/50'}`}>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-          Program Özeti
+          Atölye Özeti
         </a>
         <a href={`${base}egitmen`} class="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors text-mid hover:text-secondary hover:bg-border/50">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
@@ -124,7 +149,7 @@ const jsonLd = {
 
         <!-- Bölüm 1 -->
         <div class="px-4 pt-4 pb-1">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-accent">Bölüm 1 — VB Temelleri</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-accent">Bölüm 1 — Temeller</span>
         </div>
         {weeks.filter(w => w.id <= 4).map(w => (
           <a
@@ -139,7 +164,7 @@ const jsonLd = {
 
         <!-- Bölüm 2 -->
         <div class="px-4 pt-4 pb-1">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">Bölüm 2 — ML Uzmanlığı</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">Bölüm 2 — İçerik Atölyeleri</span>
         </div>
         {weeks.filter(w => w.id >= 5 && w.id <= 9).map(w => (
           <a
@@ -154,7 +179,7 @@ const jsonLd = {
 
         <!-- Bölüm 3 -->
         <div class="px-4 pt-4 pb-1">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Bölüm 3 — YZ Mühendisliği</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Bölüm 3 — Mesleğe Özel · Lokal · API</span>
         </div>
         {weeks.filter(w => w.id >= 10).map(w => (
           <a
@@ -183,10 +208,10 @@ const jsonLd = {
 
         <!-- Hakkında -->
         <div>
-          <h3 class="text-white font-semibold text-sm mb-3">Veri Bilimi & YZ Uzmanlığı</h3>
+          <h3 class="text-white font-semibold text-sm mb-3">Üretken YZ Atölyesi</h3>
           <p class="text-xs leading-relaxed">
-            Dr. Murat Altun tarafından hazırlanmış 90 saatlik kapsamlı program.
-            Python, makine öğrenmesi, derin öğrenme, NLP ve üretken yapay zeka konularını içerir.
+            Dr. Murat Altun tarafından hazırlanmış 84 saatlik kapsamlı atölye — prompt mühendisliğinden başlayıp
+            görsel/ses/video üretimine, lokal LLM'e ve API ile capstone'a uzanan, programlama gerektirmeyen "Prompttan Ürüne" yolculuğu.
           </p>
         </div>
 
@@ -195,18 +220,23 @@ const jsonLd = {
           <h3 class="text-white font-semibold text-sm mb-3">Dr. Murat Altun — Diğer Projeler</h3>
           <ul class="space-y-2 text-xs">
             <li>
+              <a href="https://drmurataltun.github.io/VB-YZ-90/" target="_blank" rel="noopener" class="hover:text-secondary transition-colors">
+                📊 VB-YZ-90 — Veri Bilimi & YZ Uzmanlığı (90 saat, kod ağırlıklı)
+              </a>
+            </li>
+            <li>
               <a href="https://drmurataltun.github.io/deep-learning-bootcamp/" target="_blank" rel="noopener" class="hover:text-secondary transition-colors">
-                🧠 Derin Öğrenme Bootcamp — 90 saat Keras 3 uygulamalı eğitim
+                🧠 Derin Öğrenme Bootcamp — 90 saat Keras 3 uygulamalı
               </a>
             </li>
             <li>
               <a href="https://yapayzekaokulum.com" target="_blank" rel="noopener" class="hover:text-secondary transition-colors">
-                🎓 Yapay Zeka Okulum — Eğitimciler için YZ eğitim platformu
+                🎓 Yapay Zeka Okulum — Eğitimciler için YZ platformu
               </a>
             </li>
             <li>
               <a href="https://gencyz.com" target="_blank" rel="noopener" class="hover:text-accent transition-colors">
-                🧒 GençYZ — Çocuklar için yapay zeka eğitimi
+                🧒 GençYZ — Çocuklar için yapay zeka
               </a>
             </li>
             <li>
@@ -227,17 +257,18 @@ const jsonLd = {
           </ul>
         </div>
 
-        <!-- İletişim & Teknoloji -->
+        <!-- Atölye Bilgileri -->
         <div>
-          <h3 class="text-white font-semibold text-sm mb-3">Program Bilgileri</h3>
+          <h3 class="text-white font-semibold text-sm mb-3">Atölye Bilgileri</h3>
           <ul class="space-y-2 text-xs">
-            <li>📅 15 Hafta · 90 Saat</li>
-            <li>🐍 Python · Pandas · Scikit-learn</li>
-            <li>🧠 Derin Öğrenme · NLP · Generative AI</li>
-            <li>📊 Veri Bilimi · Makine Öğrenmesi · MLOps</li>
+            <li>📅 14 Hafta · 84 Saat</li>
+            <li>💬 ChatGPT · Gemini · Claude · NotebookLM</li>
+            <li>🎨 Görsel · Ses · Video Üretimi</li>
+            <li>🖥️ Lokal LLM · RAG · API ile Capstone</li>
+            <li>🚫 Programlama Bilmek Gerekmez</li>
           </ul>
           <div class="mt-4">
-            <a href="https://github.com/DrMuratAltun/VB-YZ-90" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs hover:text-white transition-colors">
+            <a href="https://github.com/DrMuratAltun/uretken-yz-egitimleri" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs hover:text-white transition-colors">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
               GitHub Deposu
             </a>
@@ -247,7 +278,7 @@ const jsonLd = {
       </div>
 
       <div class="border-t border-gray-700 mt-8 pt-6 text-center text-xs">
-        <p>© 2026 Dr. Murat Altun — ECS Veri Bilimi ve Yapay Zeka Uzmanlığı Programı</p>
+        <p>© 2026 Dr. Murat Altun — Üretken YZ Atölyesi · Prompttan Ürüne</p>
       </div>
     </div>
   </footer>

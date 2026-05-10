@@ -19,14 +19,14 @@ const prevWeek = weeks.find(w => w.id === week.id - 1);
 const nextWeek = weeks.find(w => w.id === week.id + 1);
 
 const sectionColorClass: Record<string, string> = {
-  'VERİ BİLİMİ TEMELLERİ':       'bg-accent',
-  'MAKİNE ÖĞRENMESİ UZMANLIĞI':  'bg-secondary',
-  'YAPAY ZEKA MÜHENDİSLİĞİ':     'bg-primary',
+  'TEMELLER VE ASİSTANLAR':           'bg-accent',
+  'İÇERİK ÜRETİM ATÖLYELERİ':         'bg-secondary',
+  'MESLEĞE ÖZEL · LOKAL · API':       'bg-primary',
 };
 const badgeBg = sectionColorClass[week.section] ?? 'bg-mid';
 
 const PREVIEW = 2;
-const WHATSAPP_MESSAGE = 'Dr. Murat ALTUN referans Nisan-2026 kodu ile 90 saatlik canlı Veri Bilimi ve Yapay Zeka Uzmanlığı kursuna kaydolmak istiyorum.';
+const WHATSAPP_MESSAGE = `Dr. Murat ALTUN referans Mayıs-2026 kodu ile Üretken YZ Atölyesi (Prompttan Ürüne) — Hafta ${week.id} (${week.title}) hakkında bilgi almak istiyorum.`;
 const REGISTER_URL = `https://wa.me/905392578206?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
 // Tüm içerik açık
@@ -43,9 +43,9 @@ const resLocked: typeof week.resources = [];
 
 <Layout
   title={`Hafta ${week.id}: ${week.title}`}
-  description={`${week.section} — ${week.title}. ${week.topics.slice(0,3).join(', ')} ve daha fazlası. Dr. Murat Altun, ECS 90 saatlik program.`}
+  description={`${week.section} — ${week.title}. ${week.topics.slice(0,3).join(', ')} ve daha fazlası. Dr. Murat Altun · Üretken YZ Atölyesi · 84 saat.`}
   activeWeekId={week.id}
-  canonical={`https://drmurataltun.github.io/VB-YZ-90/hafta/${week.slug}/`}
+  canonical={`https://drmurataltun.github.io/uretken-yz-egitimleri/hafta/${week.slug}/`}
 >
 
   <!-- BREADCRUMB -->

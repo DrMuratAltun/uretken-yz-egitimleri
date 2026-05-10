@@ -1,6 +1,6 @@
 import { weeks } from '../data/curriculum';
 
-const siteUrl = 'https://drmurataltun.github.io/VB-YZ-90';
+const siteUrl = 'https://drmurataltun.github.io/uretken-yz-egitimleri';
 
 export async function GET() {
   const pages = [
