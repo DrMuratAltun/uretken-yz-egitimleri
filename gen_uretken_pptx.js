@@ -1,22 +1,9 @@
 /**
- * Üretken YZ Atölyesi · Prompttan Ürüne — Toplu PPTX Üretici
- * ============================================================
- * Tek master generator. Her hafta için ~16 slaytlık tutarlı PPTX üretir.
+ * Üretken YZ Atölyesi · Prompttan Ürüne — Toplu PPTX Üretici (v2 · Aurora)
+ * ========================================================================
+ * Aurora paleti + zenginleştirilmiş topics + hafta-spesifik özel slaytlar.
  * Çalıştır: node gen_uretken_pptx.js
- * Çıktı: sunumlar/haftaXX_<slug>.pptx (14 dosya)
- *
- * Yapı (her sunum):
- *  1. Kapak (koyu arka plan, sağ panel istatistikler)
- *  2. İçindekiler (4 ana alt-bölüm)
- *  3. Hafta hedefleri (kazanım kartları)
- *  4-9. Konular (her konu için 1-2 kart slayt)
- *  10. Kullanılacak araç seti (libraries)
- *  11. Atölye notebook'ları (notebooks listesi)
- *  12. Veri/dataset (varsa)
- *  13. Ödevler (numbered cards)
- *  14. Kaynaklar
- *  15. WhatsApp kayıt CTA + sonraki hafta
- *  16. Kapanış (key takeaway'ler)
+ * Çıktı: sunumlar/haftaXX_<slug>.pptx (14 dosya, lokal — Drive'a yüklenecek)
  */
 
 const fs = require('fs');
@@ -25,10 +12,10 @@ const T = require('/Users/drmurataltun/.claude/pptx-template.js');
 const C = T.C;
 
 // ═══════════════════════════════════════════════════════════
-// CURRICULUM META — curriculum.ts ile senkron
-// (TS'i Node ile import etmek yerine inline tutuyoruz)
+// 14 HAFTA — Aurora Paletinde Zengin Meta
 // ═══════════════════════════════════════════════════════════
 const WEEKS = [
+  // ───────────────── HAFTA 1 ─────────────────
   {
     id: 1, slug: '01',
     title: "Üretken YZ'ye Giriş",
@@ -37,39 +24,55 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 1',
     color: C.acc,
     hours: 6,
-    intro: 'Yapay zeka kavramlarından üretken YZ\'ye, etik ve KVKK\'dan Türkiye perspektifine kadar giriş bölümü.',
+    intro: 'YZ ve üretken YZ ekosistemine giriş — kavramlar, tarihçe, etik ve Türkiye perspektifi.',
     topics: [
-      'YZ vs ML vs Üretken YZ — kavram haritası ve görsel sezgi',
-      'Tarihçe: Turing → Cahit Arf (1958) → Transformer (2017) → ChatGPT (2022) → Multimodal',
-      'Üretken YZ ne yapar / ne yapamaz — gerçekçi beklenti',
-      'Halüsinasyon, deepfake, telif, bias — Türkiye\'den gerçek vakalar',
-      'KVKK, MEB Yapay Zeka Politika Belgesi, AB AI Act özeti',
-      'Konya Akıllı Şehir AI stratejisi ve ulusal araç ekosistemi',
-      'Topluluklar, kanallar, GitHub/Kaggle/HuggingFace hesapları',
+      { icon: '🧠', title: 'YZ vs ML vs Üretken YZ', detail: 'Yapay zekânın katmanları, üretken modellerin (LLM, diffusion, GAN) sınıflandırıcılardan farkı.' },
+      { icon: '⏳', title: 'Tarihçe ve Türkiye köklü', detail: 'Turing 1950 → Cahit Arf 1958 → Transformer 2017 → ChatGPT 2022 → Multimodal 2026.' },
+      { icon: '⚖️', title: 'Ne yapar / ne yapamaz', detail: 'Halüsinasyon, deepfake riski, telif belirsizliği, eğitim verisi bias\'ı — gerçekçi beklenti haritası.' },
+      { icon: '🇹🇷', title: 'KVKK + MEB Politikası', detail: 'AB AI Act özeti, MEB Yapay Zeka Politika Belgesi, Konya AI stratejisi.' },
+      { icon: '🌐', title: 'Topluluklar ve hesaplar', detail: 'Discord, GitHub, Kaggle, Hugging Face — hangi hesaplar açılmalı, hangi takipler yapılmalı.' },
+    ],
+    specialSlides: [
+      { type: 'timeline', title: 'Üretken YZ Tarihçesi', points: [
+        { year: '1950', title: 'Turing Testi', desc: 'Computing Machinery and Intelligence' },
+        { year: '1958', title: 'Cahit Arf', desc: 'Türkçe ilk YZ sorusu' },
+        { year: '2014', title: 'GAN', desc: 'Üretken çekişmeli ağlar' },
+        { year: '2017', title: 'Transformer', desc: 'Attention is All You Need' },
+        { year: '2022', title: 'ChatGPT', desc: '5 günde 1M kullanıcı' },
+        { year: '2026', title: 'Multimodal', desc: 'GPT-5, Gemini 2.5, Claude 4.7' },
+      ]},
+      { type: 'caseStudy', title: 'Etik Vakası: Sahte Hukuk Davası', case: {
+        problem: 'Bir avukat ChatGPT\'ye dava emsali sordu. Sistem 6 sahte dava uydurdu, avukat fark etmedi.',
+        approach: 'Avukat doğrulama yapmadan mahkemeye sundu. Hakim, davaların hiçbirinin var olmadığını tespit etti.',
+        solution: '5000 USD para cezası + meslek odası uyarısı. Ders: Üretken YZ çıktısını ASLA doğrulamadan kullanma.',
+      }},
     ],
     libraries: ['ChatGPT', 'Gemini', 'Claude', 'NotebookLM (önizleme)'],
     notebooks: [
-      { name: 'hafta01_kavram_haritasi.ipynb', desc: 'YZ-ML-DL-GenAI kavram haritası ve interaktif quiz' },
-      { name: 'hafta01_tarihce_timeline.ipynb', desc: 'Turing\'den 2026\'ya görsel zaman çizgisi' },
-      { name: 'hafta01_etik_senaryolar.ipynb', desc: '10 gerçek vaka — sen olsan ne yapardın?' },
+      { name: 'hafta01_kavram_haritasi.ipynb', desc: 'YZ-ML-DL-GenAI kavram haritası ve interaktif quiz', dur: '20 dk' },
+      { name: 'hafta01_tarihce_timeline.ipynb', desc: 'Turing\'den 2026\'ya görsel zaman çizgisi', dur: '15 dk' },
+      { name: 'hafta01_etik_senaryolar.ipynb', desc: '10 gerçek vaka — sen olsan ne yapardın?', dur: '40 dk' },
     ],
     assignments: [
-      'Cahit Arf — "Makine Düşünebilir mi?" makalesini oku, 1 sayfalık Türkçe özet yaz',
-      'ChatGPT, Gemini ve Claude\'a aynı 5 soruyu sor; yanıtları tabloya dök, kıyasla',
-      'Notion ya da Google Docs üzerinde 14 haftalık öğrenme defterini aç',
+      'Cahit Arf — "Makine Düşünebilir mi?" makalesini oku, 1 sayfa Türkçe özet yaz',
+      'ChatGPT, Gemini ve Claude\'a aynı 5 soruyu sor; yanıtları tabloda kıyasla',
+      'Notion / Google Docs üzerinde 14 haftalık öğrenme defterini aç',
     ],
     resources: [
-      { label: 'MEB — YZ Araçları Öğretmen El Kitabı (60 sayfa)', url: 'github.com/DrMuratAltun/uretken-yz-egitimleri' },
+      { label: 'MEB Yapay Zeka Araçları Öğretmen El Kitabı', url: 'docs/' },
       { label: 'Cahit Arf — Makine Düşünebilir mi?', url: 'docs/' },
       { label: 'AB AI Act Özeti', url: 'artificialintelligenceact.eu' },
     ],
     takeaways: [
-      'Üretken YZ = mevcut veriden yeni içerik üreten YZ; sınıflandırıcıdan farklı.',
-      'Cahit Arf 1958\'de bu soruyu sordu — Türkiye\'nin YZ kökü derindir.',
-      'KVKK ve MEB politikası kapsam dahilinde; etik ve hukuk her hafta gündemde.',
+      'Üretken YZ = mevcut veriden yeni içerik üreten YZ. Sınıflandırıcı değil, üretici.',
+      'Cahit Arf 1958\'de bu soruyu sordu — Türkiye\'nin YZ kökü 60+ yıl öncesine uzanır.',
+      'KVKK + MEB politikası + AI Act çerçevesi her hafta gündemde olacak.',
     ],
     quote: 'Makine düşünebilir mi? Bu sorunun cevabı, "düşünmek" sözünün anlamına bağlıdır.',
+    quoteAuthor: 'Cahit Arf, 1958',
   },
+
+  // ───────────────── HAFTA 2 ─────────────────
   {
     id: 2, slug: '02',
     title: 'Prompt Mühendisliği',
@@ -78,29 +81,46 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 1',
     color: C.acc,
     hours: 6,
-    intro: 'Prompt anatomisi, Few-shot, CoT, yapılandırılmış çıktı ve prompt güvenliği. Türkçe için özel teknikler.',
+    intro: 'Promptun 6 yapı taşı, few-shot, Chain-of-Thought, yapılandırılmış çıktı ve prompt güvenliği.',
     topics: [
-      'Prompt anatomisi: Rol + Bağlam + Görev + Kısıt + Format + Örnek',
-      'Zero-shot, One-shot, Few-shot — ne zaman hangisi?',
-      'Chain-of-Thought (adım adım düşündürme), "önce planla, sonra yaz"',
-      'Yapılandırılmış çıktı: tablo, JSON, markdown, listeleme',
-      'Türkçe için özel teknikler: dil kilidi, kalıp ifadeler, ölçek',
-      'Prompt zincirleri: 1. taslak → 2. eleştir → 3. düzelt',
-      'Prompt enjeksiyonu, jailbreak ve güvenli prompt tasarımı',
-      'Prompt kütüphanesi tutmak: Notion, GitHub, Gem, Project',
+      { icon: '🎭', title: 'Rol + Bağlam + Görev', detail: 'Modele "kim olduğunu, hangi durumda, ne yapacağını" net söyle. İlk üç temel taş.' },
+      { icon: '📐', title: 'Kısıt + Format + Örnek', detail: 'Sınırlar (dil, ton, uzunluk), çıktı yapısı (JSON/tablo) ve few-shot örnekler.' },
+      { icon: '🪜', title: 'Chain-of-Thought', detail: '"Adım adım düşün" sihirli kelimesi karmaşık akıl yürütmede %20+ doğruluk getirir.' },
+      { icon: '🇹🇷', title: 'Türkçe için özel teknikler', detail: 'Dil kilidi, kalıp ifadeler, deyimler — modeli sapmadan tutmanın yolları.' },
+      { icon: '🛡️', title: 'Prompt güvenliği', detail: 'Prompt injection, jailbreak, savunma stratejileri — promptu mühendislik gibi tasarla.' },
+      { icon: '📚', title: 'Prompt kütüphanesi', detail: 'Notion / GitHub / Gem / Project üzerinde versiyonlanabilir prompt arşivi tut.' },
+    ],
+    specialSlides: [
+      { type: 'iconGrid', title: 'Promptun 6 Yapı Taşı', items: [
+        { emoji: '🎭', title: 'ROL', desc: '"Sen 20 yıllık bir öğretmensin..."' },
+        { emoji: '🌍', title: 'BAĞLAM', desc: 'Hedef kitle, kurum, kısıtlar' },
+        { emoji: '🎯', title: 'GÖREV', desc: 'Net fiil + somut çıktı' },
+        { emoji: '📐', title: 'KISIT', desc: 'Dil, uzunluk, ton, yasaklar' },
+        { emoji: '📋', title: 'FORMAT', desc: 'JSON, tablo, markdown' },
+        { emoji: '💡', title: 'ÖRNEK', desc: '1-3 few-shot örnek' },
+      ]},
+      { type: 'matrix', title: 'Zero / One / Few-Shot Karşılaştırma',
+        columns: ['Kriter', 'Zero-shot', 'One-shot', 'Few-shot'],
+        rows: [
+          { label: 'Örnek sayısı', values: ['0', '1', '2-5'] },
+          { label: 'Doğruluk', values: ['Düşük', 'Orta', 'Yüksek'] },
+          { label: 'Token maliyeti', values: ['Düşük', 'Orta', 'Yüksek'] },
+          { label: 'Kullanım', values: ['Genel sorular', 'Format kopyalama', 'Sınıflandırma'] },
+        ]
+      },
     ],
     libraries: ['ChatGPT', 'Gemini Studio', 'Claude', 'Notion'],
     notebooks: [
-      { name: 'hafta02_prompt_anatomi.ipynb', desc: 'Yan yana 10 örnek prompt çözümlemesi' },
-      { name: 'hafta02_few_shot_atolye.ipynb', desc: 'Duygu analizi, sınıflandırma — zero/one/few-shot' },
-      { name: 'hafta02_cot_matematik_mantik.ipynb', desc: 'Chain-of-Thought ile 5 mantık bulmacası' },
-      { name: 'hafta02_yapilandirilmis_cikti.ipynb', desc: 'JSON, tablo, markdown şablonları' },
-      { name: 'hafta02_prompt_kutuphanesi_sablon.ipynb', desc: 'Notion / Obsidian prompt kütüphanesi' },
+      { name: 'hafta02_prompt_anatomi.ipynb', desc: 'Yan yana 10 örnek prompt çözümlemesi', dur: '30 dk' },
+      { name: 'hafta02_few_shot_atolye.ipynb', desc: 'Duygu analizi, zero/one/few-shot kıyas', dur: '40 dk' },
+      { name: 'hafta02_cot_matematik_mantik.ipynb', desc: 'CoT ile 5 mantık bulmacası', dur: '25 dk' },
+      { name: 'hafta02_yapilandirilmis_cikti.ipynb', desc: 'JSON, tablo, markdown şablonları', dur: '20 dk' },
+      { name: 'hafta02_prompt_kutuphanesi_sablon.ipynb', desc: 'Notion / Obsidian arşiv yapısı', dur: '15 dk' },
     ],
     assignments: [
-      'Aynı görev için 5 farklı prompt versiyonu yaz, sonuçları rubrik ile puanla',
-      'Kendi mesleğine yönelik 10 prompt\'tan oluşan "Altın Prompt Kütüphanesi" hazırla',
-      'Bir öğrenci/çalışan ödev değerlendirme prompt\'u tasarla (rubrik + örnek + JSON)',
+      'Aynı görevi 5 farklı prompt versiyonuyla çalıştır, sonuçları rubrik ile puanla',
+      'Kendi mesleğine özel 10 prompt\'tan oluşan "Altın Prompt Kütüphanesi" hazırla',
+      'Bir öğrenci/çalışan ödev değerlendirme prompt\'u tasarla (rubrik + örnek + JSON çıktı)',
     ],
     resources: [
       { label: 'docs/Prompt yazma.docx', url: 'docs/' },
@@ -108,12 +128,15 @@ const WEEKS = [
       { label: 'Learn Prompting (TR)', url: 'learnprompting.org' },
     ],
     takeaways: [
-      'İyi prompt 6 unsurun (rol, bağlam, görev, kısıt, format, örnek) bilinçli kombinasyonudur.',
-      'Few-shot örnekler %80 hatayı çözer; CoT karmaşık akıl yürütme için olmazsa olmaz.',
+      '6 yapı taşı (rol+bağlam+görev+kısıt+format+örnek) bilinçli birleştirildiğinde %80 hata düşer.',
+      'Few-shot 2-5 örnekle çözüm; CoT karmaşık akıl yürütme için olmazsa olmaz.',
       'Prompt güvenliği bir mühendislik disiplini — enjeksiyon savunması başından planlanır.',
     ],
     quote: 'Doğru soru, doğru cevabın yarısıdır.',
+    quoteAuthor: 'Konfüçyüs',
   },
+
+  // ───────────────── HAFTA 3 ─────────────────
   {
     id: 3, slug: '03',
     title: 'Sohbet Asistanları',
@@ -122,43 +145,58 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 1',
     color: C.acc,
     hours: 6,
-    intro: 'ChatGPT, Gemini, Claude, Grok, DeepSeek — özelliklerin, maliyetlerin ve Türkçe performansların kıyası. Custom GPT, Gem, Project oluşturma atölyesi.',
+    intro: 'ChatGPT, Gemini, Claude, Grok, DeepSeek — özellikleri, maliyetleri, Türkçe performansları.',
     topics: [
-      'ChatGPT (GPT-5/o3): Custom GPTs, Projects, Canvas, Code Interpreter, Memory, Tasks',
-      'Gemini (2.5 Pro/Flash): Gems, Gemini Live, Deep Research, 2M token context',
-      'Claude (Sonnet 4.6/Opus 4.7): Projects, Artifacts, Computer Use, MCP',
-      'Grok (3): X entegrasyonu, gerçek zamanlı arama, Think mode',
-      'DeepSeek (V3/R1): Ücretsiz reasoning, açık ağırlık',
-      'Perplexity, You.com, Phind: Arama tabanlı asistanlar',
-      'Türkçe modeller: Trendyol-LLM, KocLM, Cosmos, Llama-Türk',
-      'Karşılaştırma matrisi: maliyet, hız, doğruluk, gizlilik',
-      'Custom GPT / Gem / Project oluşturma — adım adım',
+      { icon: '🤖', title: 'ChatGPT (GPT-5/o3)', detail: 'Custom GPTs, Projects, Canvas, Code Interpreter, Memory. Genel amaçlı en güçlü.' },
+      { icon: '✨', title: 'Gemini (2.5 Pro/Flash)', detail: 'Gems, 2M token context, Deep Research, Türkiye direkt erişim — Türkçe için güçlü.' },
+      { icon: '🪶', title: 'Claude (Sonnet 4.6/Opus 4.7)', detail: 'Projects, Artifacts, Computer Use, MCP — kod ve uzun yazı için lider.' },
+      { icon: '🚀', title: 'Grok + DeepSeek', detail: 'Grok: X gerçek zamanlı arama, Think mode. DeepSeek R1: ücretsiz reasoning, açık ağırlık.' },
+      { icon: '🔍', title: 'Arama tabanlı', detail: 'Perplexity, You.com, Phind — kaynak gösteren, güncel webdir bilgisi.' },
+      { icon: '🇹🇷', title: 'Türkçe modeller', detail: 'Trendyol-LLM, KocLM, Cosmos, Llama-Türk — yerli ekosistem keşfi.' },
+      { icon: '⚙️', title: 'Custom GPT/Gem/Project', detail: 'Kendi asistanını yarat — sistem prompt + bilgi tabanı + paylaşım.' },
+    ],
+    specialSlides: [
+      { type: 'matrix', title: '5 Asistan Detaylı Kıyas',
+        columns: ['Kriter', 'ChatGPT', 'Gemini', 'Claude', 'Grok', 'DeepSeek'],
+        rows: [
+          { label: 'Aylık ücret', values: ['$20', '$19', '$20', '$8', 'Free'] },
+          { label: 'Türkçe', values: ['İyi', 'Çok iyi', 'İyi', 'Orta', 'Orta'] },
+          { label: 'Kod', values: ['Çok iyi', 'İyi', 'Mükemmel', 'Orta', 'İyi'] },
+          { label: 'Reasoning', values: ['o3', '2.5 Pro', 'Opus 4.7', 'Think', 'R1'] },
+          { label: 'Context', values: ['256K', '2M', '200K', '256K', '128K'] },
+          { label: 'Image gen', values: ['DALL-E 3', 'Imagen 3', 'Yok', 'Aurora', 'Yok'] },
+          { label: 'Türkiye erişim', values: ['Direkt', 'Direkt', 'Direkt', 'X üyeliği', 'Direkt'] },
+        ]
+      },
     ],
     libraries: ['ChatGPT', 'Gemini', 'Claude', 'Grok', 'DeepSeek', 'Perplexity'],
     notebooks: [
-      { name: 'hafta03_asistan_kiyas_matrisi.ipynb', desc: '10 görev × 5 asistan kıyas tablosu' },
-      { name: 'hafta03_chatgpt_custom_gpt.ipynb', desc: 'Kendi GPT\'ni yap — adım adım rehber' },
-      { name: 'hafta03_gemini_gem_olustur.ipynb', desc: 'Gemini Gems ile kişisel asistan' },
-      { name: 'hafta03_claude_projects_artifacts.ipynb', desc: 'Claude Projects ve Artifacts' },
-      { name: 'hafta03_perplexity_arastirma_atolyesi.ipynb', desc: 'Perplexity Spaces araştırma akışı' },
+      { name: 'hafta03_asistan_kiyas_matrisi.ipynb', desc: '10 görev × 5 asistan kıyas tablosu', dur: '45 dk' },
+      { name: 'hafta03_chatgpt_custom_gpt.ipynb', desc: 'Kendi GPT\'ni yap — adım adım', dur: '30 dk' },
+      { name: 'hafta03_gemini_gem_olustur.ipynb', desc: 'Gemini Gems atölyesi', dur: '25 dk' },
+      { name: 'hafta03_claude_projects_artifacts.ipynb', desc: 'Claude Projects + Artifacts', dur: '25 dk' },
+      { name: 'hafta03_perplexity_arastirma_atolyesi.ipynb', desc: 'Perplexity Spaces araştırma akışı', dur: '20 dk' },
     ],
     assignments: [
       'Aynı 10 mesleki soruyu 5 asistana sor, kıyas raporu yaz',
-      'Kendi alanına özel 1 Custom GPT + 1 Gem + 1 Claude Project yarat',
-      'Aile üyesi/iş arkadaşı için "kişisel asistan paneli" hazırla',
+      'Kendi alanına özel 1 Custom GPT + 1 Gem + 1 Claude Project yarat — link paylaş',
+      'Aile/iş için "kişisel asistan paneli" hazırla (hangi araç, hangi durumda)',
     ],
     resources: [
       { label: 'OpenAI Help Center', url: 'help.openai.com' },
-      { label: 'Google AI — Gemini', url: 'gemini.google.com' },
-      { label: 'Anthropic — Claude', url: 'anthropic.com/news' },
+      { label: 'Google AI Gemini', url: 'gemini.google.com' },
+      { label: 'Anthropic Claude', url: 'anthropic.com' },
     ],
     takeaways: [
-      'Tek bir asistan yetmez — görev tipine göre seçim yapılır (kod/araştırma/yaratıcı/Türkçe).',
-      'Custom GPT, Gem ve Claude Project ile asistanlarını "kişiselleştirmek" verimlilik katlar.',
+      'Tek asistan yetmez — görev tipine göre seçim. Kod/araştırma/yaratıcı/Türkçe farklı modeller.',
+      'Custom GPT, Gem ve Project ile asistanlarını "kişiselleştirmek" verimliliği katlar.',
       'Türkçe için Gemini ve Claude güçlü; akıl yürütmede o3/R1/Opus öne çıkar.',
     ],
     quote: 'Aracını seç, ustalaş, sonra başkasına öğret.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 4 ─────────────────
   {
     id: 4, slug: '04',
     title: 'NotebookLM ve Bilgi Yönetimi',
@@ -167,27 +205,33 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 1',
     color: C.acc,
     hours: 6,
-    intro: 'NotebookLM Uzmanlık Döngüsü ile kendi PDF\'lerinden, web içeriklerinden ve YouTube\'dan kişisel bilgi tabanı oluştur. Türkçe podcast üretimi.',
+    intro: 'NotebookLM Uzmanlık Döngüsü ile kendi PDF\'lerinden bilgi tabanı, Türkçe podcast üretimi.',
     topics: [
-      'NotebookLM nedir, neden devrimsel — RAG\'ın halka açılmış hâli',
-      'Uzmanlık Döngüsü: Kaynak Topla → Sorgula → Değer Yarat',
-      'Kaynak türleri: PDF, Google Docs, web URL, YouTube, Markdown',
-      'Audio Overview ile Türkçe podcast üretimi',
-      'Mind Map, Briefing Doc, Study Guide, Timeline çıktıları',
-      'NotebookLM Plus özellikleri: paylaşım, analitik',
-      'Alternatifler: Google AI Studio, Claude Projects, ChatGPT Knowledge',
-      'Akademik, eğitim ve iş uygulamaları',
+      { icon: '📚', title: 'NotebookLM nedir', detail: 'Google\'ın halka açtığı RAG aracı — 50+ kaynaktan oluşan kendi bilgi tabanı.' },
+      { icon: '🔄', title: 'Uzmanlık Döngüsü', detail: 'Kaynak Topla → Sorgula → Değer Yarat. Eğitmenin yeni okuma akışı.' },
+      { icon: '📂', title: 'Kaynak türleri', detail: 'PDF, Google Docs/Slides, web URL, YouTube, Markdown, paste — toplam 50/notebook.' },
+      { icon: '🎙️', title: 'Audio Overview', detail: 'Türkçe destekli podcast üretimi — 2 AI sunucu, doğal sohbet, indirilebilir MP3.' },
+      { icon: '🗺️', title: 'Mind Map + Study Guide', detail: 'Kaynaklarını görsel haritaya, briefing dökümanına, sınav rehberine çevir.' },
+      { icon: '🆚', title: 'Alternatifler', detail: 'Claude Projects, ChatGPT Knowledge, AI Studio Files — hangisi ne için.' },
+    ],
+    specialSlides: [
+      { type: 'pipeline', title: 'NotebookLM Uzmanlık Döngüsü', steps: [
+        { emoji: '📥', label: 'KAYNAK TOPLA', sub: 'PDF, web, YouTube, Docs' },
+        { emoji: '❓', label: 'SORGULA', sub: 'Sorularla bilgiyi süz' },
+        { emoji: '✨', label: 'ÜRET', sub: 'Mind map, podcast, özet' },
+        { emoji: '🚀', label: 'PAYLAŞ', sub: 'Sınıf, ekip, kanal' },
+      ]},
     ],
     libraries: ['NotebookLM', 'Google AI Studio', 'Claude Projects'],
     notebooks: [
-      { name: 'hafta04_notebooklm_kurulum_rehber.ipynb', desc: 'NotebookLM\'e ilk adım — ekran görüntülü' },
-      { name: 'hafta04_kendi_kitabini_konustur.ipynb', desc: '5 PDF, 20 soruluk doğruluk testi' },
-      { name: 'hafta04_audio_overview_podcast.ipynb', desc: 'Türkçe podcast üretimi' },
-      { name: 'hafta04_mind_map_studyguide.ipynb', desc: 'Mind Map ve Study Guide ile öğrenme' },
-      { name: 'hafta04_alternatif_araclar_kiyas.ipynb', desc: 'NotebookLM vs Claude vs ChatGPT' },
+      { name: 'hafta04_notebooklm_kurulum_rehber.ipynb', desc: 'NotebookLM\'e ilk adım — ekran görüntülü', dur: '20 dk' },
+      { name: 'hafta04_kendi_kitabini_konustur.ipynb', desc: '5 PDF, 20 soru-cevap testi', dur: '40 dk' },
+      { name: 'hafta04_audio_overview_podcast.ipynb', desc: 'Türkçe podcast üretimi', dur: '30 dk' },
+      { name: 'hafta04_mind_map_studyguide.ipynb', desc: 'Mind Map ve Study Guide', dur: '20 dk' },
+      { name: 'hafta04_alternatif_araclar_kiyas.ipynb', desc: 'NotebookLM vs Claude vs ChatGPT', dur: '25 dk' },
     ],
     assignments: [
-      'Kendi alanından 10 PDF/URL ile NotebookLM kur, 20 soruluk test',
+      'Kendi alanından 10 PDF/URL ile NotebookLM kur, 20 soruluk doğruluk testi',
       'Bir konuda 20 dakikalık Türkçe Audio Overview podcast üret, kanal aç',
       'Bir öğrenciye/çalışana NotebookLM eğitimi ver (mini sunum)',
     ],
@@ -198,11 +242,14 @@ const WEEKS = [
     ],
     takeaways: [
       'NotebookLM, herkes için RAG — PDF\'inle konuşmanın en kolay yolu.',
-      'Audio Overview, Türkçe destekli podcast üretiyor — eğitim materyali için altın değerinde.',
+      'Audio Overview Türkçe podcast üretiyor — eğitim materyali için altın değerinde.',
       'Mind Map çıktısı bir kitabı 5 dakikada görselleştirir.',
     ],
     quote: 'Bilgi, yapılandırılmadan değer üretmez.',
+    quoteAuthor: 'Peter Drucker (uyarlanmış)',
   },
+
+  // ───────────────── HAFTA 5 ─────────────────
   {
     id: 5, slug: '05',
     title: 'Görsel Üretim Atölyesi',
@@ -211,28 +258,36 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 2',
     color: C.sec,
     hours: 6,
-    intro: 'DALL-E, Midjourney, Imagen, Flux ve Türkiye yapımı Nano Banana ile diffusion modelleri. Prompt yapısı, kontrol parametreleri, telif.',
+    intro: 'DALL-E, Midjourney, Imagen, Flux ve Türkiye yapımı Nano Banana ile diffusion modelleri.',
     topics: [
-      'Diffusion sezgisi: gürültüden anlam çıkarma',
-      'Gemini Imagen 3 + Google AI Studio (ücretsiz)',
-      'DALL-E 3 (ChatGPT içinde) ve Sora image',
-      'Midjourney v6.1 + Niji (Discord ve Web)',
-      'Ideogram 2.0 — en iyi metin yazımı',
-      'Flux (Pro/Dev/Schnell) — açık kaynak en iyi',
-      'Krea, Leonardo, Magnific (upscaler)',
-      'Nano Banana — Türkiye yapımı',
-      'Prompt yapısı: özne + ortam + ışık + stil + kamera + negatif',
-      'Aspect ratio, seed, CFG, sampler, ControlNet, IP-Adapter',
-      'Telif, watermark, C2PA, "AI etiketi" yasal durumu',
+      { icon: '🌫️', title: 'Diffusion sezgisi', detail: 'Gürültüden anlam çıkarma — diffusion modellerinin altındaki temel mantık.' },
+      { icon: '🟢', title: 'Gemini Imagen 3', detail: 'Google AI Studio\'dan ücretsiz, Türkiye direkt — başlangıç için ideal.' },
+      { icon: '🎨', title: 'DALL-E 3 + Midjourney', detail: 'ChatGPT\'de DALL-E, Discord/Web\'de Midjourney — sanat değeri en yüksek.' },
+      { icon: '✍️', title: 'Ideogram + Flux', detail: 'Ideogram metin yazımında lider, Flux açık kaynak en iyi.' },
+      { icon: '🍌', title: 'Nano Banana', detail: 'Türkiye yapımı görsel üretim aracı — yerel ekosistem, KVKK uyumlu.' },
+      { icon: '🎯', title: 'Prompt yapısı', detail: 'Özne + ortam + ışık + stil + kamera + negatif — 6 unsurlu görsel formülü.' },
+      { icon: '⚖️', title: 'Telif ve etik', detail: 'C2PA standardı, watermark, "AI etiketi" yasal durumu.' },
+    ],
+    specialSlides: [
+      { type: 'iconGrid', title: '8 Görsel Üretim Aracı', items: [
+        { emoji: '🟢', title: 'Gemini Imagen', desc: 'Ücretsiz, Türkçe' },
+        { emoji: '🎨', title: 'DALL-E 3', desc: 'ChatGPT içinde' },
+        { emoji: '🌟', title: 'Midjourney', desc: 'Sanat değeri lider' },
+        { emoji: '✍️', title: 'Ideogram', desc: 'Metin yazımı' },
+        { emoji: '⚡', title: 'Flux', desc: 'Açık kaynak' },
+        { emoji: '🎭', title: 'Krea + Leonardo', desc: 'Yaratıcı' },
+        { emoji: '🍌', title: 'Nano Banana', desc: 'Türkiye yapımı' },
+        { emoji: '🔍', title: 'Magnific', desc: 'Upscaler' },
+      ]},
     ],
     libraries: ['Gemini Imagen', 'DALL-E 3', 'Midjourney', 'Ideogram', 'Flux', 'Nano Banana'],
     notebooks: [
-      { name: 'hafta05_gorsel_arac_kiyasla.ipynb', desc: '5 araç × 5 prompt karşılaştırma posteri' },
-      { name: 'hafta05_gemini_imagen_atolye.ipynb', desc: 'Google AI Studio ile ücretsiz görsel' },
-      { name: 'hafta05_midjourney_atolye.ipynb', desc: 'Midjourney Discord + Web — adım adım' },
-      { name: 'hafta05_flux_huggingface.ipynb', desc: 'Flux Schnell — HF Spaces ücretsiz' },
-      { name: 'hafta05_nano_banana_uygulama.ipynb', desc: 'Nano Banana atölyesi' },
-      { name: 'hafta05_kamera_acilari_atolye.ipynb', desc: 'Kamera açıları, ışık, stil prompt' },
+      { name: 'hafta05_gorsel_arac_kiyasla.ipynb', desc: '5 araç × 5 prompt karşılaştırma posteri', dur: '50 dk' },
+      { name: 'hafta05_gemini_imagen_atolye.ipynb', desc: 'Google AI Studio ile ücretsiz görsel', dur: '30 dk' },
+      { name: 'hafta05_midjourney_atolye.ipynb', desc: 'Midjourney Discord + Web', dur: '40 dk' },
+      { name: 'hafta05_flux_huggingface.ipynb', desc: 'Flux Schnell HF Spaces', dur: '25 dk' },
+      { name: 'hafta05_nano_banana_uygulama.ipynb', desc: 'Nano Banana atölyesi', dur: '20 dk' },
+      { name: 'hafta05_kamera_acilari_atolye.ipynb', desc: 'Kamera/ışık/stil prompt', dur: '30 dk' },
     ],
     assignments: [
       'Aynı sahneyi 4 farklı modelde üret, kıyaslama posteri yap',
@@ -240,18 +295,20 @@ const WEEKS = [
       'Tutarlı bir karakter yarat — 5 farklı poz, aynı yüz',
     ],
     resources: [
-      { label: 'docs/Görsel üretim Rehberi.docx', url: 'docs/' },
-      { label: 'docs/Kamera açıları.docx', url: 'docs/' },
-      { label: 'docs/Nano Banana Uygulamaları.docx', url: 'docs/' },
-      { label: 'Lexica Prompt Galerisi', url: 'lexica.art' },
+      { label: 'docs/Görsel üretim Rehberi', url: 'docs/' },
+      { label: 'docs/Kamera açıları', url: 'docs/' },
+      { label: 'docs/Nano Banana Uygulamaları', url: 'docs/' },
     ],
     takeaways: [
-      '6 öğeli prompt yapısı (özne+ortam+ışık+stil+kamera+negatif) her modelde işe yarar.',
-      'Tutarlı karakter için seed sabitleme + IP-Adapter olmazsa olmaz.',
+      '6 öğeli prompt yapısı her modelde işe yarar — özne+ortam+ışık+stil+kamera+negatif.',
+      'Tutarlı karakter için seed sabitleme + IP-Adapter kritik.',
       'Telif ve C2PA etiketi — eğitim/ticari kullanımda yasal sınırı bil.',
     ],
     quote: 'Hayal gücü, doğru prompt ile pikselleşir.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 6 ─────────────────
   {
     id: 6, slug: '06',
     title: 'Ses, TTS ve Müzik',
@@ -260,25 +317,32 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 2',
     color: C.sec,
     hours: 6,
-    intro: 'ElevenLabs Türkçe, OpenAI TTS, Whisper STT, Suno müzik. Voice cloning etiği, NotebookLM Audio Overview, lip sync avatar.',
+    intro: 'ElevenLabs Türkçe, OpenAI TTS, Whisper STT, Suno müzik. Voice cloning etiği ve KVKK.',
     topics: [
-      'TTS evrimi: robotik sesten doğal sese',
-      'ElevenLabs Multilingual v2 — Türkçe ses, klonlama',
-      'OpenAI TTS (gpt-4o-tts) ve Gemini TTS',
-      'Azure Speech ve Google Cloud TTS (kurumsal)',
-      'NotebookLM Audio Overview — Türkçe podcast',
-      'Whisper (STT): video → transkript → SRT altyazı',
-      'Müzik üretimi: Suno v4, Udio, Riffusion',
-      'Voice cloning etiği: onay protokolü, KVKK',
-      'Lip sync: HeyGen, D-ID, Hedra konuşan avatar',
+      { icon: '🔊', title: 'TTS evrimi', detail: 'Robotik sesten doğal Türkçe sese — ElevenLabs Multilingual v2 mevcut altın standart.' },
+      { icon: '🎤', title: 'OpenAI + Gemini TTS', detail: 'gpt-4o-tts ve Gemini TTS — bulut tabanlı, Türkçe destekli.' },
+      { icon: '🏢', title: 'Kurumsal: Azure + GCP', detail: 'KVKK uyumu için Azure Speech ve Google Cloud TTS — daha katı veri kontrolü.' },
+      { icon: '🎙️', title: 'Whisper STT', detail: 'Açık kaynak transkript — Türkçe %95+ doğruluk. Whisper large-v3 best.' },
+      { icon: '🎵', title: 'Müzik üretimi', detail: 'Suno v4 (sözlü şarkı), Udio, Riffusion — Türkçe destekli, eğitim için ideal.' },
+      { icon: '⚖️', title: 'Voice cloning etiği', detail: 'Onay protokolü zorunlu — KVKK + deepfake yasası — yazılı izin olmadan klonlama yasaktır.' },
+      { icon: '🎭', title: 'Lip sync avatar', detail: 'HeyGen, D-ID, Hedra — konuşan avatar üretimi (Hafta 7\'de derinleşeceğiz).' },
+    ],
+    specialSlides: [
+      { type: 'timeline', title: 'TTS Evrimi', points: [
+        { year: '2017', title: 'Tacotron', desc: 'Google ilk doğal TTS' },
+        { year: '2019', title: 'WaveNet', desc: 'DeepMind kalitesi' },
+        { year: '2021', title: 'VITS', desc: 'Açık kaynak' },
+        { year: '2023', title: 'ElevenLabs', desc: 'Türkçe Multilingual' },
+        { year: '2025', title: 'Gemini Live', desc: 'Real-time çeviri' },
+      ]},
     ],
     libraries: ['ElevenLabs', 'OpenAI TTS', 'Whisper', 'Suno', 'NotebookLM'],
     notebooks: [
-      { name: 'hafta06_tts_arac_kiyasla.ipynb', desc: 'Aynı metin × 5 farklı TTS aracı' },
-      { name: 'hafta06_elevenlabs_atolye.ipynb', desc: 'Ses klonlama + Türkçe örnek' },
-      { name: 'hafta06_whisper_transkript.ipynb', desc: 'Kendi videondan altyazı (Whisper Colab)' },
-      { name: 'hafta06_suno_egitim_jingle.ipynb', desc: 'Suno ile sınıf jingle\'ı' },
-      { name: 'hafta06_voice_clone_etik.ipynb', desc: 'Voice cloning onay protokolü atölyesi' },
+      { name: 'hafta06_tts_arac_kiyasla.ipynb', desc: 'Aynı metin × 5 TTS aracı', dur: '30 dk' },
+      { name: 'hafta06_elevenlabs_atolye.ipynb', desc: 'Ses klonlama + Türkçe', dur: '40 dk' },
+      { name: 'hafta06_whisper_transkript.ipynb', desc: 'Video → SRT altyazı (Whisper Colab)', dur: '35 dk' },
+      { name: 'hafta06_suno_egitim_jingle.ipynb', desc: 'Sınıf jingle\'ı üret', dur: '20 dk' },
+      { name: 'hafta06_voice_clone_etik.ipynb', desc: 'Onay protokolü atölyesi', dur: '25 dk' },
     ],
     assignments: [
       'Tanıtım videon için 3 farklı TTS sesiyle dublaj üret, A/B test',
@@ -292,11 +356,14 @@ const WEEKS = [
     ],
     takeaways: [
       'ElevenLabs Multilingual v2, Türkçe TTS\'in mevcut altın standardı.',
-      'Whisper free + open-source; uzun videolarda %95+ doğruluk Türkçede.',
+      'Whisper free + open-source; Türkçede %95+ doğruluk.',
       'Voice cloning yasal yükümlülük getirir — onay protokolü olmadan klonlama yapma.',
     ],
     quote: 'Ses, anlamın taşıyıcısıdır.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 7 ─────────────────
   {
     id: 7, slug: '07',
     title: 'Video, Avatar ve Animasyon',
@@ -305,30 +372,37 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 2',
     color: C.sec,
     hours: 6,
-    intro: 'Sora, Veo, Kling, Runway, HeyGen. Multimodal Gemini ile uzun video özetleme. Senaryodan videoya uçtan uca pipeline.',
+    intro: 'Sora, Veo, Kling, Runway, HeyGen. Multimodal Gemini ile video özetleme. Uçtan uca pipeline.',
     topics: [
-      'Sora 2 (OpenAI) — text-to-video, image-to-video',
-      'Veo 3 (Google) — Gemini Studio ücretsiz katman',
-      'Kling, Runway Gen-3, Luma, Pika 2.0, Hailuo',
-      'Wan 2.2 (Alibaba açık kaynak) — lokal',
-      'Avatar: HeyGen (Türkçe), Synthesia, D-ID',
-      'Animasyon: Animate Diff, LeiaPix, Genmo',
-      'Video editleme YZ: Descript, CapCut AI, Captions',
-      'Multimodal Gemini: uzun videodan özet, soru-cevap',
-      'Pipeline: senaryo → görsel → ses → video → edit',
+      { icon: '🎬', title: 'Sora 2 + Veo 3', detail: 'OpenAI Sora ve Google Veo — text-to-video ve image-to-video lider modeller.' },
+      { icon: '🎥', title: 'Kling/Runway/Luma/Pika', detail: 'Çinli ve ABD\'li alternatifler — 5-10 saniyelik klipler, hızlı üretim.' },
+      { icon: '🐲', title: 'Wan 2.2', detail: 'Alibaba açık kaynak — lokal kullanım için ideal (16GB+ VRAM önerilir).' },
+      { icon: '🗣️', title: 'Avatar: HeyGen', detail: 'HeyGen Türkçe destekli, Synthesia ve D-ID alternatifleri — eğitim videosu için.' },
+      { icon: '✨', title: 'Animasyon araçları', detail: 'Animate Diff, LeiaPix, Genmo — sabit görselden hareketli içerik.' },
+      { icon: '🎞️', title: 'Video editleme YZ', detail: 'Descript (otomatik kesim), CapCut AI, Captions — son düzenleme katmanı.' },
+      { icon: '🧠', title: 'Multimodal Gemini', detail: 'Uzun video → özet + soru-cevap — Gemini 2.5\'in 2M context\'i ile.' },
+    ],
+    specialSlides: [
+      { type: 'pipeline', title: 'Uçtan Uca Video Pipeline', steps: [
+        { emoji: '✍️', label: 'SENARYO', sub: 'LLM (ChatGPT/Gemini)' },
+        { emoji: '🎨', label: 'GÖRSEL', sub: 'Imagen / Midjourney' },
+        { emoji: '🔊', label: 'SES', sub: 'ElevenLabs / OpenAI TTS' },
+        { emoji: '🎬', label: 'VİDEO', sub: 'Veo / Runway / Sora' },
+        { emoji: '✂️', label: 'EDİT', sub: 'CapCut AI / Descript' },
+      ]},
     ],
     libraries: ['Sora', 'Veo', 'Runway', 'HeyGen', 'CapCut AI', 'Wan 2.2'],
     notebooks: [
-      { name: 'hafta07_video_arac_kiyasla.ipynb', desc: '5 video aracını aynı promptla' },
-      { name: 'hafta07_veo_gemini_studio.ipynb', desc: 'Veo 3 ile ilk video' },
-      { name: 'hafta07_heygen_egitim_avatari.ipynb', desc: 'Türkçe konuşan avatar' },
-      { name: 'hafta07_uzun_video_ozetle.ipynb', desc: 'Gemini ile 1 saatlik dersi 5 paragrafa' },
-      { name: 'hafta07_uctan_uca_pipeline.ipynb', desc: 'Senaryodan videoya tek başına' },
+      { name: 'hafta07_video_arac_kiyasla.ipynb', desc: '5 video aracını aynı promptla', dur: '40 dk' },
+      { name: 'hafta07_veo_gemini_studio.ipynb', desc: 'Veo 3 ile ilk video', dur: '30 dk' },
+      { name: 'hafta07_heygen_egitim_avatari.ipynb', desc: 'Türkçe konuşan avatar', dur: '35 dk' },
+      { name: 'hafta07_uzun_video_ozetle.ipynb', desc: 'Gemini ile 1 saatlik dersi 5 paragrafa', dur: '25 dk' },
+      { name: 'hafta07_uctan_uca_pipeline.ipynb', desc: 'Senaryodan videoya tek başına', dur: '60 dk' },
     ],
     assignments: [
       'Bir ders konusu için 60 saniyelik tanıtım videosu (uçtan uca)',
-      'Tarihi/edebi karakteri canlandıran 3 dk avatar dersi',
-      '30 dk öğrenci sunumunu izleyip otomatik geri bildirim raporu',
+      'Tarihi/edebi karakteri canlandıran 3 dakikalık avatar dersi',
+      '30 dk öğrenci sunumunu izlet, otomatik geri bildirim raporu üret',
     ],
     resources: [
       { label: 'docs/Komuttan Ürüne Üretken YZ.mp4', url: 'docs/' },
@@ -336,12 +410,15 @@ const WEEKS = [
       { label: 'HeyGen', url: 'heygen.com' },
     ],
     takeaways: [
-      'Senaryo + görsel + ses + video bağımsız üretilip CapCut\'ta birleştirilir — pipeline mantığı.',
-      'HeyGen, Türkçe avatar için en olgun seçenek; eğitim videolarında öğretmen-süreklilik sağlar.',
-      'Multimodal Gemini, 1 saatlik videoyu okuyabilir — ders değerlendirmede güçlü.',
+      'Senaryo + görsel + ses + video bağımsız üret, CapCut\'ta birleştir — pipeline mantığı.',
+      'HeyGen Türkçe avatar için en olgun seçenek; eğitim videolarında öğretmen-süreklilik sağlar.',
+      'Multimodal Gemini 1 saatlik videoyu okuyabilir — ders değerlendirmede güçlü.',
     ],
     quote: 'Hikâye akıyorsa, ürün hazır demektir.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 8 ─────────────────
   {
     id: 8, slug: '08',
     title: 'Yazı, Sunum, Doküman, Ofis',
@@ -350,25 +427,33 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 2',
     color: C.sec,
     hours: 6,
-    intro: 'Gamma, Tome, Canva AI ile sunum. Microsoft Copilot 365, Gemini Workspace ile doküman/tablo. PDF asistanları, e-posta ve toplantı otomasyonu.',
+    intro: 'Gamma, Canva AI, Microsoft Copilot, Gemini Workspace. Toplantı asistanları, e-posta otomasyonu.',
     topics: [
-      'Yazma: Notion AI, Grammarly, DeepL Write (Türkçe), Quillbot',
-      'Sunum: Gamma, Tome, Beautiful AI, Canva Magic Design',
-      'Doküman & Tablo: Copilot 365, Gemini Workspace, Excel AI',
-      'PDF asistanları: ChatPDF, AskYourPDF, Humata',
-      'Adobe Firefly: Express, Photoshop, Illustrator',
-      'Tasarım: Figma AI, Framer AI, Uizard',
-      'E-posta otomasyonu: Superhuman, Shortwave',
-      'Toplantı asistanı: Otter, Fireflies, tldv, Zoom AI',
-      'Türkçe ipuçları: dil tonu, resmi yazışma, KVKK',
+      { icon: '✍️', title: 'Yazma araçları', detail: 'Notion AI, Grammarly, DeepL Write (Türkçe), Quillbot — yazıyı kişisel asistanla rafine et.' },
+      { icon: '📊', title: 'Sunum: Gamma + Tome', detail: 'Tek prompt → 20 slaytlık sunum 5 dakikada. Beautiful AI, Canva Magic Design alternatifleri.' },
+      { icon: '📈', title: 'Microsoft Copilot 365', detail: 'Excel formül üretimi, PowerPoint çevirisi, Word taslağı — kurumsal ofis YZ\'si.' },
+      { icon: '🟢', title: 'Gemini Workspace', detail: 'Google Docs/Sheets/Slides içinde Gemini — ücretsiz hesaplarda da var.' },
+      { icon: '📄', title: 'PDF asistanları', detail: 'ChatPDF, AskYourPDF, Humata — uzun dokümanlarla sohbet.' },
+      { icon: '🎨', title: 'Adobe Firefly', detail: 'Express, Photoshop, Illustrator AI özellikleri — profesyonel tasarım.' },
+      { icon: '🎙️', title: 'Toplantı asistanları', detail: 'Otter, Fireflies, tldv, Zoom AI — otomatik özet + aksiyon maddeleri.' },
+    ],
+    specialSlides: [
+      { type: 'iconGrid', title: 'Ofis YZ Araç Seti', items: [
+        { emoji: '📊', title: 'Gamma', desc: 'Sunum 5 dk' },
+        { emoji: '🎨', title: 'Canva AI', desc: 'Tasarım + magic' },
+        { emoji: '🪟', title: 'Copilot 365', desc: 'Excel/PPT/Word' },
+        { emoji: '🟢', title: 'Gemini Workspace', desc: 'Docs/Sheets' },
+        { emoji: '📄', title: 'ChatPDF', desc: 'PDF sohbet' },
+        { emoji: '🎙️', title: 'Otter / tldv', desc: 'Toplantı özeti' },
+      ]},
     ],
     libraries: ['Gamma', 'Canva AI', 'Microsoft Copilot', 'Gemini Workspace', 'ChatPDF', 'Otter'],
     notebooks: [
-      { name: 'hafta08_gamma_sunum_atolye.ipynb', desc: 'Gamma ile 20 slaytlık sunum' },
-      { name: 'hafta08_copilot_excel_otomasyon.ipynb', desc: 'Excel formül + grafik' },
-      { name: 'hafta08_canva_magic_design.ipynb', desc: 'Pazarlama görselleri' },
-      { name: 'hafta08_chatpdf_arastirma.ipynb', desc: 'ChatPDF araştırma akışı' },
-      { name: 'hafta08_toplanti_asistani.ipynb', desc: 'Otter / tldv kıyas' },
+      { name: 'hafta08_gamma_sunum_atolye.ipynb', desc: 'Gamma ile 20 slaytlık sunum', dur: '30 dk' },
+      { name: 'hafta08_copilot_excel_otomasyon.ipynb', desc: 'Excel formül + grafik üretimi', dur: '40 dk' },
+      { name: 'hafta08_canva_magic_design.ipynb', desc: 'Pazarlama görselleri', dur: '25 dk' },
+      { name: 'hafta08_chatpdf_arastirma.ipynb', desc: 'ChatPDF araştırma akışı', dur: '20 dk' },
+      { name: 'hafta08_toplanti_asistani.ipynb', desc: 'Otter / tldv kıyas', dur: '25 dk' },
     ],
     assignments: [
       'Mesleğine özel 20 slaytlık sunumu Gamma + Canva ile üret',
@@ -381,12 +466,15 @@ const WEEKS = [
       { label: 'Google Workspace Gemini', url: 'workspace.google.com' },
     ],
     takeaways: [
-      'Gamma, sunum üretimini 30 dakikadan 5 dakikaya indirir.',
-      'Copilot 365 + Excel — finans/yönetim için tablo otomasyonu sıçraması.',
-      'Toplantı asistanı, herkesin "ekstra üyesi" — özet + aksiyonlar otomatik.',
+      'Gamma sunum üretimini 30 dakikadan 5 dakikaya indirir.',
+      'Copilot 365 + Excel finans/yönetim için sıçrama.',
+      'Toplantı asistanı, "ekibin ekstra üyesi" — özet + aksiyonlar otomatik.',
     ],
     quote: 'İyi yazı, iyi düşüncenin görünür hâlidir.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 9 ─────────────────
   {
     id: 9, slug: '09',
     title: 'Otomasyon ve İş Akışları',
@@ -395,25 +483,30 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 2',
     color: C.sec,
     hours: 6,
-    intro: 'Zapier, Make, n8n ile no-code otomasyon. AI node\'ları ile zincir. Telegram bot, Notion AI, VPS\'te self-hosted n8n kurulum.',
+    intro: 'Zapier, Make, n8n ile no-code otomasyon. AI node\'ları, Telegram bot, Notion AI.',
     topics: [
-      'Otomasyon platformları: Zapier, Make, n8n',
-      'AI node\'ları: OpenAI, Gemini, Anthropic, ElevenLabs',
-      'Tetikleyiciler: e-posta, form, takvim, webhook, Telegram, RSS',
-      'Senaryo: "Yeni ders kaydı → transkript + özet → Drive + Slack"',
-      'Telegram bot otomasyonu — kişisel asistan',
-      'Make Scenarios + AI ile sıfırdan akış',
-      'Notion AI + Database otomasyonları',
-      'n8n self-hosted — Docker / VPS kurulum',
-      'Maliyet, hata yönetimi, gizlilik',
+      { icon: '⚙️', title: 'Zapier + Make + n8n', detail: 'No-code akış araçları — Zapier popüler, Make güçlü, n8n self-hosted.' },
+      { icon: '🤖', title: 'AI node\'ları', detail: 'OpenAI, Gemini, Anthropic, ElevenLabs node\'ları her platforma entegre.' },
+      { icon: '🚦', title: 'Tetikleyiciler', detail: 'E-posta, form, takvim, webhook, Telegram, RSS — her şey otomasyonun başlangıcı.' },
+      { icon: '📩', title: 'Telegram bot otomasyonu', detail: 'Günlük brifing, hava+takvim+haber özet → @MyBot — kişisel asistan.' },
+      { icon: '📋', title: 'Notion AI Database', detail: 'Notion database\'inde AI sütunları — kişisel CRM, proje paneli.' },
+      { icon: '🐳', title: 'n8n self-hosted', detail: 'VPS\'te Docker ile — sınırsız akış, sıfır maliyet, gizlilik max.' },
+      { icon: '💰', title: 'Maliyet ve gizlilik', detail: 'Ücretli katmanlar, hata yönetimi, gizli verilerle çalışma protokolü.' },
+    ],
+    specialSlides: [
+      { type: 'caseStudy', title: 'Senaryo: Günlük Brifing Botu', case: {
+        problem: 'Her sabah hava durumu + takvim + e-posta + haber tek tek 4 farklı kaynaktan kontrol ediliyor — 20 dk israf.',
+        approach: 'n8n\'de Schedule trigger (08:00) → 4 paralel HTTP request → Gemini ile Türkçe özet → Telegram bot.',
+        solution: '20 dk\'lık sabah rutini 30 saniyeye indi. Bot Telegram\'a günlük brifing gönderir, manuel kontrol bitti.',
+      }},
     ],
     libraries: ['Zapier', 'Make', 'n8n', 'Notion AI'],
     notebooks: [
-      { name: 'hafta09_zapier_ilk_zap.ipynb', desc: 'İlk Zap — Gmail → Sheets + GPT' },
-      { name: 'hafta09_make_senaryo.ipynb', desc: 'Make: RSS → ChatGPT → Telegram' },
-      { name: 'hafta09_n8n_kurulum.ipynb', desc: 'n8n Docker kurulum' },
-      { name: 'hafta09_telegram_bot_otomasyon.ipynb', desc: 'Günlük brifing botu (n8n + Gemini)' },
-      { name: 'hafta09_notion_database_ai.ipynb', desc: 'Notion AI Database otomasyonu' },
+      { name: 'hafta09_zapier_ilk_zap.ipynb', desc: 'Gmail → Sheets + GPT özet', dur: '25 dk' },
+      { name: 'hafta09_make_senaryo.ipynb', desc: 'RSS → ChatGPT → Telegram', dur: '30 dk' },
+      { name: 'hafta09_n8n_kurulum.ipynb', desc: 'Docker + ücretsiz katman', dur: '40 dk' },
+      { name: 'hafta09_telegram_bot_otomasyon.ipynb', desc: 'Günlük brifing botu', dur: '35 dk' },
+      { name: 'hafta09_notion_database_ai.ipynb', desc: 'Notion AI Database', dur: '20 dk' },
     ],
     assignments: [
       'Kendi günlük rutinini otomatize eden 1 Zap + 1 Make senaryosu',
@@ -421,17 +514,20 @@ const WEEKS = [
       'Notion\'da AI destekli kişisel CRM/proje paneli',
     ],
     resources: [
-      { label: 'Zapier — Learn AI', url: 'zapier.com/learn/ai' },
-      { label: 'Make Help Center', url: 'make.com/en/help' },
+      { label: 'Zapier Learn AI', url: 'zapier.com/learn/ai' },
+      { label: 'Make Help Center', url: 'make.com/help' },
       { label: 'n8n Docs', url: 'docs.n8n.io' },
     ],
     takeaways: [
-      'Tekrarlayan iş = otomatik iş. n8n + Gemini ile haftada 5+ saat kazanılır.',
-      'Telegram bot, "kişisel asistan"ın en hızlı kanalı; webhook ile her şey bağlanır.',
-      'Self-hosted n8n (VPS), bulut maliyetini sıfıra indirir, gizliliği maxa çıkarır.',
+      'Tekrarlayan iş = otomatik iş. n8n + Gemini ile haftada 5+ saat kazanırsın.',
+      'Telegram bot kişisel asistanın en hızlı kanalı — webhook ile her şey bağlanır.',
+      'Self-hosted n8n bulut maliyetini sıfıra indirir, gizliliği maxa çıkarır.',
     ],
     quote: 'En değerli zaman, başkasına devredilebilen zamandır.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 10 ─────────────────
   {
     id: 10, slug: '10',
     title: 'Eğitimciler İçin Üretken YZ',
@@ -440,30 +536,37 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 3',
     color: C.pri,
     hours: 6,
-    intro: 'MEB rehberi 45+ aracın disipliner uygulanması. MagicSchool, Khanmigo, Diffit, Curipod. Ders planı, ölçme-değerlendirme, akademik dürüstlük.',
+    intro: 'MEB rehberi 45+ aracın disipliner uygulanması. Ders planı, ölçme-değerlendirme, akademik dürüstlük.',
     topics: [
-      'MEB rehberi araçlarını disiplinde uygulama',
-      'Türkçe: Ello, Edufy, Vocabulary.com, Quizlet',
-      'Matematik: MathGPTPro, QANDA, Wolfram, SymboLab',
-      'Fen: Science360, DIY Nano, Toca Lab',
-      'İngilizce: TalkPal AI, Babbel AI, Preply',
-      'Eğitim platformları: MagicSchool, Khanmigo, Diffit, Curipod',
-      'Ders planı + etkinlik üretimi (Gemini Gems)',
-      'Ölçme-değerlendirme: rubrik, soru bankası, otomatik puanlama',
-      'Etkileşimli: Mentimeter AI, Kahoot AI, Quizizz AI',
-      'Akademik dürüstlük: Turnitin AI, GPTZero, atıf protokolü',
-      'Veli iletişimi ve idari yazışma otomasyonu',
+      { icon: '📚', title: 'MEB Yapay Zeka Rehberi', detail: '45+ araç, disiplin başına haritalandırılmış — Türkiye\'nin resmî YZ eğitim kaynağı.' },
+      { icon: '🔢', title: 'Matematik araçları', detail: 'MathGPTPro, QANDA, Wolfram Alpha, SymboLab, Mathway — adım adım çözüm.' },
+      { icon: '🔬', title: 'Fen ve doğa', detail: 'Science360, DIY Nano, Toca Lab — sanal deney ve simülasyon.' },
+      { icon: '🇬🇧', title: 'İngilizce dil', detail: 'TalkPal AI, Babbel AI, Preply — pratik konuşma partneri.' },
+      { icon: '🪄', title: 'Eğitim platformları', detail: 'MagicSchool, Khanmigo, Diffit, Curipod — öğretmenler için all-in-one.' },
+      { icon: '📝', title: 'Ders planı + rubrik', detail: 'Gemini Gems + Custom GPT ile 5E modeli, otomatik soru bankası, rubrik.' },
+      { icon: '🎮', title: 'Etkileşimli sınıf', detail: 'Mentimeter AI, Kahoot AI, Quizizz AI — anlık etkileşim.' },
+      { icon: '⚖️', title: 'Akademik dürüstlük', detail: 'Turnitin AI, GPTZero, atıf protokolü — sınıf kuralları başta belirlenir.' },
+    ],
+    specialSlides: [
+      { type: 'iconGrid', title: 'MEB Rehberi Disipliner Haritası', items: [
+        { emoji: '📖', title: 'Türkçe', desc: 'Ello, Edufy, Quizlet' },
+        { emoji: '🔢', title: 'Matematik', desc: 'MathGPT, QANDA' },
+        { emoji: '🔬', title: 'Fen', desc: 'Science360, DIY Nano' },
+        { emoji: '🇬🇧', title: 'İngilizce', desc: 'TalkPal, Babbel' },
+        { emoji: '🏛️', title: 'Sosyal', desc: 'Tarih + Coğrafya AI' },
+        { emoji: '🎨', title: 'Görsel Sanatlar', desc: 'Magic Design' },
+      ]},
     ],
     libraries: ['MagicSchool', 'Diffit', 'Curipod', 'Khanmigo', 'Kahoot AI', 'Quizizz AI'],
     notebooks: [
-      { name: 'hafta10_meb_rehberi_disipliner_tarama.ipynb', desc: '45+ aracın disipliner haritası' },
-      { name: 'hafta10_dersplani_5e_uretici.ipynb', desc: '5E modeline uygun ders planı' },
-      { name: 'hafta10_soru_bankasi_yapilandirilmis.ipynb', desc: 'JSON çıktılı soru bankası' },
-      { name: 'hafta10_rubrik_otomasyon.ipynb', desc: 'Otomatik rubrik üretimi' },
-      { name: 'hafta10_kahoot_quizizz_ai.ipynb', desc: 'Kahoot AI + Quizizz AI' },
+      { name: 'hafta10_meb_rehberi_disipliner_tarama.ipynb', desc: '45+ aracın haritası', dur: '40 dk' },
+      { name: 'hafta10_dersplani_5e_uretici.ipynb', desc: '5E modeline uygun ders planı', dur: '35 dk' },
+      { name: 'hafta10_soru_bankasi_yapilandirilmis.ipynb', desc: 'JSON çıktılı soru bankası', dur: '30 dk' },
+      { name: 'hafta10_rubrik_otomasyon.ipynb', desc: 'Otomatik rubrik üretimi', dur: '25 dk' },
+      { name: 'hafta10_kahoot_quizizz_ai.ipynb', desc: 'Etkileşimli quiz', dur: '20 dk' },
     ],
     assignments: [
-      'Kendi branşına özel 10 araç testi + sınıfta deneme + rapor',
+      'Branşına özel 10 araç testi + sınıfta deneme + rapor',
       '1 ünitelik (4 ders) plan + etkinlik + ölçme paketi',
       'Velilere YZ kullanımı bilgilendirme broşürü',
     ],
@@ -473,12 +576,15 @@ const WEEKS = [
       { label: 'MagicSchool', url: 'magicschool.ai' },
     ],
     takeaways: [
-      'MEB rehberi, Türk eğitimcisi için altın referans — 45+ aracı kendi branşına haritalandır.',
+      'MEB rehberi Türk eğitimcisi için altın referans — 45+ aracı kendi branşına haritalandır.',
       'Ders planı + soru bankası + rubrik = 3 saatlik haftalık iş yarım saate iner.',
-      'Akademik dürüstlük protokolü olmadan YZ sınıfa girmemeli — atıf kuralları başta belirlenir.',
+      'Akademik dürüstlük protokolü olmadan YZ sınıfa girmemeli — atıf kuralları başta.',
     ],
     quote: 'En iyi öğretmen, öğrenmeye en açık olandır.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 11 ─────────────────
   {
     id: 11, slug: '11',
     title: 'Mesleğe Özel Atölyeler',
@@ -487,43 +593,65 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 3',
     color: C.pri,
     hours: 6,
-    intro: 'Akademisyen (Elicit, Consensus, ResearchRabbit), sağlık/hukuk/finans dikey araçları, yaratıcı/girişimci no-code (Lovable, Bolt.new) — 3 paralel parkur.',
+    intro: 'Akademisyen, sağlık/hukuk/finans, yaratıcı/girişimci — 3 paralel parkur, dikey araçlar.',
     topics: [
-      'AKADEMİK: NotebookLM ileri, Elicit, Consensus',
-      'AKADEMİK: ResearchRabbit + Connected Papers',
-      'AKADEMİK: SciSpace, Scite, Paperpal, Trinka',
-      'AKADEMİK: Atıf yönetimi (Zotero AI, Mendeley AI)',
-      'SAĞLIK: OpenEvidence, Doximity GPT — TTB etik',
-      'HUKUK: Harvey AI, Lexis+ AI — Barolar uyumu',
-      'FİNANS: Bloomberg GPT, FinChat — SPK uyumu',
-      'YARATICI: Jasper, Copy.ai, SurferSEO, Frase',
-      'GİRİŞİMCİ: Lovable, Bolt.new, Replit Agent (no-code uygulama)',
+      { icon: '🎓', title: 'Akademik parkur', detail: 'Elicit, Consensus, ResearchRabbit, Connected Papers — sistematik review akışı.' },
+      { icon: '✍️', title: 'Akademik yazma', detail: 'Paperpal, Trinka, DeepL Write, Zotero AI — atıf yönetimi ve dil rafinasyonu.' },
+      { icon: '⚕️', title: 'Sağlık dikey', detail: 'OpenEvidence, Doximity GPT — TTB etik kuralları altında klinik karar destek.' },
+      { icon: '⚖️', title: 'Hukuk dikey', detail: 'Harvey AI, Lexis+ AI — Barolar Birliği uyumlu dava analizi, sözleşme.' },
+      { icon: '💰', title: 'Finans dikey', detail: 'Bloomberg GPT, FinChat — SPK uyumlu piyasa analizi, raporlama.' },
+      { icon: '📈', title: 'Pazarlama + SEO', detail: 'Jasper, Copy.ai, SurferSEO, Frase — içerik üretimi ve arama optimizasyonu.' },
+      { icon: '🚀', title: 'Girişimci no-code', detail: 'Lovable, Bolt.new, Replit Agent — fikrini 1 saatte canlı uygulamaya çevir.' },
+    ],
+    specialSlides: [
+      { type: 'infoCard3Col', title: '3 Paralel Parkur Seçimi', cards: [
+        { emoji: '🎓', title: 'AKADEMİK', desc: 'Elicit + Consensus + NotebookLM', color: C.acc, items: [
+          'Sistematik review',
+          'Atıf grafiği',
+          'AI yazma asistanı',
+          'Zotero entegrasyonu',
+        ]},
+        { emoji: '🏥', title: 'DİKEY ALANLAR', desc: 'Sağlık / Hukuk / Finans', color: C.sec, items: [
+          'OpenEvidence',
+          'Harvey AI',
+          'Bloomberg GPT',
+          'Meslek etik kuralları',
+        ]},
+        { emoji: '🎨', title: 'YARATICI/GİRİŞİMCİ', desc: 'Pazarlama + No-Code', color: C.pri, items: [
+          'Jasper / Copy.ai',
+          'SurferSEO',
+          'Lovable / Bolt.new',
+          '1 saatte deploy',
+        ]},
+      ]},
     ],
     libraries: ['Elicit', 'Consensus', 'ResearchRabbit', 'Lovable', 'Bolt.new', 'Harvey AI'],
     notebooks: [
-      { name: 'hafta11A_akademik_arastirma.ipynb', desc: 'Elicit + Consensus + NotebookLM' },
-      { name: 'hafta11B_dikey_alanlar.ipynb', desc: 'Sağlık / Hukuk / Finans atölyesi' },
-      { name: 'hafta11C_pazarlama_girisimcilik.ipynb', desc: 'Pazarlama + SEO + içerik' },
-      { name: 'hafta11_lovable_bolt_replit_atolye.ipynb', desc: 'No-code uygulama atölyesi' },
+      { name: 'hafta11A_akademik_arastirma.ipynb', desc: 'Elicit + Consensus + NotebookLM', dur: '60 dk' },
+      { name: 'hafta11B_dikey_alanlar.ipynb', desc: 'Sağlık/Hukuk/Finans', dur: '40 dk' },
+      { name: 'hafta11C_pazarlama_girisimcilik.ipynb', desc: 'Pazarlama + SEO + içerik', dur: '40 dk' },
+      { name: 'hafta11_lovable_bolt_replit_atolye.ipynb', desc: 'No-code uygulama', dur: '60 dk' },
     ],
     assignments: [
       'Akademisyen: 1 makalelik mini sistematik review',
       'Hekim/Hukukçu: 1 vakalık dikey araç testi + etik raporu',
-      'Yaratıcı/Girişimci: Lovable veya Bolt ile küçük landing page',
+      'Yaratıcı/Girişimci: Lovable / Bolt ile küçük landing page',
     ],
     resources: [
-      { label: 'docs/akademik araçlar.docx', url: 'docs/' },
+      { label: 'docs/akademik araçlar', url: 'docs/' },
       { label: 'Elicit', url: 'elicit.com' },
       { label: 'Lovable', url: 'lovable.dev' },
-      { label: 'Bolt.new', url: 'bolt.new' },
     ],
     takeaways: [
-      'YZ \'genel asistan\' değil — branşına özel dikey araçlar, sektör verimliliğini patlatır.',
+      'YZ \'genel asistan\' değil — branşına özel dikey araçlar verimliliği patlatır.',
       'Akademide Elicit + Consensus, sistematik review süresini günlerden saatlere indirir.',
-      'Lovable / Bolt.new ile fikrini 1 saatte canlı uygulamaya dönüştürebilirsin.',
+      'Lovable/Bolt.new ile fikrini 1 saatte canlı uygulamaya dönüştürebilirsin.',
     ],
     quote: 'Genel araç çok şey bilir, dikey araç bir şeyi mükemmel bilir.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 12 ─────────────────
   {
     id: 12, slug: '12',
     title: 'Lokal LLM Kurulumu',
@@ -532,30 +660,43 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 3',
     color: C.pri,
     hours: 6,
-    intro: 'Ollama, LM Studio, Open WebUI, Jan, GPT4All. Türkçe modeller. Donanım eşiği, kuantizasyon (Q4_K_M, Q8), GPU ve MLX optimizasyon.',
+    intro: 'Ollama, LM Studio, Open WebUI ile YZ\'yi kendi bilgisayarında çalıştır. Türkçe modeller.',
     topics: [
-      'Neden lokal LLM? Gizlilik, maliyet, internet bağımsızlığı, KVKK',
-      'Donanım: GPU/CPU, RAM, kuantizasyon (Q4_K_M, Q8)',
-      'Ollama — en kolay başlangıç (Mac/Win/Linux)',
-      'LM Studio — GUI, model arama, sohbet',
-      'Open WebUI (Docker) — çoklu kullanıcı arayüzü',
-      'Jan — açık kaynak alternatif',
-      'GPT4All — düşük donanımda',
-      'Türkçe: llama3.2, qwen2.5, gemma2, Trendyol-LLM',
-      'Hız optimizasyonu, GPU, MLX (Apple Silicon)',
-      'Türkçe performans kıyaslaması',
+      { icon: '🔒', title: 'Neden lokal?', detail: 'Gizlilik, sıfır maliyet, internet bağımsızlığı, KVKK uyumu — hassas veri için zorunlu.' },
+      { icon: '💻', title: 'Donanım eşiği', detail: '8 GB RAM minimum (3B model), 16 GB (7B), 32 GB+ (13B+). GPU önerilir, CPU\'da da çalışır.' },
+      { icon: '🦙', title: 'Ollama', detail: 'En kolay başlangıç — Mac/Win/Linux. Tek komut: `ollama run llama3.2`.' },
+      { icon: '🖥️', title: 'LM Studio', detail: 'GUI tercih edenlere — model arama, sohbet, local server (OpenAI uyumlu).' },
+      { icon: '🌐', title: 'Open WebUI', detail: 'Docker ile ChatGPT benzeri arayüz — çoklu kullanıcı, RAG, web search.' },
+      { icon: '🇹🇷', title: 'Türkçe modeller', detail: 'llama3.2:3b, qwen2.5:7b, gemma2:9b, Trendyol-LLM — pratik kıyaslama.' },
+      { icon: '⚡', title: 'Optimize et', detail: 'Kuantizasyon (Q4_K_M, Q8), Apple Silicon MLX, GPU offload — hız ipuçları.' },
+    ],
+    specialSlides: [
+      { type: 'matrix', title: 'Donanım × Model Boyutu Tablosu',
+        columns: ['RAM', '3B (Q4)', '7B (Q4)', '13B (Q4)', '70B (Q4)'],
+        rows: [
+          { label: '8 GB', values: ['✅ Akıcı', '⚠️ Yavaş', '❌', '❌'] },
+          { label: '16 GB', values: ['✅', '✅', '⚠️', '❌'] },
+          { label: '32 GB', values: ['✅', '✅', '✅', '⚠️'] },
+          { label: '64 GB+', values: ['✅', '✅', '✅', '✅'] },
+        ]
+      },
+      { type: 'statsRow', title: 'Türkçe Model Karşılaştırma', stats: [
+        { value: '3B', label: 'Llama 3.2', sub: 'Hızlı, basit görevler' },
+        { value: '7B', label: 'Qwen 2.5', sub: 'Türkçe en iyi denge' },
+        { value: '9B', label: 'Gemma 2', sub: 'Akıl yürütme güçlü' },
+      ]},
     ],
     libraries: ['Ollama', 'LM Studio', 'Open WebUI', 'Jan', 'GPT4All'],
     notebooks: [
-      { name: 'hafta12_ollama_kurulum_macwinlinux.ipynb', desc: '3 işletim sistemi adım adım' },
-      { name: 'hafta12_ilk_konusma.ipynb', desc: 'ollama run + Python REST API' },
-      { name: 'hafta12_lm_studio_atolye.ipynb', desc: 'GUI ile model deneme' },
-      { name: 'hafta12_openwebui_docker.ipynb', desc: 'Docker kurulum (Mac + VPS)' },
-      { name: 'hafta12_model_kiyaslama.ipynb', desc: 'Llama vs Qwen vs Gemma TR' },
+      { name: 'hafta12_ollama_kurulum_macwinlinux.ipynb', desc: '3 işletim sistemi adım adım', dur: '30 dk' },
+      { name: 'hafta12_ilk_konusma.ipynb', desc: 'ollama run + Python REST API', dur: '40 dk' },
+      { name: 'hafta12_lm_studio_atolye.ipynb', desc: 'GUI ile model deneme', dur: '30 dk' },
+      { name: 'hafta12_openwebui_docker.ipynb', desc: 'Docker kurulum (Mac + VPS)', dur: '45 dk' },
+      { name: 'hafta12_model_kiyaslama.ipynb', desc: 'Llama vs Qwen vs Gemma TR', dur: '40 dk' },
     ],
     assignments: [
       'Ollama kurulumu + 3 modeli indir, 10 Türkçe görevde kıyas',
-      'Open WebUI\'yi Docker ile kur, aile üyesine erişim ver',
+      'Open WebUI Docker kurulum, aile üyesine erişim ver',
       'Donanımına en uygun model + kuantizasyon raporu',
     ],
     resources: [
@@ -565,11 +706,14 @@ const WEEKS = [
     ],
     takeaways: [
       'Lokal LLM = gizliliğin kazandığı an. Ollama 5 dakikada kurulur, çevrimdışı çalışır.',
-      'Türkçe için Qwen 2.5 7B Q4 + Mac M1 Pro = pratik üretkenlik için yeterli.',
+      'Türkçe için Qwen 2.5 7B Q4 + Mac M1 Pro = pratik üretkenlik.',
       'Open WebUI Docker, evdeki herkesin "ChatGPT\'sine" sıfır maliyetle dönüşür.',
     ],
     quote: 'Bulut, başkasının bilgisayarıdır — kendi bilgisayarın daha sadıktır.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
+
+  // ───────────────── HAFTA 13 ─────────────────
   {
     id: 13, slug: '13',
     title: 'Lokal RAG ve Kendi Verinle Konuşma',
@@ -578,31 +722,38 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 3',
     color: C.pri,
     hours: 6,
-    intro: 'AnythingLLM, Cherry Studio, Page Assist, GPT4All Local Docs, MSTY. Embedding modelleri, chunk stratejisi, Türkçe doğruluk.',
+    intro: 'AnythingLLM, Cherry Studio, Page Assist — tamamen lokal RAG. Embedding modelleri, Türkçe doğruluk.',
     topics: [
-      'RAG nedir, neden lokal? (Hafta 4 NotebookLM ile bağ)',
-      'AnythingLLM — çoklu workspace, herhangi LLM',
-      'Cherry Studio — Türkçe destekli, çoklu API + Ollama',
-      'Page Assist (browser) — web sayfası RAG',
-      'GPT4All Local Docs — basit dosya indeksi',
-      'MSTY — local + cloud hibrit',
-      'Open WebUI Documents özelliği',
-      'Embedding: nomic-embed, mxbai, multilingual-e5 (TR)',
-      'Doküman türleri: PDF, DOCX, TXT, web URL, YouTube',
-      'Chunk size, overlap, retrieval limit',
-      'Gizlilik: tam lokal vs hibrit vs bulut',
+      { icon: '🔄', title: 'RAG nedir', detail: 'Retrieval-Augmented Generation: dokümanı parçala → embed → sorguda en alakalı parçaları LLM\'e ver.' },
+      { icon: '🗂️', title: 'AnythingLLM', detail: 'Mintplex Labs — sınırsız workspace, herhangi LLM, çoklu doküman kaynağı.' },
+      { icon: '🍒', title: 'Cherry Studio', detail: 'Türkçe destekli, çoklu API + Ollama — Çin yapımı ama yerli pratik.' },
+      { icon: '🌐', title: 'Page Assist', detail: 'Browser uzantısı — açık web sayfasıyla anında konuş.' },
+      { icon: '💼', title: 'GPT4All + MSTY', detail: 'Düşük donanımda dosya indeksi, MSTY local+cloud hibrit.' },
+      { icon: '📐', title: 'Embedding seçimi', detail: 'nomic-embed-text, mxbai, multilingual-e5 — Türkçe için multilingual-e5 en iyi.' },
+      { icon: '⚙️', title: 'Performans ayarları', detail: 'Chunk size 512 + overlap 64 + parent retriever = pratik production formülü.' },
+    ],
+    specialSlides: [
+      { type: 'pipeline', title: 'Lokal RAG Mimarisi', steps: [
+        { emoji: '📄', label: 'PDF/DOCX', sub: 'Yükle' },
+        { emoji: '✂️', label: 'CHUNK', sub: '512+overlap' },
+        { emoji: '🧮', label: 'EMBED', sub: 'nomic / e5' },
+        { emoji: '🗄️', label: 'VECTOR DB', sub: 'LanceDB / Chroma' },
+        { emoji: '🔍', label: 'RETRIEVE', sub: 'Top-K alakalı' },
+        { emoji: '💬', label: 'LLM', sub: 'Ollama / Cloud' },
+        { emoji: '📤', label: 'CEVAP', sub: 'Kaynaklı' },
+      ]},
     ],
     libraries: ['AnythingLLM', 'Cherry Studio', 'Page Assist', 'MSTY', 'Open WebUI'],
     notebooks: [
-      { name: 'hafta13_anythingllm_kurulum.ipynb', desc: 'Workspace + ilk soru' },
-      { name: 'hafta13_cherry_studio_turkce.ipynb', desc: 'Türkçe destekli kullanım' },
-      { name: 'hafta13_page_assist_browser.ipynb', desc: 'Browser uzantısı atölyesi' },
-      { name: 'hafta13_kendi_kitabini_konustur_lokal.ipynb', desc: '5 PDF tamamen offline RAG' },
-      { name: 'hafta13_embedding_kiyas_tr.ipynb', desc: 'Türkçe embedding doğruluk testi' },
+      { name: 'hafta13_anythingllm_kurulum.ipynb', desc: 'Workspace + ilk soru', dur: '40 dk' },
+      { name: 'hafta13_cherry_studio_turkce.ipynb', desc: 'Türkçe destekli kullanım', dur: '30 dk' },
+      { name: 'hafta13_page_assist_browser.ipynb', desc: 'Browser uzantısı', dur: '20 dk' },
+      { name: 'hafta13_kendi_kitabini_konustur_lokal.ipynb', desc: '5 PDF tamamen offline', dur: '60 dk' },
+      { name: 'hafta13_embedding_kiyas_tr.ipynb', desc: 'Türkçe embedding doğruluk', dur: '45 dk' },
     ],
     assignments: [
       'AnythingLLM ile 20 PDF\'lik bilgi tabanı, NotebookLM ile kıyasla',
-      'Cherry Studio + Ollama ile tam offline iş akışı',
+      'Cherry Studio + Ollama tam offline iş akışı',
       'Page Assist ile günlük araştırma rutinini hızlandır',
     ],
     resources: [
@@ -613,10 +764,13 @@ const WEEKS = [
     takeaways: [
       'AnythingLLM = "kendi NotebookLM\'in" — tamamen lokal, sınırsız doküman.',
       'Türkçe için multilingual-e5 + Qwen 2.5 = en iyi kombinasyon.',
-      'Chunk size 512 + overlap 64 + parent retriever = pratik production formülü.',
+      'Chunk 512 + overlap 64 + parent retriever = pratik production formülü.',
     ],
     quote: 'Verin, senin kalır.',
+    quoteAuthor: 'Lokal LLM Manifestosu',
   },
+
+  // ───────────────── HAFTA 14 ─────────────────
   {
     id: 14, slug: '14',
     title: 'API ile Üretken YZ + Capstone',
@@ -625,35 +779,61 @@ const WEEKS = [
     sectionShort: 'BÖLÜM 3',
     color: C.pri,
     hours: 6,
-    intro: 'Google AI Studio, OpenRouter, HF Spaces. Streamlit/Gradio şablon. v0 + Vercel ile no-code arayüz. Capstone proje sunum günü.',
+    intro: 'Google AI Studio, OpenRouter, HF Spaces. Streamlit/Gradio + v0/Vercel. Capstone proje sunumu.',
     topics: [
-      'API nedir? Anahtar saklama (.env, Colab Secrets)',
-      'Google AI Studio — ücretsiz Gemini 2.5 Flash',
-      'OpenRouter — tek API ile 100+ model',
-      'Hugging Face Inference API — açık kaynak',
-      'Replicate ve Fal.ai — görsel/video API\'ları',
-      'Basit Python: pip install google-generativeai',
-      'No-code API: Postman, Bruno, Apidog',
-      'Streamlit/Gradio ile 30 satırda arayüz (kopyala-yapıştır)',
-      'Hugging Face Spaces — sıfır kart deploy',
-      'Vercel + v0 ile no-code arayüz + AI',
-      'Maliyet izleme: OpenAI Dashboard, Anthropic Console',
-      'Capstone proje sunumu, sertifika töreni',
+      { icon: '🔑', title: 'API anahtarı', detail: 'Google AI Studio ücretsiz, OpenRouter 100+ model, HF Inference. .env / Colab Secrets ile sakla.' },
+      { icon: '🟢', title: 'Gemini 2.5 Flash', detail: 'Ücretsiz katman, haftalık kota, Türkiye direkt — başlangıç için ideal.' },
+      { icon: '🌐', title: 'OpenRouter', detail: 'Tek API ile Gemini/Claude/GPT/Llama/DeepSeek — provider değişimi tek satırda.' },
+      { icon: '🤗', title: 'HF Inference', detail: 'Açık kaynak modeller, sıfır maliyet katmanı, Replicate/Fal.ai görsel/video API\'ları.' },
+      { icon: '🐍', title: 'Basit Python', detail: 'pip install google-generativeai, ilk istek 3 satırda — kopyala-yapıştır şablon.' },
+      { icon: '🎨', title: 'Streamlit/Gradio', detail: '30 satırda canlı arayüz — chat input, sidebar ayarlar, geçmiş tutma.' },
+      { icon: '🚀', title: 'HF Spaces + Vercel v0', detail: 'Sıfır kart deploy. v0.dev ile no-code arayüz + AI bağlantısı.' },
+      { icon: '💵', title: 'Maliyet izleme', detail: 'OpenAI Dashboard, Anthropic Console — günlük limit, sürpriz fatura yok.' },
+    ],
+    specialSlides: [
+      { type: 'infoCard3Col', title: 'Capstone Proje Fikirleri', cards: [
+        { emoji: '👨‍🏫', title: 'EĞİTİMCİLER', desc: 'Sınıfa, atölyeye, dersaneye', color: C.acc, items: [
+          'Veli iletişim botu',
+          'Soru bankası üretici',
+          'Ders planı asistanı',
+          'Otomatik rubrik',
+        ]},
+        { emoji: '🎓', title: 'AKADEMİSYENLER', desc: 'Araştırma + yazma', color: C.sec, items: [
+          'Mini sistematik review',
+          'Atıf yönetici',
+          'Türkçe akademik yazı',
+          'Sınav hazırlık botu',
+        ]},
+        { emoji: '🚀', title: 'GİRİŞİMCİLER', desc: 'Ürün + pazarlama', color: C.pri, items: [
+          'Müşteri destek botu',
+          'İçerik fabrikası',
+          'No-code SaaS',
+          'AI destekli landing',
+        ]},
+      ]},
+      { type: 'pipeline', title: 'Proje → Deploy Zinciri', steps: [
+        { emoji: '💡', label: 'FİKİR', sub: 'Sorun seç' },
+        { emoji: '🎨', label: 'TASARIM', sub: 'v0.dev / Streamlit' },
+        { emoji: '🔌', label: 'API', sub: 'Gemini / OpenRouter' },
+        { emoji: '🧪', label: 'TEST', sub: 'Yerel deneme' },
+        { emoji: '🚀', label: 'DEPLOY', sub: 'HF Spaces / Vercel' },
+        { emoji: '📺', label: 'DEMO', sub: '5 dk sunum' },
+      ]},
     ],
     libraries: ['google-generativeai', 'streamlit', 'gradio', 'OpenRouter', 'HF Spaces', 'Vercel v0'],
     notebooks: [
-      { name: 'hafta14_aistudio_ilk_api.ipynb', desc: 'Gemini 2.5 Flash hello world' },
-      { name: 'hafta14_openrouter_uc_model.ipynb', desc: 'Gemini/Claude/GPT karşılaştırma' },
-      { name: 'hafta14_streamlit_kisisel_asistan.ipynb', desc: '50 satır kişisel asistan' },
-      { name: 'hafta14_hf_spaces_deploy.ipynb', desc: 'HF Spaces sıfır maliyet deploy' },
-      { name: 'hafta14_v0_vercel_nocode.ipynb', desc: 'v0.dev ile no-code arayüz' },
-      { name: 'hafta14_capstone_sablon.ipynb', desc: 'Capstone proje iskeleti' },
+      { name: 'hafta14_aistudio_ilk_api.ipynb', desc: 'Gemini 2.5 Flash hello world', dur: '30 dk' },
+      { name: 'hafta14_openrouter_uc_model.ipynb', desc: 'Gemini/Claude/GPT karşılaştırma', dur: '35 dk' },
+      { name: 'hafta14_streamlit_kisisel_asistan.ipynb', desc: '50 satır kişisel asistan', dur: '45 dk' },
+      { name: 'hafta14_hf_spaces_deploy.ipynb', desc: 'HF Spaces sıfır maliyet deploy', dur: '30 dk' },
+      { name: 'hafta14_v0_vercel_nocode.ipynb', desc: 'v0.dev no-code arayüz', dur: '25 dk' },
+      { name: 'hafta14_capstone_sablon.ipynb', desc: 'Capstone iskeleti', dur: '60 dk' },
     ],
     assignments: [
-      'CAPSTONE: Tüm dönemde öğrendiklerini birleştiren bir ürün üret (en az 3 madde dahil)',
+      'CAPSTONE: 14 hafta birikimini birleştiren bir ürün üret (en az 3 madde)',
       'Canlı deploy: HF Spaces, Vercel + v0 ya da Open WebUI',
       'README + mimari diyagram + 3 dakikalık demo videosu',
-      'Sunum günü: 5 dk demo + 2 dk Q&A, sertifika töreni',
+      'Sunum günü: 5 dk demo + 2 dk Q&A, sertifika töreni 🎓',
     ],
     resources: [
       { label: 'Google AI Studio', url: 'aistudio.google.com' },
@@ -662,155 +842,169 @@ const WEEKS = [
       { label: 'Vercel v0', url: 'v0.dev' },
     ],
     takeaways: [
-      '14 hafta birikimini canlı deploy edilmiş bir ürüne dönüştürdün — bu CV\'nin yeni satırı.',
+      '14 hafta birikimini canlı deploy edilmiş bir ürüne dönüştürdün — CV\'nin yeni satırı.',
       'Gemini 2.5 Flash + Streamlit + HF Spaces = sıfır maliyetle ürünleştirme zinciri.',
-      'Atölyenin sonu yolculuğun başlangıcı — kendi öğrenme döngüsünü kur, paylaşımı sürdür.',
+      'Atölyenin sonu yolculuğun başlangıcı — kendi öğrenme döngünü kur, paylaşımı sürdür.',
     ],
     quote: 'En iyi prompt, ürünleşmiş olandır.',
+    quoteAuthor: 'Atölye Felsefesi',
   },
 ];
 
 // ═══════════════════════════════════════════════════════════
-// HER HAFTA İÇİN PPTX ÜRETEN ANA FONKSİYON
+// HAFTA İÇİN PPTX ÜRETEN ANA FONKSİYON
 // ═══════════════════════════════════════════════════════════
 function generateWeekPPTX(week, outputDir) {
   const pres = T.createPres(`Hafta ${week.id} — ${week.title}`, 'Dr. Murat Altun');
-  const TOTAL = 16;
 
-  // ─── Slayt 1: Kapak ───────────────────────────────────────
-  const sCover = pres.addSlide();
-  sCover.background = { color: C.pri };
-  sCover.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 0.12, h: 5.625, fill: { color: C.acc } });
-  sCover.addShape(pres.shapes.RECTANGLE, { x: 6.5, y: 0, w: 3.5, h: 5.625, fill: { color: '4A2518' } });
-  sCover.addShape(pres.shapes.RECTANGLE, { x: 6.5, y: 0, w: 0.05, h: 5.625, fill: { color: C.sec } });
-  sCover.addShape(pres.shapes.RECTANGLE, { x: 0.5, y: 0.6, w: 3.0, h: 0.34, fill: { color: C.acc } });
-  sCover.addText('ÜRETKEN YZ ATÖLYESİ', { x: 0.5, y: 0.6, w: 3.0, h: 0.34, fontFace: 'Calibri', fontSize: 10, bold: true, color: 'FFFFFF', align: 'center', valign: 'middle', charSpacing: 3 });
-  sCover.addText(week.title, { x: 0.5, y: 1.2, w: 5.6, h: 1.6, fontFace: 'Georgia', fontSize: 42, bold: true, color: 'FFFFFF' });
-  sCover.addShape(pres.shapes.RECTANGLE, { x: 0.5, y: 2.85, w: 3.0, h: 0.05, fill: { color: C.sec } });
-  sCover.addText(week.subtitle, { x: 0.5, y: 3.05, w: 5.6, h: 0.6, fontFace: 'Calibri', fontSize: 14, color: C.secLt, italic: true });
-  sCover.addText(week.intro, { x: 0.5, y: 3.7, w: 5.6, h: 0.8, fontFace: 'Calibri', fontSize: 11, color: 'F5E8DC' });
-  sCover.addText('Dr. Murat Altun', { x: 0.5, y: 4.65, w: 3, h: 0.32, fontFace: 'Georgia', fontSize: 13, color: C.sec, bold: true });
-  sCover.addText('Üretken YZ Atölyesi · Prompttan Ürüne · 2026', { x: 0.5, y: 4.96, w: 5, h: 0.3, fontFace: 'Calibri', fontSize: 10, color: C.subtle });
-  // Sağ panel istatistikler
-  const stats = [
-    { value: String(week.hours), label: 'Saat' },
-    { value: String(week.notebooks.length), label: 'Atölye Notebook' },
-    { value: String(week.assignments.length), label: 'Pratik Ödev' },
-    { value: String(week.libraries.length), label: 'Araç Seti' },
-  ];
-  stats.forEach((r, i) => {
-    const yy = 0.35 + i * 1.32;
-    sCover.addText(r.value, { x: 6.7, y: yy, w: 3.1, h: 0.55, fontFace: 'Georgia', fontSize: 30, bold: true, color: C.sec, align: 'center' });
-    sCover.addText(r.label, { x: 6.7, y: yy + 0.55, w: 3.1, h: 0.52, fontFace: 'Calibri', fontSize: 10, color: C.secLt, align: 'center' });
-    if (i < stats.length - 1) sCover.addShape(pres.shapes.RECTANGLE, { x: 7.2, y: yy + 1.15, w: 2.1, h: 0.02, fill: { color: '6B3A28' } });
+  // ─── 1. KAPAK ────────────────────────────────────────────
+  T.addCoverSlide(pres,
+    week.title,
+    week.subtitle + ' · ' + week.intro,
+    'Dr. Murat Altun',
+    [
+      { value: String(week.hours), label: 'Saat' },
+      { value: String(week.notebooks.length), label: 'Notebook' },
+      { value: String(week.assignments.length), label: 'Ödev' },
+      { value: String(week.libraries.length), label: 'Araç' },
+    ],
+    week.sectionShort + ' · HAFTA ' + week.id,
+  );
+
+  // ─── 2. AÇILIŞ QUOTE ─────────────────────────────────────
+  T.addQuoteSlide(pres, week.quote, week.quoteAuthor || 'Dr. Murat Altun', week.section);
+
+  // ─── 3. HAFTA ÖZETİ (3-card grid) ────────────────────────
+  T.addInfoCard3Col(pres, 'Bu Haftada Ne Öğreneceğiz?', week.sectionShort, [
+    {
+      emoji: '🎯', title: 'KAVRAMLAR', color: C.acc,
+      desc: `${week.topics.length} ana konu, kavram haritası ve gerçek örnekler`,
+      items: week.topics.slice(0, 3).map(t => t.title),
+    },
+    {
+      emoji: '🛠️', title: 'ATÖLYE', color: C.sec,
+      desc: `${week.notebooks.length} notebook, adım adım pratik uygulama`,
+      items: week.notebooks.slice(0, 3).map(nb => nb.name.replace('.ipynb', '').split('_').slice(1).join(' ')),
+    },
+    {
+      emoji: '🚀', title: 'ÇIKTI', color: C.pri,
+      desc: `${week.assignments.length} somut ödev, paylaşılabilir ürün`,
+      items: week.assignments.slice(0, 3).map(a => a.length > 50 ? a.substring(0, 50) + '...' : a),
+    },
+  ]);
+
+  // ─── 4-5. HAFTA-SPESİFİK ÖZEL SLAYTLAR ───────────────────
+  (week.specialSlides || []).forEach(sp => {
+    if (sp.type === 'timeline') {
+      T.addTimelineSlide(pres, sp.title, week.sectionShort, sp.points);
+    } else if (sp.type === 'matrix') {
+      T.addComparisonMatrix(pres, sp.title, week.sectionShort, sp.columns, sp.rows);
+    } else if (sp.type === 'iconGrid') {
+      T.addIconGrid(pres, sp.title, week.sectionShort, sp.items);
+    } else if (sp.type === 'infoCard3Col') {
+      T.addInfoCard3Col(pres, sp.title, week.sectionShort, sp.cards);
+    } else if (sp.type === 'caseStudy') {
+      T.addCaseStudySlide(pres, sp.title, week.sectionShort, sp.case);
+    } else if (sp.type === 'pipeline') {
+      T.addPipelineDiagram(pres, sp.title, week.sectionShort, sp.steps);
+    } else if (sp.type === 'statsRow') {
+      T.addStatsRow(pres, sp.title, week.sectionShort, sp.stats);
+    }
   });
 
-  // ─── Slayt 2: Hafta Özeti ─────────────────────────────────
-  {
+  // ─── 6-N. KONULAR (zenginleştirilmiş, her slaytta 4 konu) ──
+  const TOPICS_PER_SLIDE = 4;
+  for (let i = 0; i < week.topics.length; i += TOPICS_PER_SLIDE) {
+    const chunk = week.topics.slice(i, i + TOPICS_PER_SLIDE);
+    const slideIdx = Math.floor(i / TOPICS_PER_SLIDE) + 1;
+    const totalSlides = Math.ceil(week.topics.length / TOPICS_PER_SLIDE);
     const s = pres.addSlide();
-    T.slideHeader(pres, s, 'Bu Haftada Ne Öğreneceğiz?', week.sectionShort, C.cream, TOTAL);
-    T.addCard(pres, s, 0.5, 1.0, 9.0, 1.4, { topColor: week.color });
-    T.cardTitle(s, 0.7, 1.15, 8.5, week.section, week.color);
-    T.cardBody(s, 0.7, 1.55, 8.5, 0.8, week.intro);
+    T.slideHeader(pres, s, `Konular · ${slideIdx}/${totalSlides}`, week.sectionShort, C.cream);
 
-    // 4 alt-başlık özet
-    const segments = [
-      { num: 1, title: 'Konseptler', desc: `${week.topics.length} ana konu, kavram haritası ve etkin örnekler.`, color: C.acc },
-      { num: 2, title: 'Atölye Pratiği', desc: `${week.notebooks.length} adım-adım notebook ile uygulamalı çalışma.`, color: C.sec },
-      { num: 3, title: 'Araç Seti', desc: `${week.libraries.length} farklı aracın derinlikli kullanımı.`, color: C.purple },
-      { num: 4, title: 'Çıktı', desc: `${week.assignments.length} ödev ile somut, paylaşılabilir ürün.`, color: C.green },
-    ];
-    segments.forEach((sec, i) => {
-      const x = 0.5 + (i % 2) * 4.75;
-      const y = 2.7 + Math.floor(i / 2) * 1.15;
-      T.addCard(pres, s, x, y, 4.25, 1.0, { leftColor: sec.color });
-      T.numBadge(pres, s, x + 0.15, y + 0.32, sec.num, sec.color);
-      T.cardTitle(s, x + 0.65, y + 0.15, 3.5, sec.title, sec.color);
-      T.cardBody(s, x + 0.65, y + 0.5, 3.5, 0.45, sec.desc);
+    chunk.forEach((topic, idx) => {
+      const y = 1.0 + idx * 1.05;
+      T.addCard(pres, s, 0.5, y, 9.0, 0.92, { leftColor: week.color });
+      // Numara badge
+      T.numBadge(pres, s, 0.7, y + 0.28, i + idx + 1, week.color);
+      // Emoji
+      s.addText(topic.icon || '✨', { x: 1.2, y: y + 0.18, w: 0.5, h: 0.55, margin: 0, fontFace: 'Calibri', fontSize: 24, align: 'center' });
+      // Başlık
+      s.addText(topic.title, { x: 1.8, y: y + 0.1, w: 7.2, h: 0.34, margin: 0, fontFace: 'Georgia', fontSize: 13, bold: true, color: week.color });
+      // Detay
+      s.addText(topic.detail || '', { x: 1.8, y: y + 0.45, w: 7.2, h: 0.42, margin: 0, fontFace: 'Calibri', fontSize: 10.5, color: C.dark });
     });
   }
 
-  // ─── Slaytlar 3-N: Konular (her 4 konuda 1 slayt) ─────────
-  const TOPIC_PER_SLIDE = 4;
-  const topicChunks = [];
-  for (let i = 0; i < week.topics.length; i += TOPIC_PER_SLIDE) topicChunks.push(week.topics.slice(i, i + TOPIC_PER_SLIDE));
-  topicChunks.forEach((chunk, idx) => {
-    const s = pres.addSlide();
-    T.slideHeader(pres, s, `Konular · ${idx + 1}/${topicChunks.length}`, week.sectionShort, C.cream, TOTAL);
-    chunk.forEach((topic, i) => {
-      const y = 1.0 + i * 0.95;
-      T.addCard(pres, s, 0.5, y, 9.0, 0.78, { leftColor: week.color });
-      T.numBadge(pres, s, 0.7, y + 0.21, idx * TOPIC_PER_SLIDE + i + 1, week.color);
-      T.cardBody(s, 1.25, y + 0.18, 8.0, 0.5, topic, { size: 13 });
-    });
-  });
-
-  // ─── Araç Seti ─────────────────────────────────────────────
+  // ─── ARAÇ SETİ (icon grid ile zenginleştirilmiş) ─────────
   {
     const s = pres.addSlide();
-    T.slideHeader(pres, s, 'Bu Haftanın Araç Seti', week.sectionShort, C.cream, TOTAL);
+    T.slideHeader(pres, s, 'Bu Haftanın Araç Seti', week.sectionShort, C.cream);
     const cols = 2, rows = Math.ceil(week.libraries.length / cols);
+    const cellW = 4.4, cellH = 0.85, gap = 0.15;
     week.libraries.forEach((lib, i) => {
-      const x = 0.5 + (i % cols) * 4.75;
-      const y = 1.0 + Math.floor(i / cols) * 0.85;
-      T.addCard(pres, s, x, y, 4.25, 0.7, { leftColor: week.color });
-      s.addShape(pres.shapes.RECTANGLE, { x: x + 0.18, y: y + 0.15, w: 0.4, h: 0.4, fill: { color: week.color } });
-      s.addText(String(i + 1), { x: x + 0.18, y: y + 0.15, w: 0.4, h: 0.4, fontFace: 'Calibri', fontSize: 12, bold: true, color: 'FFFFFF', align: 'center', valign: 'middle' });
-      s.addText(lib, { x: x + 0.7, y: y + 0.18, w: 3.4, h: 0.4, fontFace: 'Calibri', fontSize: 13, bold: true, color: C.dark, valign: 'middle' });
+      const x = 0.5 + (i % cols) * (cellW + gap);
+      const y = 1.0 + Math.floor(i / cols) * (cellH + gap);
+      T.addCard(pres, s, x, y, cellW, cellH, { leftColor: week.color });
+      s.addShape(pres.shapes.OVAL, { x: x + 0.18, y: y + 0.22, w: 0.42, h: 0.42, fill: { color: week.color }, line: { type: 'none' } });
+      s.addText(String(i + 1), { x: x + 0.18, y: y + 0.22, w: 0.42, h: 0.42, fontFace: 'Calibri', fontSize: 13, bold: true, color: 'FFFFFF', align: 'center', valign: 'middle' });
+      s.addText(lib, { x: x + 0.75, y: y + 0.18, w: cellW - 0.85, h: 0.5, fontFace: 'Calibri', fontSize: 13, bold: true, color: C.dark, valign: 'middle' });
     });
-    T.cardBody(s, 0.5, 4.7, 9.0, 0.5,
+    T.cardBody(s, 0.5, 5.0, 9.0, 0.4,
       'Tüm araçların ücretsiz katmanı atölyede gösterilir. Premium gerekmez.',
       { size: 10, color: C.subtle, italic: true });
   }
 
-  // ─── Atölye Notebook'ları ─────────────────────────────────
+  // ─── NOTEBOOK'LAR (süre rozetli) ────────────────────────
   {
     const s = pres.addSlide();
-    T.slideHeader(pres, s, 'Atölye Notebook\'ları', week.sectionShort, C.cream, TOTAL);
-    week.notebooks.forEach((nb, i) => {
-      const y = 1.0 + i * 0.78;
-      if (y + 0.65 > 5.4) return; // sığmazsa atla
-      T.addCard(pres, s, 0.5, y, 9.0, 0.65, { leftColor: C.acc });
-      s.addText(`📓 ${nb.name}`, { x: 0.7, y: y + 0.1, w: 4.0, h: 0.3, fontFace: 'Consolas', fontSize: 10, color: C.acc, bold: true });
-      s.addText(nb.desc, { x: 4.8, y: y + 0.13, w: 4.5, h: 0.4, fontFace: 'Calibri', fontSize: 10.5, color: C.dark, valign: 'middle' });
+    T.slideHeader(pres, s, 'Atölye Notebook\'ları', week.sectionShort, C.cream);
+    week.notebooks.slice(0, 6).forEach((nb, i) => {
+      const y = 1.0 + i * 0.7;
+      T.addCard(pres, s, 0.5, y, 9.0, 0.6, { leftColor: C.acc });
+      s.addText('📓', { x: 0.65, y: y + 0.12, w: 0.4, h: 0.4, fontFace: 'Calibri', fontSize: 18, align: 'center' });
+      s.addText(nb.name, { x: 1.1, y: y + 0.08, w: 3.6, h: 0.28, fontFace: 'Consolas', fontSize: 10, bold: true, color: C.acc });
+      s.addText(nb.desc, { x: 1.1, y: y + 0.32, w: 6.5, h: 0.28, fontFace: 'Calibri', fontSize: 10, color: C.dark });
+      // Süre rozeti
+      if (nb.dur) {
+        s.addShape(pres.shapes.RECTANGLE, { x: 8.1, y: y + 0.14, w: 0.8, h: 0.32, fill: { color: C.amber }, line: { type: 'none' } });
+        s.addText('⏱ ' + nb.dur, { x: 8.1, y: y + 0.14, w: 0.8, h: 0.32, fontFace: 'Calibri', fontSize: 9, bold: true, color: 'FFFFFF', align: 'center', valign: 'middle' });
+      }
     });
   }
 
-  // ─── Ödevler ──────────────────────────────────────────────
+  // ─── ÖDEVLER ─────────────────────────────────────────────
   {
     const s = pres.addSlide();
-    T.slideHeader(pres, s, 'Pratik Ödevler', week.sectionShort, C.cream, TOTAL);
+    T.slideHeader(pres, s, 'Pratik Ödevler', week.sectionShort, C.cream);
     week.assignments.forEach((a, i) => {
-      const y = 1.0 + i * 1.05;
-      T.addCard(pres, s, 0.5, y, 9.0, 0.92, { leftColor: C.sec, bg: C.warmBg });
-      T.numBadge(pres, s, 0.7, y + 0.28, i + 1, C.sec);
-      T.cardBody(s, 1.25, y + 0.18, 8.0, 0.65, a, { size: 12 });
+      const y = 1.0 + i * (week.assignments.length > 3 ? 0.85 : 1.05);
+      const h = week.assignments.length > 3 ? 0.75 : 0.92;
+      T.addCard(pres, s, 0.5, y, 9.0, h, { leftColor: C.sec, bg: C.warmBg });
+      T.numBadge(pres, s, 0.7, y + (h - 0.36) / 2, i + 1, C.sec);
+      T.cardBody(s, 1.25, y + 0.18, 7.7, h - 0.3, a, { size: 12 });
     });
-    T.cardBody(s, 0.5, 4.85, 9.0, 0.4,
-      'Her ödev kişisel öğrenme defterine kaydedilir, capstone projesinde tekrar kullanılır.',
-      { size: 9.5, color: C.subtle, italic: true });
   }
 
-  // ─── Kaynaklar ────────────────────────────────────────────
+  // ─── KAYNAKLAR ───────────────────────────────────────────
   {
     const s = pres.addSlide();
-    T.slideHeader(pres, s, 'Kaynaklar ve Referanslar', week.sectionShort, C.cream, TOTAL);
+    T.slideHeader(pres, s, 'Kaynaklar ve Referanslar', week.sectionShort, C.cream);
     week.resources.forEach((r, i) => {
-      const y = 1.0 + i * 0.85;
-      T.addCard(pres, s, 0.5, y, 9.0, 0.72, { leftColor: C.purple });
-      s.addText('🔗', { x: 0.7, y: y + 0.18, w: 0.4, h: 0.4, fontFace: 'Calibri', fontSize: 16, valign: 'middle' });
-      s.addText(r.label, { x: 1.2, y: y + 0.1, w: 7.8, h: 0.3, fontFace: 'Calibri', fontSize: 12, bold: true, color: C.dark });
-      s.addText(r.url, { x: 1.2, y: y + 0.4, w: 7.8, h: 0.25, fontFace: 'Consolas', fontSize: 9, color: C.subtle });
+      const y = 1.0 + i * 1.0;
+      T.addCard(pres, s, 0.5, y, 9.0, 0.85, { leftColor: C.priLt });
+      s.addText('🔗', { x: 0.65, y: y + 0.22, w: 0.4, h: 0.4, fontFace: 'Calibri', fontSize: 18, align: 'center' });
+      s.addText(r.label, { x: 1.15, y: y + 0.12, w: 7.8, h: 0.32, fontFace: 'Calibri', fontSize: 12, bold: true, color: C.dark });
+      s.addText(r.url, { x: 1.15, y: y + 0.45, w: 7.8, h: 0.28, fontFace: 'Consolas', fontSize: 9, color: C.subtle });
     });
   }
 
-  // ─── Kapanış ──────────────────────────────────────────────
+  // ─── KAPANIŞ ─────────────────────────────────────────────
   T.addClosingSlide(pres, `Hafta ${week.id} · ${week.title}`,
-    week.takeaways.map(t => ({ text: t, color: week.color })),
+    week.takeaways.map((t, i) => ({ text: t, color: [C.acc, C.sec, C.pri][i % 3] })),
     week.quote,
     'Dr. Murat Altun');
 
-  // ─── Yaz ──────────────────────────────────────────────────
+  // ─── YAZ ─────────────────────────────────────────────────
   const filename = `hafta${week.slug}_${week.title.toLowerCase()
     .replace(/['"·•]/g, '')
     .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ç/g, 'c')
@@ -823,13 +1017,13 @@ function generateWeekPPTX(week, outputDir) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// MAIN — 14 HAFTA İÇİN ÜRET
+// MAIN
 // ═══════════════════════════════════════════════════════════
 async function main() {
   const outputDir = path.join(__dirname, 'sunumlar');
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
-  console.log(`\n🎨 Üretken YZ Atölyesi · 14 hafta PPTX üretiliyor → ${outputDir}\n`);
+  console.log(`\n🎨 Üretken YZ Atölyesi · Aurora paleti · 14 hafta PPTX → ${outputDir}\n`);
   for (const week of WEEKS) {
     try {
       const fp = await generateWeekPPTX(week, outputDir);
@@ -839,7 +1033,7 @@ async function main() {
       console.error(`  ✗ Hafta ${week.id} HATA:`, e.message);
     }
   }
-  console.log(`\n✅ ${WEEKS.length} PPTX üretildi.\n`);
+  console.log(`\n✅ ${WEEKS.length} PPTX üretildi. Drive'a yükle, ID'leri curriculum.ts'e ekle.\n`);
 }
 
 main();

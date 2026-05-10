@@ -48,3 +48,11 @@ docs/**/*.7z
 
 # Eski VB-YZ-90 sunumlar_yeni/ klasörü artık yok — yeni: sunumlar/
 sunumlar_yeni/
+
+# === KRİTİK: PPTX/PDF/Notebook'lar Drive'da, repo'da DEĞİL ===
+# VB-YZ-90 mantığı: Eğitmen Drive'a yükler, sadece görüntüleme izni verir.
+# curriculum.ts'teki pptxDriveId + notebooks[].url alanları Drive ID'leriyle doldurulur.
+# Bu klasörler lokalde üretim için kullanılır, repo'ya gitmez.
+sunumlar/
+web/public/sunumlar/
+notebooks/
