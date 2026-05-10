@@ -56,7 +56,7 @@ export const weeks: Week[] = [
       { label: 'Konya Akıllı Şehir & YZ Stratejisi', url: 'https://github.com/DrMuratAltun/uretken-yz-egitimleri/tree/main/docs' },
       { label: 'AB AI Act Özeti', url: 'https://artificialintelligenceact.eu/' },
     ],
-    pptxFile: 'hafta01_uretken_yz_giris.pptx',
+    pptxFile: 'hafta01_uretken_yzye_giris.pptx',
   },
   {
     id: 2,
@@ -176,7 +176,7 @@ export const weeks: Week[] = [
       { label: 'NotebookLM resmî sayfa', url: 'https://notebooklm.google.com/' },
       { label: 'NotebookLM Help Center', url: 'https://support.google.com/notebooklm' },
     ],
-    pptxFile: 'hafta04_notebooklm_bilgi_yonetimi.pptx',
+    pptxFile: 'hafta04_notebooklm_ve_bilgi_yonetimi.pptx',
   },
   {
     id: 5,
@@ -262,7 +262,7 @@ export const weeks: Week[] = [
       { label: 'OpenAI Whisper', url: 'https://openai.com/research/whisper' },
       { label: 'Suno', url: 'https://suno.com/' },
     ],
-    pptxFile: 'hafta06_ses_tts_atolye.pptx',
+    pptxFile: 'hafta06_ses_tts_ve_muzik.pptx',
   },
   {
     id: 7,
@@ -303,7 +303,7 @@ export const weeks: Week[] = [
       { label: 'Google AI Studio — Veo', url: 'https://aistudio.google.com/' },
       { label: 'HeyGen', url: 'https://www.heygen.com/' },
     ],
-    pptxFile: 'hafta07_video_avatar_atolye.pptx',
+    pptxFile: 'hafta07_video_avatar_ve_animasyon.pptx',
   },
   {
     id: 8,
@@ -344,7 +344,7 @@ export const weeks: Week[] = [
       { label: 'Google Workspace Gemini', url: 'https://workspace.google.com/solutions/ai/' },
       { label: 'Canva Magic Design', url: 'https://www.canva.com/magic-design/' },
     ],
-    pptxFile: 'hafta08_yazi_sunum_ofis.pptx',
+    pptxFile: 'hafta08_yazi_sunum_dokuman_ofis.pptx',
   },
   {
     id: 9,
@@ -385,7 +385,7 @@ export const weeks: Week[] = [
       { label: 'n8n Docs', url: 'https://docs.n8n.io/' },
       { label: 'Notion AI', url: 'https://www.notion.so/product/ai' },
     ],
-    pptxFile: 'hafta09_otomasyon_isakislari.pptx',
+    pptxFile: 'hafta09_otomasyon_ve_i_s_akislari.pptx',
   },
   {
     id: 10,
@@ -428,7 +428,7 @@ export const weeks: Week[] = [
       { label: 'docs/akademik araçlar.pdf', url: 'https://github.com/DrMuratAltun/uretken-yz-egitimleri/tree/main/docs' },
       { label: 'MagicSchool', url: 'https://www.magicschool.ai/' },
     ],
-    pptxFile: 'hafta10_egitimciler_atolye.pptx',
+    pptxFile: 'hafta10_egitimciler_i_cin_uretken_yz.pptx',
   },
   {
     id: 11,
@@ -470,7 +470,7 @@ export const weeks: Week[] = [
       { label: 'Lovable', url: 'https://lovable.dev/' },
       { label: 'Bolt.new', url: 'https://bolt.new/' },
     ],
-    pptxFile: 'hafta11_meslege_ozel_atolye.pptx',
+    pptxFile: 'hafta11_meslege_ozel_atolyeler.pptx',
   },
   {
     id: 12,
@@ -512,7 +512,7 @@ export const weeks: Week[] = [
       { label: 'Open WebUI', url: 'https://github.com/open-webui/open-webui' },
       { label: 'Jan', url: 'https://jan.ai/' },
     ],
-    pptxFile: 'hafta12_lokal_llm_kurulum.pptx',
+    pptxFile: 'hafta12_lokal_llm_kurulumu.pptx',
   },
   {
     id: 13,
@@ -555,7 +555,7 @@ export const weeks: Week[] = [
       { label: 'Page Assist (Chrome Web Store)', url: 'https://chromewebstore.google.com/' },
       { label: 'MSTY', url: 'https://msty.app/' },
     ],
-    pptxFile: 'hafta13_lokal_rag.pptx',
+    pptxFile: 'hafta13_lokal_rag_ve_kendi_verinle_konusma.pptx',
   },
   {
     id: 14,
@@ -602,7 +602,7 @@ export const weeks: Week[] = [
       { label: 'Streamlit Docs', url: 'https://docs.streamlit.io/' },
       { label: 'Vercel v0', url: 'https://v0.dev/' },
     ],
-    pptxFile: 'hafta14_api_capstone.pptx',
+    pptxFile: 'hafta14_api_ile_uretken_yz_capstone.pptx',
   },
 ];
 
