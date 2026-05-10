@@ -18,6 +18,19 @@ churn-pptx.js
 sunumlar_yeni/.~lock*
 egitim-kitabi/
 
-# docs/ — 1.4 GB referans materyal (MEB rehberi, NotebookLM PDF, ses/video örnekleri,
-# Nano Banana, Konya stratejisi vb). Drive üzerinden paylaşılır, repo'ya commit edilmez.
-docs/
+# docs/ — 1.4 GB referans materyal: büyük medya (PDF, DOCX, MP4, M4A, MP3, görsel)
+# Drive üzerinden paylaşılır, repo'ya commit edilmez.
+# Sadece küçük markdown dosyaları (AI_DECISIONS, ai_collab_chat, README) commit'lenir.
+docs/**/*.pdf
+docs/**/*.docx
+docs/**/*.doc
+docs/**/*.pptx
+docs/**/*.mp4
+docs/**/*.m4a
+docs/**/*.mp3
+docs/**/*.mov
+docs/**/*.png
+docs/**/*.jpg
+docs/**/*.jpeg
+docs/**/*.xlsx
+docs/**/*.zip
