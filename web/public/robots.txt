@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://drmurataltun.github.io/VB-YZ-90/sitemap.xml
+# Hassas/admin yolları yok — tüm içerik halka açık atölye materyali
+
+Sitemap: https://drmurataltun.github.io/uretken-yz-egitimleri/sitemap.xml
