@@ -57,6 +57,7 @@ export const weeks: Week[] = [
       { label: 'AB AI Act Özeti', url: 'https://artificialintelligenceact.eu/' },
     ],
     pptxFile: 'hafta01_uretken_yzye_giris.pptx',
+    pptxDriveId: '1W58a5eL11Cf0dq4xgPVUH76sXSTn5nR0',
   },
   {
     id: 2,
@@ -97,6 +98,7 @@ export const weeks: Week[] = [
       { label: 'OpenAI Cookbook — Reasoning', url: 'https://cookbook.openai.com/' },
     ],
     pptxFile: 'hafta02_prompt_muhendisligi.pptx',
+    pptxDriveId: '1rgPT20lHGUDew-WNVsi2bx9NwmJyJF9R',
   },
   {
     id: 3,
@@ -138,6 +140,7 @@ export const weeks: Week[] = [
       { label: 'xAI — Grok', url: 'https://x.ai/' },
     ],
     pptxFile: 'hafta03_sohbet_asistanlari.pptx',
+    pptxDriveId: '1DhS1sEfPdgMFeIf6SlkXyx2X5r0WxM0x',
   },
   {
     id: 4,
@@ -177,6 +180,7 @@ export const weeks: Week[] = [
       { label: 'NotebookLM Help Center', url: 'https://support.google.com/notebooklm' },
     ],
     pptxFile: 'hafta04_notebooklm_ve_bilgi_yonetimi.pptx',
+    pptxDriveId: '1VQtgAequv-qcePlBmj-0eh_Mv5e0TDRw',
   },
   {
     id: 5,
@@ -222,6 +226,7 @@ export const weeks: Week[] = [
       { label: 'PromptHero', url: 'https://prompthero.com/' },
     ],
     pptxFile: 'hafta05_gorsel_uretim_atolyesi.pptx',
+    pptxDriveId: '1gFL-cUJmqrN69gMLZkdqEKPzZjSf_Nf_',
   },
   {
     id: 6,
@@ -263,6 +268,7 @@ export const weeks: Week[] = [
       { label: 'Suno', url: 'https://suno.com/' },
     ],
     pptxFile: 'hafta06_ses_tts_ve_muzik.pptx',
+    pptxDriveId: '1YDZvitMnm_D8lmmRwHcoLAJn48Zgp9Fv',
   },
   {
     id: 7,
@@ -304,6 +310,7 @@ export const weeks: Week[] = [
       { label: 'HeyGen', url: 'https://www.heygen.com/' },
     ],
     pptxFile: 'hafta07_video_avatar_ve_animasyon.pptx',
+    pptxDriveId: '1dfSw1bSyd4E11cX2avPhpSsmPkG1Ud_9',
   },
   {
     id: 8,
@@ -345,6 +352,7 @@ export const weeks: Week[] = [
       { label: 'Canva Magic Design', url: 'https://www.canva.com/magic-design/' },
     ],
     pptxFile: 'hafta08_yazi_sunum_dokuman_ofis.pptx',
+    pptxDriveId: '1i4xxddUGn9sfgrjGWEZMTSqIjQII3Cse',
   },
   {
     id: 9,
@@ -386,6 +394,7 @@ export const weeks: Week[] = [
       { label: 'Notion AI', url: 'https://www.notion.so/product/ai' },
     ],
     pptxFile: 'hafta09_otomasyon_ve_i_s_akislari.pptx',
+    pptxDriveId: '1E7Sf8WMH-UeWFMb_ncCxt1GVaJLT6t3L',
   },
   {
     id: 10,
@@ -429,6 +438,7 @@ export const weeks: Week[] = [
       { label: 'MagicSchool', url: 'https://www.magicschool.ai/' },
     ],
     pptxFile: 'hafta10_egitimciler_i_cin_uretken_yz.pptx',
+    pptxDriveId: '1W4dUZm5o9Ny8pjtz_L4xfq2SsEEsmtd3',
   },
   {
     id: 11,
@@ -471,6 +481,7 @@ export const weeks: Week[] = [
       { label: 'Bolt.new', url: 'https://bolt.new/' },
     ],
     pptxFile: 'hafta11_meslege_ozel_atolyeler.pptx',
+    pptxDriveId: '12PQ3-sAukDVOunAa0ZKQDLASFfIGwzXn',
   },
   {
     id: 12,
@@ -513,6 +524,7 @@ export const weeks: Week[] = [
       { label: 'Jan', url: 'https://jan.ai/' },
     ],
     pptxFile: 'hafta12_lokal_llm_kurulumu.pptx',
+    pptxDriveId: '1nfqxsBcmLx4xRFGtPr0jeRfd65nc2xR4',
   },
   {
     id: 13,
@@ -556,6 +568,7 @@ export const weeks: Week[] = [
       { label: 'MSTY', url: 'https://msty.app/' },
     ],
     pptxFile: 'hafta13_lokal_rag_ve_kendi_verinle_konusma.pptx',
+    pptxDriveId: '1AAs-TZSeIDOA62aUNvbGU3r8QmK9YWcK',
   },
   {
     id: 14,
@@ -603,6 +616,7 @@ export const weeks: Week[] = [
       { label: 'Vercel v0', url: 'https://v0.dev/' },
     ],
     pptxFile: 'hafta14_api_ile_uretken_yz_capstone.pptx',
+    pptxDriveId: '1_hJ8sryLE7sTec3GS4Z6qJ7zQQPiyrxI',
   },
 ];
 

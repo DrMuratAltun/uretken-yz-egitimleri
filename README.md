@@ -62,15 +62,6 @@ npm run preview      # production build önizleme
 
 **Not:** Büyük medya dosyaları `.gitignore`'da — Drive üzerinden paylaşılır. Sadece markdown dosyaları (AI_DECISIONS, ai_collab_chat, protokol) commit'lenir.
 
-## Üretim Aşamaları
-
-- ✅ **Faz A** — İskelet (curriculum.ts + sayfalar) — commit `1b57357`
-- ✅ **Faz E** — Favicon + OG image (gradient ✨ + 1200×630 JPEG)
-- 🟡 **Faz B** — İçerik detayı + ADR + README (bu commit)
-- ⏳ **Faz C** — 14 PPTX generator (`gen_haftaXX.js`)
-- ⏳ **Faz D** — ~60 notebook üretimi (markdown ağırlıklı, ekran görüntülü)
-- ⏳ **Faz F** — Drive yükleme + Search Console + canlı yayın
-
 ## AI İşbirliği
 
 Bu proje **Claude + Gemini + Dr. Murat** üçlüsüyle yürütülüyor.
