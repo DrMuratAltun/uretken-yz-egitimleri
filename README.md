@@ -4,7 +4,7 @@
 > Programlama bilmek gerekmez. Hazır araçları ileri seviye kullan, lokal LLM'i kendi bilgisayarında çalıştır, API ile kendi ürününü yayınla.
 
 🌐 **Canlı Site:** https://drmurataltun.github.io/uretken-yz-egitimleri/
-📱 **Kayıt:** WhatsApp +90 539 257 82 06 (Referans: **Mayıs-2026**)
+📱 **Kayıt:** WhatsApp +90 507 750 19 82 (Referans: **Mayıs-2026**)
 
 ---
 

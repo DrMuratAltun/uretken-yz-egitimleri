@@ -21,7 +21,7 @@ const path = require('path');
 // HELPERS — Aurora HTML Header / Footer / Sections
 // ═══════════════════════════════════════════════════════════
 const SITE_URL = 'https://drmurataltun.github.io/uretken-yz-egitimleri/';
-const WHATSAPP = '+90 539 257 82 06';
+const WHATSAPP = '+90 507 750 19 82';
 
 function auroraHeader({ title, weekId, weekTitle, duration, difficulty, sectionLabel, color }) {
   const labelBg = color || '#10B981';
